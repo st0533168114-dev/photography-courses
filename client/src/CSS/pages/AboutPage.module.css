@@ -1,0 +1,86 @@
+.main {
+  min-height: 100vh;
+  padding: var(--space-4rem) var(--space-1-5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--color-primary) 28%, transparent), transparent 30%),
+    radial-gradient(circle at bottom left, color-mix(in srgb, var(--color-accent) 24%, transparent), transparent 34%),
+    linear-gradient(135deg, var(--color-bg-subtle) 0%, var(--color-primary-light) 45%, var(--color-accent-light) 100%);
+  direction: rtl;
+  position: relative;
+  overflow: hidden;
+}
+
+.main::before,
+.main::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.main::before {
+  width: 220px;
+  height: 220px;
+  background: color-mix(in srgb, var(--color-primary) 26%, transparent);
+  top: 8%;
+  left: 6%;
+}
+
+.main::after {
+  width: 260px;
+  height: 260px;
+  background: var(--color-overlay-accent-22);
+  bottom: 5%;
+  right: 4%;
+}
+
+/* הסרנו את ה-card והטקסט מוצג ישירות על ה-main */
+
+.header {
+  margin-bottom: var(--space-2rem);
+  padding-bottom: var(--space-1-5rem);
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.title {
+  font-size: 3rem; /* הגדלה נוספת לנוכחות בלי הריבוע */
+  background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 var(--space-0-75rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: var(--color-accent-strong);
+  font-weight: 600;
+  margin: 0;
+}
+
+.text {
+  font-size: 1.35rem; /* גופן גדול וקריא יותר */
+  line-height: 2;
+  color: var(--color-text-strong);
+  margin: 0;
+  white-space: pre-line;
+  width: 100%;
+  max-width: 800px;
+  text-align: center; /* מרקז את הטקסט לזרימה טבעית ללא מסגרת */
+  
+  /* ללא רקע, ללא מסגרת, ללא פדינג מיותר */
+  background: none;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}

@@ -1,0 +1,116 @@
+:root {
+  /* צבעי מותג (מבוסס על לוגו "מירלה כהן") */
+  --color-primary: #2f9e93;
+  --color-primary-hover: #257d74;
+  --color-primary-active: #1d625b;
+  --color-primary-light: #e3f4f2;
+
+  --color-accent: #d3a13e;
+  --color-accent-hover: #b6872f;
+  --color-accent-light: #faf1de;
+
+  /* רקעים ומשטחים */
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f6f7fb;
+  --color-surface: #ffffff;
+  --color-border: #e2e5ec;
+  --color-border-strong: #c7cbd6;
+
+  /* טקסט */
+  --color-text: #1b2a4a;
+  --color-text-muted: #5a6478;
+  --color-text-inverse: #ffffff;
+  --color-text-disabled: #9aa0b0;
+
+  /* סמנטי (סל/הזמנות/טפסים) */
+  --color-success: #1e8a4c;
+  --color-success-bg: #e7f6ec;
+  --color-error: #cf3131;
+  --color-error-bg: #fbeaea;
+  --color-warning: #b8760a;
+  --color-warning-bg: #fdf3e0;
+  --color-info: #2f6fb0;
+  --color-info-bg: #e9f2fa;
+
+  --color-link: var(--color-primary);
+
+  /* צבעים משלימים שנמצאים בשימוש בקבצים קיימים */
+  --color-text-strong: #1f2937;
+  --color-accent-strong: #d4a017;
+  --color-error-strong: #dc2626;
+
+  --color-overlay-dark-05: rgba(0, 0, 0, 0.05);
+  --color-overlay-dark-40: rgba(0, 0, 0, 0.4);
+  --color-overlay-dark-55: rgba(0, 0, 0, 0.55);
+  --color-overlay-dark-60: rgba(0, 0, 0, 0.6);
+  --color-overlay-accent-12: rgba(212, 160, 23, 0.12);
+  --color-overlay-accent-22: rgba(212, 160, 23, 0.22);
+  --color-shadow-accent-12: rgba(211, 161, 62, 0.12);
+  --color-shadow-slate-10: rgba(15, 23, 42, 0.1);
+  --color-focus-ring: rgba(47, 158, 147, 0.16);
+
+  /* ריווחים */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 88px;
+
+  /* ריווחים משלימים לשמירה על ערכים קיימים */
+  --space-0-2rem: 0.2rem;
+  --space-0-5rem: 0.5rem;
+  --space-0-6rem: 0.6rem;
+  --space-0-75rem: 0.75rem;
+  --space-0-8rem: 0.8rem;
+  --space-1rem: 1rem;
+  --space-1-5rem: 1.5rem;
+  --space-2rem: 2rem;
+  --space-3rem: 3rem;
+  --space-4rem: 4rem;
+  --space-2px: 2px;
+  --space-10px: 10px;
+  --space-14px: 14px;
+
+  /* טיפוגרפיה */
+  --font-sans: "Assistant", "Segoe UI", system-ui, Arial, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-md: 18px;
+  --font-size-lg: 22px;
+  --font-size-xl: 28px;
+  --font-size-2xl: 36px;
+  --font-size-3xl: 48px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.7;
+
+  /* מסגרות וצללים */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 4px 10px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 10px 24px rgba(16, 24, 40, 0.12);
+
+  --border-width: 1px;
+
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+}
+
+/* נקודת שבירה יחידה בשימוש בפרויקט: 1024px (משתני CSS לא נתמכים בתוך @media) */

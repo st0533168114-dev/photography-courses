@@ -1,0 +1,8 @@
+.main {
+  flex: 1;
+}
+
+.categoriesSection {
+  padding: var(--space-7) var(--space-6);
+  background: var(--color-bg-subtle);
+}

@@ -1,0 +1,15 @@
+.comment {
+  max-width: 280px;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.text {
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin: 0;
+}

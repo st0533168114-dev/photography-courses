@@ -1,0 +1,30 @@
+.featuredRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-6);
+  width: 100%;
+}
+
+.featuredRow > div {
+  width: 100%;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-5);
+  align-items: stretch;
+}
+
+.status {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-6) 0;
+}
+
+.error {
+  color: var(--color-error);
+  text-align: center;
+  padding: var(--space-6) 0;
+}

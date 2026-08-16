@@ -1,0 +1,12 @@
+.main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-7);
+}
+
+.heading {
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
