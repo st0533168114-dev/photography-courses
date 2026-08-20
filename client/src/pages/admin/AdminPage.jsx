@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import Header from "../../layout/Header";
 import Footer from "../../layout/Footer";
 
+// דשבורד ניהול ראשי עם ניווט לכל הישויות (קורסים, משתמשים, הזמנות וכו')
 export default function AdminPage() {
 
 
@@ -13,7 +14,7 @@ export default function AdminPage() {
       <nav>
         {/* //כך נכון הקישורים?לבדוק */}
  
-        <NavLink to="/admin/courses">ניהול קורסים</NavLink>
+        <NavLink to="/admin/courses/list">ניהול קורסים</NavLink>
         {/* <NavLink to="/admin/users">ניהול משתמשים</NavLink>
         <NavLink to="/admin/categories">ניהול קטגוריות</NavLink>
         <NavLink to="/admin/orders">ניהול הזמנות</NavLink>

@@ -1,0 +1,40 @@
+.container {
+  padding: var(--space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.addPaidBtn,
+.addFreeBtn {
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  color: var(--color-text-inverse);
+}
+
+.addPaidBtn {
+  background-color: var(--color-primary);
+}
+
+.addPaidBtn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.addFreeBtn {
+  background-color: var(--color-success);
+}
+
+.addFreeBtn:hover {
+  background-color: #1d7a42;
+}

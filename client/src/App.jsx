@@ -11,7 +11,19 @@ import MyCoursesPage from "./pages/MyCoursesPage";
 import HomePage from "./pages/HomePage";
 import CoursesPage from "./pages/CoursesPage";
 import AdminPage from "./pages/admin/AdminPage";
-import AdminCoursesPage from "./pages/admin/AdminCoursesPage"
+import AdminCoursesPage from "./pages/admin/AdminCoursesPage";
+import AdminCourseFormPage from "./pages/admin/AdminCourseFormPage";
+import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
+import AdminCategoryFormPage from "./pages/admin/AdminCategoryFormPage";
+import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import AdminUserFormPage from "./pages/admin/AdminUserFormPage";
+import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
+import AdminOrderFormPage from "./pages/admin/AdminOrderFormPage";
+import AdminPaymentsPage from "./pages/admin/AdminPaymentsPage";
+import AdminPaymentFormPage from "./pages/admin/AdminPaymentFormPage";
+import AdminFaqPage from "./pages/admin/AdminFaqPage";
+import AdminFaqFormPage from "./pages/admin/AdminFaqFormPage";
+import AdminRoute from "./components/AdminRoute";
 import CreateOrderPage from "./pages/CreateOrderPage";
 import PaymentConfirmationPage from "./pages/PaymentConfirmationPage";
 
@@ -68,8 +80,30 @@ function App() {
           <Route path="/signUp" element={<SignUpPage />}></Route>
           <Route path="/myCourses" element={<MyCoursesPage />}></Route>
 
-          <Route path="/admin" element={<AdminPage />}>
-                <Route path='courses' element={<AdminCoursesPage />} /> 
+          <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>}>
+                <Route path='courses/list' element={<AdminCoursesPage />}></Route>
+                <Route path='courses/new/paid' element={<AdminCourseFormPage />}></Route>
+                <Route path='courses/new/free' element={<AdminCourseFormPage />}></Route>
+                <Route path='courses/:courseId/edit/paid' element={<AdminCourseFormPage />}></Route>
+                <Route path='courses/:courseId/edit/free' element={<AdminCourseFormPage />}></Route>
+
+                <Route path='categories/list' element={<AdminCategoriesPage />}></Route>
+                <Route path='categories/new' element={<AdminCategoryFormPage />}></Route>
+                <Route path='categories/:categoryId/edit' element={<AdminCategoryFormPage />}></Route>
+
+                <Route path='users/list' element={<AdminUsersPage />}></Route>
+                <Route path='users/:userId/edit' element={<AdminUserFormPage />}></Route>
+
+                <Route path='orders/list' element={<AdminOrdersPage />}></Route>
+                <Route path='orders/:orderId/edit' element={<AdminOrderFormPage />}></Route>
+
+                <Route path='payments/list' element={<AdminPaymentsPage />}></Route>
+                <Route path='payments/new' element={<AdminPaymentFormPage />}></Route>
+                <Route path='payments/:paymentId/edit' element={<AdminPaymentFormPage />}></Route>
+
+                <Route path='faq/list' element={<AdminFaqPage />}></Route>
+                <Route path='faq/new' element={<AdminFaqFormPage />}></Route>
+                <Route path='faq/:faqId/edit' element={<AdminFaqFormPage />}></Route>
           </Route>
 
           {/* בתוך הבראוסראוטר רק מה שקשור לניתובים בתוך האתר כמו 

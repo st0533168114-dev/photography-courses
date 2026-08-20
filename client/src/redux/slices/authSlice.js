@@ -48,7 +48,7 @@ const authSlice = createSlice({
     //רק מה מידע על המשתמש עצמו פרטים אישיים בל סימה ובלי קודים
     user: null, // fullName,email,userName,phoneNumber,courseIds
     isLoggedIn: false,
-    isLoading: false,
+    isLoading: true,//כדי שלא יציג למנהל את מסך הלוגין לפני שהבדיקה הסתיימה
     error: null,
   },
   reducers: {
