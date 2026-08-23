@@ -4,11 +4,10 @@ import { useParams } from "react-router-dom";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import CourseCard from "../components/CourseCard";
-import { getCourses } from "../redux/slices/coursesSlice";
+import { getCourses, clearCoursesError } from "../redux/slices/coursesSlice";
 import styles from "../CSS/pages/CoursesPage.module.css";
 
 export default function CoursesPage() {
-  //אם ארצה להוסיף כאן שם קטגוריה גם אז צריך סלייס קטגוריותתת
   const { categoryId } = useParams(); //אם יש
   const dispatch = useDispatch();
   const coursesList = useSelector((state) => state.courses.coursesList || []);
@@ -16,6 +15,8 @@ export default function CoursesPage() {
   const error = useSelector((state) => state.courses.error);
 
   useEffect(() => {
+    // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+    dispatch(clearCoursesError());
     if (coursesList.length === 0) {
       dispatch(getCourses());
     }

@@ -4,22 +4,29 @@ import Footer from "../layout/Footer.jsx";
 import AddToCartButton from "../components/AddToCartButton";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourses } from "../redux/slices/coursesSlice";
+import { getCourses, clearCoursesError } from "../redux/slices/coursesSlice";
 import styles from "../CSS/pages/CourseDetailsPage.module.css";
 
 export default function CourseDetailsPage() {
   const {courseId}=useParams();
   const dispatch=useDispatch();
   const coursesList=useSelector((state)=>state.courses.coursesList);
+  const isLoading=useSelector((state)=>state.courses.isLoading);
+  const error=useSelector((state)=>state.courses.error);
   const course=coursesList.find((c)=>c._id===courseId);
 
   useEffect(() => {
+    // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+    dispatch(clearCoursesError());
     if (coursesList.length === 0) {
       dispatch(getCourses());
     }
   }, [dispatch]);
 
-  if (!course) return <p className={styles.status}>טוען נתונים...</p>;
+  if (isLoading) return <p className={styles.status}>טוען נתונים...</p>;
+  if (error) return <p className={styles.error}>שגיאה: {error}</p>;
+  //מבדיל בין "עדיין בטעינה" ל"קורס לא קיים", כדי לא להיתקע על הודעת טעינה לצמיתות
+  if (!course) return <p className={styles.status}>קורס לא נמצא.</p>;
 
   return (
     <>

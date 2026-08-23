@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CategoryItem from "./CategoryItem";
-import { getCategories } from "../redux/slices/categoriesSlice";
+import { getCategories, clearCategoriesError } from "../redux/slices/categoriesSlice";
 import styles from "../CSS/components/CategoryGrid.module.css";
 
 export default function CategoryGrid(props) {
@@ -13,6 +13,8 @@ export default function CategoryGrid(props) {
   const error = useSelector((state) => state.categories.error);
 
   useEffect(() => {
+    // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+    dispatch(clearCategoriesError());
     if (categoriesList.length === 0) {
       dispatch(getCategories());
     }

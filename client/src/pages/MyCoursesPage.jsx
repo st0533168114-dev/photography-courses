@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import MyCourseItem from "../components/MyCourseItem";
-import { getCourses } from "../redux/slices/coursesSlice";
+import { getCourses, clearCoursesError } from "../redux/slices/coursesSlice";
 import styles from "../CSS/pages/CoursesPage.module.css";
 
 export default function MyCoursesPage() {
@@ -14,6 +14,8 @@ export default function MyCoursesPage() {
   const error = useSelector((state) => state.courses.error);
 
   useEffect(() => {
+    // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+    dispatch(clearCoursesError());
     if (coursesList.length === 0) {
       dispatch(getCourses());
     }

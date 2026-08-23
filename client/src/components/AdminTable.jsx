@@ -37,7 +37,8 @@ export default function AdminTable(props) {
           {rows.map((row) => (
             <tr key={row._id}>
               {columns.map((col) => (
-                <td key={col.key}>{row[col.key]}</td>
+                // render מאפשר לעמודה לעצב את הערך (למשל המרת מזהה לשם קטגוריה)
+                <td key={col.key}>{col.render ? col.render(row[col.key], row) : row[col.key]}</td>
               ))}
               <td className={styles.actions}>
                 <button className={styles.editBtn} onClick={() => onEdit?.(row._id)}>

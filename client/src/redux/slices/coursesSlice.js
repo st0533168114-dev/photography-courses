@@ -10,7 +10,9 @@ export const getCourses = createAsyncThunk("courses/getCourses", async (_, thunk
     return thunkAPI.rejectWithValue("שליפת הקורסים נכשלה");
   }
 });
+
 //כרגע לא בשמוש!אבל כנראה שאצטרך בהמשך.כרגע שולפת את כל הקורסים בעמוד פרטי קורס
+//בניהול כן משתמשת בזה לבדוק אם זה נכון ובסדר
 export const getCourseById = createAsyncThunk(
   "courses/getCourseById",
   async (courseId, thunkAPI) => {
@@ -61,7 +63,12 @@ export const coursesSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    // ניקוי השגיאה הגלובלית - מוטציה שנכשלה משאירה שגיאה שאף שליפה לא תנקה
+    clearCoursesError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCourses.pending, (state) => {
@@ -132,5 +139,7 @@ export const coursesSlice = createSlice({
       });
   },
 });
+
+export const { clearCoursesError } = coursesSlice.actions;
 
 export default coursesSlice.reducer;

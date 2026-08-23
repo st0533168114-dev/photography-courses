@@ -53,7 +53,10 @@ export const deleteCategory = createAsyncThunk(
       await categoryApi.deleteCategory(categoryId);
       return categoryId;
     } catch (error) {
-      return thunkAPI.rejectWithValue("מחיקת הקטגוריה נכשלה");
+      // העברת הודעת השרת (למשל: קטגוריה שיש בה קורסים) אם קיימת
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "מחיקת הקטגוריה נכשלה"
+      );
     }
   }
 );
@@ -66,7 +69,12 @@ export const categoriesSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    // ניקוי השגיאה הגלובלית - מוטציה שנכשלה משאירה שגיאה שאף שליפה לא תנקה
+    clearCategoriesError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCategories.pending, (state) => {
@@ -137,5 +145,7 @@ export const categoriesSlice = createSlice({
       });
   },
 });
+
+export const { clearCategoriesError } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

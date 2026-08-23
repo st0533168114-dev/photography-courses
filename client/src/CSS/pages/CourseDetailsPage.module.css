@@ -77,3 +77,9 @@
   padding: var(--space-6);
   text-align: center;
 }
+
+.error {
+  color: var(--color-error);
+  padding: var(--space-6);
+  text-align: center;
+}

@@ -82,10 +82,9 @@ function App() {
 
           <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>}>
                 <Route path='courses/list' element={<AdminCoursesPage />}></Route>
-                <Route path='courses/new/paid' element={<AdminCourseFormPage />}></Route>
-                <Route path='courses/new/free' element={<AdminCourseFormPage />}></Route>
-                <Route path='courses/:courseId/edit/paid' element={<AdminCourseFormPage />}></Route>
-                <Route path='courses/:courseId/edit/free' element={<AdminCourseFormPage />}></Route>
+                {/* courseType כפרמטר (paid/free) - הטופס קורא אותו כדי להבדיל בין קורס בתשלום לחינמי */}
+                <Route path='courses/new/:courseType' element={<AdminCourseFormPage />}></Route>
+                <Route path='courses/:courseId/edit/:courseType' element={<AdminCourseFormPage />}></Route>
 
                 <Route path='categories/list' element={<AdminCategoriesPage />}></Route>
                 <Route path='categories/new' element={<AdminCategoryFormPage />}></Route>

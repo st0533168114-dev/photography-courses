@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AdminTable from "../../components/AdminTable";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
-import * as coursesApi from "../../API/coursesApi";
+import { getCourses, deleteCourse, clearCoursesError } from "../../redux/slices/coursesSlice";
 import { getCategories } from "../../redux/slices/categoriesSlice";
 import styles from "../../CSS/pages/admin/AdminCoursesPage.module.css";
 
@@ -13,36 +13,35 @@ export default function AdminCoursesPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categoriesList || []);
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const courses = useSelector((state) => state.courses.coursesList || []);
+  const loading = useSelector((state) => state.courses.isLoading);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
+  // שגיאת שליפה מקומית - רק כישלון בטעינה מצדיק להחליף את הטבלה בהודעת שגיאה
+  const [loadError, setLoadError] = useState(null);
 
-  // טעינה ראשונית של רשימת הקורסים
+  // שליפת קורסים אם עדיין לא נשלפו
   useEffect(() => {
-    fetchCourses();
-  }, []);
+    const loadCourses = async () => {
+      // ניקוי שגיאה שנשארה בסטור מפעולה קודמת, כדי שהעמוד יתחיל נקי
+      dispatch(clearCoursesError());
+      try {
+        if (courses.length === 0) {
+          await dispatch(getCourses()).unwrap();
+        }
+      } catch (err) {
+        setLoadError(err || "שגיאה בטעינת הקורסים");
+      }
+    };
+    loadCourses();
+  }, [dispatch]);
 
-  // שליפת קטגוריות אם עדיין לא נשלפו
+  // שליפת קטגוריות רק אם עדיין לא נשלפו - נדרשות להצגת שם הקטגוריה בטבלה
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(getCategories());
     }
-  }, [dispatch, categories.length]);
-
-  const fetchCourses = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await coursesApi.getCourses();
-      setCourses(data);
-    } catch (err) {
-      setError(err.message || "שגיאה בטעינת קורסים");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [dispatch]);
 
   const getCategoryName = (categoryId) => {
     const category = categories.find((cat) => cat._id === categoryId);
@@ -67,13 +66,13 @@ export default function AdminCoursesPage() {
     if (!selectedCourseId) return;
 
     try {
-      await coursesApi.deleteCourse(selectedCourseId);
-      // הסרת הקורס מה-state אחרי מחיקה מוצלחת
-      setCourses(courses.filter((c) => c._id !== selectedCourseId));
+      // unwrap() זורק exception אם המחיקה נכשלה, כדי שנתפוס בcatch
+      await dispatch(deleteCourse(selectedCourseId)).unwrap();
       setDialogOpen(false);
       setSelectedCourseId(null);
     } catch (err) {
-      alert("שגיאה במחיקת קורס: " + (err.message || "נסה שוב"));
+      // אם מחיקה נכשלה - Dialog נשאר פתוח, משתמש רואה שגיאה
+      alert("שגיאה במחיקת קורס: " + (err || "נסה שוב"));
     }
   };
 
@@ -103,11 +102,12 @@ export default function AdminCoursesPage() {
         </button>
       </div>
 
+      {/* loading מוגבל לטעינה ראשונית - אחרת כל מחיקה מעלימה את הטבלה */}
       <AdminTable
         columns={columns}
         rows={courses}
-        loading={loading}
-        error={error}
+        loading={loading && courses.length === 0}
+        error={loadError}
         emptyMessage="אין קורסים"
         onEdit={handleEdit}
         onDelete={handleDeleteClick}

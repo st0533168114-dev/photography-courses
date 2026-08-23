@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import * as coursesApi from "../../API/coursesApi";
+import { getCourseById, addCourse, updateCourse } from "../../redux/slices/coursesSlice";
 import { getCategories } from "../../redux/slices/categoriesSlice";
 import styles from "../../CSS/pages/admin/AdminCourseFormPage.module.css";
 
@@ -34,7 +34,7 @@ const isEditMode = courseId !== undefined && courseId !== "";
     if (categories.length === 0) {
       dispatch(getCategories());
     }
-  }, [dispatch, categories.length]);
+  }, [dispatch]);
 
   // טעינת הקורס בעריכה
   useEffect(() => {
@@ -47,7 +47,8 @@ const isEditMode = courseId !== undefined && courseId !== "";
     setLoading(true);
     setError(null);
     try {
-      const course = await coursesApi.getCourseById(courseId);
+      // unwrap() משחרר את התוצאה או זורק exception אם נכשל
+      const course = await dispatch(getCourseById(courseId)).unwrap();
       setFormData({
         courseName: course.courseName || "",
         categoryId: course.categoryId || "",
@@ -59,7 +60,7 @@ const isEditMode = courseId !== undefined && courseId !== "";
         youtubeLink: course.youtubeLink || "",
       });
     } catch (err) {
-      setError(err.message || "שגיאה בטעינת הקורס");
+      setError(err || "שגיאה בטעינת הקורס");
     } finally {
       setLoading(false);
     }
@@ -112,14 +113,14 @@ const isEditMode = courseId !== undefined && courseId !== "";
       };
 
       if (isEditMode) {
-        await coursesApi.updateCourse(courseId, submitData);
+        await dispatch(updateCourse({ courseId, course: submitData })).unwrap();
       } else {
-        await coursesApi.addCourse(submitData);
+        await dispatch(addCourse(submitData)).unwrap();
       }
 
       navigate("/admin/courses/list");
     } catch (err) {
-      setError(err.message || "שגיאה בשמירת הקורס");
+      setError(err || "שגיאה בשמירת הקורס");
     } finally {
       setLoading(false);
     }
