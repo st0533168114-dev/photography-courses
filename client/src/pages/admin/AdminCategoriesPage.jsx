@@ -77,7 +77,11 @@ export default function AdminCategoriesPage() {
 
   return (
     <div className={styles.container}>
-      <AdminPageHeader title="ניהול קטגוריות" onAdd={() => navigate("/admin/categories/new")} />
+      <AdminPageHeader
+        title="ניהול קטגוריות"
+        addLabel="הוסף קטגוריה"
+        onAdd={() => navigate("/admin/categories/new")}
+      />
 
       {/* loading מוגבל לטעינה ראשונית - אחרת כל מחיקה מעלימה את הטבלה */}
       <AdminTable

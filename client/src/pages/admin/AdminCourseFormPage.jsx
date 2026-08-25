@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourseById, addCourse, updateCourse } from "../../redux/slices/coursesSlice";
+import { getCourses, addCourse, updateCourse } from "../../redux/slices/coursesSlice";
 import { getCategories } from "../../redux/slices/categoriesSlice";
 import styles from "../../CSS/pages/admin/AdminCourseFormPage.module.css";
 
@@ -10,8 +10,9 @@ export default function AdminCourseFormPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categoriesList || []);
+  const coursesList = useSelector((state) => state.courses.coursesList || []);
 
-const isEditMode = courseId !== undefined && courseId !== "";  
+const isEditMode = courseId !== undefined && courseId !== "";
   const isPaid = courseType === "paid";
 
   const [formData, setFormData] = useState({
@@ -36,35 +37,34 @@ const isEditMode = courseId !== undefined && courseId !== "";
     }
   }, [dispatch]);
 
-  // טעינת הקורס בעריכה
+  // בעריכה - מביאים את כל הקורסים פעם אחת אם הרשימה ריקה
   useEffect(() => {
-    if (isEditMode) {
-      fetchCourse();
+    if (isEditMode && coursesList.length === 0) {
+      dispatch(getCourses());
     }
-  }, [courseId]);
+  }, [dispatch, isEditMode]);
 
-  const fetchCourse = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      // unwrap() משחרר את התוצאה או זורק exception אם נכשל
-      const course = await dispatch(getCourseById(courseId)).unwrap();
-      setFormData({
-        courseName: course.courseName || "",
-        categoryId: course.categoryId || "",
-        price: course.price || 0,
-        status: course.status || "available",
-        courseImage: course.courseImage || "",
-        courseDescription: course.courseDescription || "",
-        courseContent: course.courseContent || [],
-        youtubeLink: course.youtubeLink || "",
-      });
-    } catch (err) {
-      setError(err || "שגיאה בטעינת הקורס");
-    } finally {
-      setLoading(false);
+  // מילוי הטופס בעריכה - שליפה ידנית מתוך מערך הקורסים שב-state, בלי פנייה נוספת לשרת
+  useEffect(() => {
+    if (!isEditMode || coursesList.length === 0) return;
+
+    const course = coursesList.find((c) => c._id === courseId);
+    if (!course) {
+      setError("הקורס לא נמצא");
+      return;
     }
-  };
+
+    setFormData({
+      courseName: course.courseName || "",
+      categoryId: course.categoryId || "",
+      price: course.price || 0,
+      status: course.status || "available",
+      courseImage: course.courseImage || "",
+      courseDescription: course.courseDescription || "",
+      courseContent: course.courseContent || [],
+      youtubeLink: course.youtubeLink || "",
+    });
+  }, [courseId, coursesList, isEditMode]);
 
   // מעדכן את ערכי שדות הקלט הכלליים ב-State של הטופס
   const handleInputChange = (e) => {
@@ -126,7 +126,8 @@ const isEditMode = courseId !== undefined && courseId !== "";
     }
   };
 
-  if (loading && isEditMode) {
+  // בעריכה מחכים שרשימת הקורסים תגיע לפני הצגת הטופס
+  if (isEditMode && coursesList.length === 0) {
     return <div className={styles.container}>טוען נתונים...</div>;
   }
 
@@ -234,7 +235,7 @@ const isEditMode = courseId !== undefined && courseId !== "";
                 {/* בדיקה: הרשימה תרונדר רק אם יש לפחות איבר אחד במערך */}
                 {formData.courseContent.length > 0 && (
                   <ul className={styles.contentList}>
-                 {/* מעבר בלולאה על כל פריט במערך התכנים */} 
+                 {/* מעבר בלולאה על כל פריט במערך התכנים */}
                     {formData.courseContent.map((item, index) => (
                       <li key={index} className={styles.contentItem}>
                         {item}

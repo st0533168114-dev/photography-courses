@@ -10,8 +10,7 @@ export const getCourses = createAsyncThunk("courses/getCourses", async (_, thunk
     return thunkAPI.rejectWithValue("שליפת הקורסים נכשלה");
   }
 });
-
-//כרגע לא בשמוש!אבל כנראה שאצטרך בהמשך.כרגע שולפת את כל הקורסים בעמוד פרטי קורס
+//לא בשמוש כי מסננים בקומפוננטה עצמה מתוך הרשימה שבסטייט ולא מביאים כל פריט בנפרד מהשרת 
 //בניהול כן משתמשת בזה לבדוק אם זה נכון ובסדר
 export const getCourseById = createAsyncThunk(
   "courses/getCourseById",

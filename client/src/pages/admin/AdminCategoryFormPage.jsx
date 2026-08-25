@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  getCategoryById,
+  getCategories,
   addCategory,
   updateCategory,
 } from "../../redux/slices/categoriesSlice";
@@ -13,6 +13,7 @@ export default function AdminCategoryFormPage() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const categoriesList = useSelector((state) => state.categories.categoriesList || []);
   const isEditMode = categoryId !== undefined && categoryId !== "";
 
   const [formData, setFormData] = useState({
@@ -21,28 +22,27 @@ export default function AdminCategoryFormPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // טעינת הקטגוריה בעריכה
+  // בעריכה - מביאים את כל הקטגוריות פעם אחת אם הרשימה ריקה
   useEffect(() => {
-    if (isEditMode) {
-      fetchCategory();
+    if (isEditMode && categoriesList.length === 0) {
+      dispatch(getCategories());
     }
-  }, [categoryId]);
+  }, [dispatch, isEditMode]);
 
-  const fetchCategory = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      // unwrap() משחרר את התוצאה או זורק exception אם נכשל
-      const result = await dispatch(getCategoryById(categoryId)).unwrap();
-      setFormData({
-        categoryName: result.categoryName || "",
-      });
-    } catch (err) {
-      setError(err || "שגיאה בטעינת הקטגוריה");
-    } finally {
-      setLoading(false);
+  // מילוי הטופס בעריכה - שליפה ידנית מתוך מערך הקטגוריות שב-state, בלי פנייה נוספת לשרת
+  useEffect(() => {
+    if (!isEditMode || categoriesList.length === 0) return;
+
+    const category = categoriesList.find((c) => c._id === categoryId);
+    if (!category) {
+      setError("הקטגוריה לא נמצאה");
+      return;
     }
-  };
+
+    setFormData({
+      categoryName: category.categoryName || "",
+    });
+  }, [categoryId, categoriesList, isEditMode]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
