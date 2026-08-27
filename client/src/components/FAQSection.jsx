@@ -13,7 +13,8 @@ export default function FAQSection() {
       try {
         setIsLoading(true);
         const data = await getFaqs();
-        setFaqsList(Array.isArray(data) ? data : []);//בדיקה אם הנתונים שהתקבלו הם מערך, אם לא, מחזירים מערך ריק
+        // הגנה על תגובה לא צפויה מהשרת - map על ערך שאינו מערך היה מפיל את הקומפוננטה
+        setFaqsList(Array.isArray(data) ? data : []);
       } catch (err) {
         setError(err.message || "נכשלה טעינת השאלות והתשובות");
       } finally {
@@ -22,7 +23,7 @@ export default function FAQSection() {
     };
 
     fetchFaqsData();
-  }, []);//רק בהתחלה נטען-פעם אחת
+  }, []);
 
   return (
     <div className={styles.section}>

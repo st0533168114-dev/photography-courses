@@ -31,6 +31,7 @@ export default function AdminUsersPage() {
     loadUsers();
   }, []);
 
+  // הסטטוס מתעדכן בטבלה לפני תשובת השרת כדי שהמתג יגיב מיד, ומוחזר לערך הקודם אם העדכון נכשל
   const handleToggleStatus = async (user) => {
     const previousStatus = user.status;
     const newStatus = previousStatus === "active" ? "inactive" : "active";

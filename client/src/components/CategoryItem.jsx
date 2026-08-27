@@ -4,7 +4,7 @@ import styles from "../CSS/components/CategoryItem.module.css";
 export default function CategoryItem(props) {
   const { category } = props;
   const navigate = useNavigate();
-//אם לא נשלחה קטגוריה כל הקורסים יוצגו
+  // category ריק משמש בכוונה ככרטיס "לכל הקורסים", כדי לא ליצור קומפוננטה נפרדת עבורו
   const categoryName = category?.categoryName || "לכל הקורסים";
   const destination = category?._id ? `/courses/${category._id}` : "/courses";
 
@@ -12,7 +12,6 @@ export default function CategoryItem(props) {
 
   return (
     <div
-    //עיצוב מסוים לקטגוריה רגילה ועיצוב אחר לכל הקורסים
       className={`${styles.category} ${isAllCourses ? styles.allCoursesCard : ""}`}
       onClick={() => navigate(destination)}
     >

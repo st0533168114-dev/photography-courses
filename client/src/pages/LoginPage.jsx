@@ -13,10 +13,9 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // שליפת הנתונים מתוך ה-Redux Store הגלובלי
   const { isLoading, isLoggedIn } = useSelector((state) => state.auth);
 
-  // אפקט שמקשיב למצב החיבור: אם המשתמש מחובר (גם לאחר ריענון), הוא מועבר אוטומטית לעמוד הבית
+  // הניווט תלוי ב-isLoggedIn ולא בתוצאת ההתחברות, כדי שגם משתמש שכבר מחובר לא יישאר בעמוד
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/");
@@ -24,17 +23,16 @@ export default function LoginPage() {
   }, [isLoggedIn, navigate]);
 
   const handleLogin = async (e) => {
-    e.preventDefault(); //מניעת ריענון בלחיצה
+    e.preventDefault();
 
     if (!username || !password) {
       alert("נא למלא את כל השדות");
       return;
     }
 
-    // שליחת פעולת ההתחברות ל-Redux
     const resultAction = await dispatch(loginUser({ userName: username, password: password }));
 
-    // אם הפעולה נכשלה בשרת - מקפיצים התראת alert
+    // ה-thunk לא זורק שגיאה, ולכן בודקים את סוג ה-action שהוחזר
     if (loginUser.rejected.match(resultAction)) {
       alert("פרטי התחברות שגויים או שאינך רשום במערכת");
     }

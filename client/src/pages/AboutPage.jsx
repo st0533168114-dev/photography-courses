@@ -2,8 +2,6 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import styles from "../CSS/pages/AboutPage.module.css";
 
-//עד כאן
-
 export default function AboutPage() {
   return (
     <>

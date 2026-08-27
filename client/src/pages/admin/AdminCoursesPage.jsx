@@ -8,7 +8,6 @@ import { getCourses, deleteCourse, clearCoursesError } from "../../redux/slices/
 import { getCategories } from "../../redux/slices/categoriesSlice";
 import styles from "../../CSS/pages/admin/AdminCoursesPage.module.css";
 
-// עמוד רשימת קורסים עם אפשרויות הוספה/עריכה/מחיקה וייצוג סוג קורס (חינמי/בתשלום)
 export default function AdminCoursesPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,13 +16,12 @@ export default function AdminCoursesPage() {
   const loading = useSelector((state) => state.courses.isLoading);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
-  // שגיאת שליפה מקומית - רק כישלון בטעינה מצדיק להחליף את הטבלה בהודעת שגיאה
+  // שגיאת שליפה מקומית ולא מהסטור - רק כישלון בטעינה מצדיק להחליף את הטבלה בהודעת שגיאה
   const [loadError, setLoadError] = useState(null);
 
-  // שליפת קורסים אם עדיין לא נשלפו
   useEffect(() => {
     const loadCourses = async () => {
-      // ניקוי שגיאה שנשארה בסטור מפעולה קודמת, כדי שהעמוד יתחיל נקי
+      // שגיאה ממוטציה שנכשלה נשארת בסטור הגלובלי ולא מתנקה לבד
       dispatch(clearCoursesError());
       try {
         if (courses.length === 0) {
@@ -52,7 +50,7 @@ export default function AdminCoursesPage() {
     const course = courses.find((c) => c._id === courseId);
     if (!course) return;
 
-    // זיהוי סוג הקורס לפי מחיר: 0 = חינמי, >0 = בתשלום
+    // אין שדה סוג במסד, ולכן הסוג נגזר מהמחיר בלבד
     const courseType = course.price === 0 ? "free" : "paid";
     navigate(`/admin/courses/${courseId}/edit/${courseType}`);
   };
@@ -66,17 +64,16 @@ export default function AdminCoursesPage() {
     if (!selectedCourseId) return;
 
     try {
-      // unwrap() זורק exception אם המחיקה נכשלה, כדי שנתפוס בcatch
+      // unwrap כדי שכישלון של ה-thunk יגיע ל-catch
       await dispatch(deleteCourse(selectedCourseId)).unwrap();
       setDialogOpen(false);
       setSelectedCourseId(null);
     } catch (err) {
-      // אם מחיקה נכשלה - Dialog נשאר פתוח, משתמש רואה שגיאה
+      // הדיאלוג נשאר פתוח בכוונה, כדי שהמשתמש יוכל לנסות שוב בלי לפתוח אותו מחדש
       alert("שגיאה במחיקת קורס: " + (err || "נסה שוב"));
     }
   };
 
-  // עמודות לטבלה
   const columns = [
     { key: "courseName", label: "שם הקורס" },
     { key: "categoryId", label: "קטגוריה", render: (value) => getCategoryName(value) },

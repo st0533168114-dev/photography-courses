@@ -11,14 +11,14 @@ export default function ShoppingCartPage() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.shoppingCart.cart);
   const isLoading = useSelector((state) => state.shoppingCart.isLoading);
-//??/בכל מקרה כדי לקבל את המידע הכי עדכני?
   useEffect(() => {
     dispatch(getCart());
   }, [dispatch]);
 
-  const courseList = cart?.courseList || cart?.coursList || [];
+  const courseList = cart?.courseList || [];
   const subtotal = cart?.subtotal || 0;
 
+  // מסך הטעינה מוגבל לטעינה ראשונית - אחרת כל הוספה או מחיקה הייתה מעלימה את העגלה
   if (isLoading && courseList.length === 0) {
     return (
       <>

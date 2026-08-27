@@ -9,7 +9,6 @@ export default function CategoriesPage() {
       <Header />
       <main className={styles.main}>
         <h1 className={styles.heading}>הקורסים שלנו</h1>
-        {/* בדף קטגוריות מציגים גם את כרטיס "לכל הקורסים" וגם את ריבועי הקטגוריות */}
         <CategoryGrid showAllCourses={true} />
       </main>
       <Footer />

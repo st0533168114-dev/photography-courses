@@ -38,15 +38,14 @@ import CourseDetailsPage from "./pages/CourseDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
-  //שליפה המשתנים מהסלייס אאוז
   const { isLoading, isLoggedIn, user } = useSelector((state) => state.auth);
 
-  // הפעלת בדיקת החיבור האוטומטית מיד כשהאפליקציה עולה/מתרעננת
+  // הטוקן נבדק מול השרת בכל טעינה, כדי שהמשתמש יישאר מחובר גם אחרי ריענון
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  // בזמן שהשרת בודק אם יש טוקן תקף ב-localStorage, נציג מסך טעינה
+  // חוסם את רינדור הראוטים עד לסיום הבדיקה, אחרת משתמש מחובר היה נשלח רגע למסך התחברות
   if (isLoading) {
     return (
       <div
@@ -57,7 +56,6 @@ function App() {
       </div>
     );
   }
-  //npm run dev זה פקודת ההרצה
   return (
     <>
       <BrowserRouter>
@@ -83,7 +81,7 @@ function App() {
 
           <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>}>
                 <Route path='courses/list' element={<AdminCoursesPage />}></Route>
-                {/* courseType כפרמטר (paid/free) - הטופס קורא אותו כדי להבדיל בין קורס בתשלום לחינמי */}
+                {/* courseType נשמר בנתיב ולא ב-state, כדי שהטופס יידע אם הקורס בתשלום או חינמי גם בכניסה ישירה לכתובת */}
                 <Route path='courses/new/:courseType' element={<AdminCourseFormPage />}></Route>
                 <Route path='courses/:courseId/edit/:courseType' element={<AdminCourseFormPage />}></Route>
 
@@ -106,9 +104,6 @@ function App() {
                 <Route path='faq/new' element={<AdminFaqFormPage />}></Route>
                 <Route path='faq/:faqId/edit' element={<AdminFaqFormPage />}></Route>
           </Route>
-
-          {/* בתוך הבראוסראוטר רק מה שקשור לניתובים בתוך האתר כמו 
-      קטגוריות מוצרים וכו-זה עם האי די אבל לא לפי משתמשים כרגע?  */}
         </Routes>
       </BrowserRouter>
     </>

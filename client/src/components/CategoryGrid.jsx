@@ -5,7 +5,7 @@ import { getCategories, clearCategoriesError } from "../redux/slices/categoriesS
 import styles from "../CSS/components/CategoryGrid.module.css";
 
 export default function CategoryGrid(props) {
-  // showAllCourses: האם להציג כרטיס "לכל הקורסים" מעל ריבועי הקטגוריות (ברירת מחדל: כן)
+  // ברירת המחדל true כי רוב העמודים מציגים את הכרטיס - דף הבית הוא היוצא מן הכלל
   const { showAllCourses = true } = props;
   const dispatch = useDispatch();
   const categoriesList = useSelector((state) => state.categories.categoriesList);
@@ -13,7 +13,7 @@ export default function CategoryGrid(props) {
   const error = useSelector((state) => state.categories.error);
 
   useEffect(() => {
-    // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+    // שגיאה ממוטציה שנכשלה נשארת בסטור הגלובלי ולא מתנקה לבד
     dispatch(clearCategoriesError());
     if (categoriesList.length === 0) {
       dispatch(getCategories());
@@ -30,7 +30,7 @@ export default function CategoryGrid(props) {
 
   return (
     <>
-      {/* מוצג רק כש-showAllCourses=true – כרטיס רחב שמנווט לכל הקורסים (/courses) */}
+      {/* category={null} הוא הסימן ל-CategoryItem להציג את כרטיס "לכל הקורסים" */}
       {showAllCourses && (
         <div className={styles.featuredRow}>
           <CategoryItem category={null} />

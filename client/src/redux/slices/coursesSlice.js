@@ -10,8 +10,7 @@ export const getCourses = createAsyncThunk("courses/getCourses", async (_, thunk
     return thunkAPI.rejectWithValue("שליפת הקורסים נכשלה");
   }
 });
-//לא בשמוש כי מסננים בקומפוננטה עצמה מתוך הרשימה שבסטייט ולא מביאים כל פריט בנפרד מהשרת 
-//בניהול כן משתמשת בזה לבדוק אם זה נכון ובסדר
+// כמעט ולא בשימוש - הקומפוננטות מסננות קורס בודד מתוך הרשימה שבסטייט ולא מביאות אותו בנפרד מהשרת
 export const getCourseById = createAsyncThunk(
   "courses/getCourseById",
   async (courseId, thunkAPI) => {

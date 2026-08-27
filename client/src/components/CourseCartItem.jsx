@@ -1,7 +1,6 @@
 import DeleteFromCartButton from "./DeleteFromCartButton";
 import styles from "../CSS/components/CourseCartItem.module.css";
 export default function CourseCartItem(props) {
-  //לא בדקתי אם נכון ועובדדדד
 
   const { course } = props;
   return (

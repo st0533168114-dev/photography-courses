@@ -8,14 +8,15 @@ import { getCourses, clearCoursesError } from "../redux/slices/coursesSlice";
 import styles from "../CSS/pages/CoursesPage.module.css";
 
 export default function CoursesPage() {
-  const { categoryId } = useParams(); //אם יש
+  // categoryId קיים רק בנתיב /courses/:categoryId - בלעדיו מוצגים כל הקורסים
+  const { categoryId } = useParams();
   const dispatch = useDispatch();
   const coursesList = useSelector((state) => state.courses.coursesList || []);
   const isLoading = useSelector((state) => state.courses.isLoading);
   const error = useSelector((state) => state.courses.error);
 
   useEffect(() => {
-    // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+    // שגיאה ממוטציה שנכשלה נשארת בסטור הגלובלי ולא מתנקה לבד
     dispatch(clearCoursesError());
     if (coursesList.length === 0) {
       dispatch(getCourses());
@@ -44,53 +45,3 @@ export default function CoursesPage() {
     </>
   );
 }
-  //  //לשנות כי הוספתי סלייס קטגוריות
-  // ????????????
-  //  import React, { useEffect } from "react";
-  // import { useDispatch, useSelector } from "react-redux";
-  // import Header from "../layout/Header";
-  // import Footer from "../layout/Footer";
-  // import CategoryItem from "../components/CategoryItem";
-  // import { getCategories } from "../redux/slices/categoriesSlice";
-
-  // export default function CategoriesPage() {
-  //   const dispatch = useDispatch();
-
-  //   // שליפת הנתונים מתוך ה-Redux Store
-  //   const categoriesList = useSelector((state) => state.categories.categoriesList);
-  //   const isLoading = useSelector((state) => state.categories.isLoading);
-  //   const error = useSelector((state) => state.categories.error);
-
-  //   // טעינת הקטגוריות רק אם הרשימה בסטייט הגלובלי עדיין ריקה
-  //   useEffect(() => {
-  //     if (categoriesList.length === 0) {
-  //       dispatch(getCategories());
-  //     }
-  //   }, [categoriesList.length, dispatch]);
-
-  //   return (
-  //     <>
-  //       <Header />
-
-  //       <p>קטגוריות</p>
-
-  //       {/* תצוגת מצבי טעינה ושגיאה */}
-  //       {isLoading && <p>טוען קטגוריות ממסד הנתונים...</p>}
-  //       {error && <p>שגיאה: {error}</p>}
-
-  //       {/* רינדור רשימת הקטגוריות במידה והכל נטען בהצלחה */}
-  //       {!isLoading && !error && (
-  //         <div className="categories-grid">
-  //           {categoriesList.map((singleCategory) => (
-  //             <CategoryItem
-  //               key={singleCategory._id}
-  //               category={singleCategory}
-  //             />
-  //           ))}
-  //         </div>
-  //       )}
-
-  //       <Footer />
-  //     </>
-  //   );
-  // }

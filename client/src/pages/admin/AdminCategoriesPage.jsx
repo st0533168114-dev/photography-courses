@@ -8,7 +8,6 @@ import { getCategories, deleteCategory, clearCategoriesError } from "../../redux
 import { getCourses } from "../../redux/slices/coursesSlice";
 import styles from "../../CSS/pages/admin/AdminCategoriesPage.module.css";
 
-// עמוד רשימת קטגוריות עם הוספה/עריכה/מחיקה דרך Redux
 export default function AdminCategoriesPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,13 +17,12 @@ export default function AdminCategoriesPage() {
   const courses = useSelector((state) => state.courses.coursesList || []);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-  // שגיאת שליפה מקומית - רק כישלון בטעינה מצדיק להחליף את הטבלה בהודעת שגיאה
+  // שגיאת שליפה מקומית ולא מהסטור - רק כישלון בטעינה מצדיק להחליף את הטבלה בהודעת שגיאה
   const [loadError, setLoadError] = useState(null);
 
-  // טעינה של קטגוריות רק אם עדיין לא נטענו
   useEffect(() => {
     const loadCategories = async () => {
-      // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+      // שגיאה ממוטציה שנכשלה נשארת בסטור הגלובלי ולא מתנקה לבד
       dispatch(clearCategoriesError());
       try {
         if (categories.length === 0) {
@@ -49,7 +47,7 @@ export default function AdminCategoriesPage() {
   };
 
   const handleDeleteClick = (categoryId) => {
-    // חסימה מוקדמת - אין למחוק קטגוריה שמשויכים אליה קורסים
+    // חסימה מוקדמת בלקוח כדי לחסוך פנייה שהשרת ידחה בכל מקרה
     const linkedCourses = courses.filter((course) => course.categoryId === categoryId);
     if (linkedCourses.length > 0) {
       alert(`לא ניתן למחוק קטגוריה זו כי משויכים אליה ${linkedCourses.length} קורסים`);
@@ -63,7 +61,7 @@ export default function AdminCategoriesPage() {
   const handleConfirmDelete = async () => {
     if (!selectedCategoryId) return;
     try {
-      // unwrap() גורם לthunk להטיל exception אם נכשל, כדי שנוכל לתפוס שגיאות בcatch
+      // unwrap כדי שכישלון של ה-thunk יגיע ל-catch
       await dispatch(deleteCategory(selectedCategoryId)).unwrap();
       setDialogOpen(false);
       setSelectedCategoryId(null);
@@ -72,7 +70,6 @@ export default function AdminCategoriesPage() {
     }
   };
 
-  // עמודות לטבלה
   const columns = [{ key: "categoryName", label: "שם קטגוריה" }];
 
   return (

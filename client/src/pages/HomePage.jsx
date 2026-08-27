@@ -14,7 +14,6 @@ export default function HomePage() {
         <WellcomeSection />
 
         <section className={styles.categoriesSection}>
-          {/* בדף הבית לא מציגים את כרטיס "לכל הקורסים", רק את ריבועי הקטגוריות */}
           <CategoryGrid showAllCourses={false} />
         </section>
 

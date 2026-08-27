@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "../CSS/components/WellcomeSection.module.css";
 
-// אוסף התמונות המופיע בגלריה.
-//   משתמשים ב-import.meta.glob כדי לייבא את כל התמונות מתיקיית assets.
+// import.meta.glob מייבא את כל התמונות מהתיקייה, כך שהוספת תמונה לגלריה לא דורשת שינוי בקוד
 const images = Object.values(
   import.meta.glob("../assets/*.{jpg,jpeg,png,webp}", {
     eager: true,
@@ -10,29 +9,21 @@ const images = Object.values(
   })
 );
 
-// קומפוננטת מקטע הפתיחה של האתר
 export default function WellcomeSection() {
-  // מאחסן את התמונה הנוכחית בגלריה.
   const [currentImage, setCurrentImage] = useState(0);
 
-  // משנה תמונה באופן אוטומטי בכל כמה שניות.
   useEffect(() => {
-    // מגדיר טיימר שמריץ פאנקשן כל שלוש שניות
     const interval = setInterval(() => {
-      // מקדם לאינדקס התמונה הבאה, וחוזר להתחלה בסוף המערך
       setCurrentImage((prev) => (prev + 1) % images.length);
     }, 3000);
 
-    // מחזיר פונקציה שמנקה את הטיימר כדי למנוע זליגת זיכרון
     return () => clearInterval(interval);
   }, []);
 
-  // מציג את המקטע עם התמונה הנוכחית.
   return (
     <section
       className={styles.section}
       style={{
-        // קובע את תמונת הרקע לפי האינדקס הנוכחי
         backgroundImage: `url(${images[currentImage]})`,
       }}
     >

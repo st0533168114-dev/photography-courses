@@ -10,17 +10,7 @@ export const getCategories = createAsyncThunk("categories/getCategories", async 
   }
 });
 
-// export const getCategoryById = createAsyncThunk(
-//   "categories/getCategoryById",
-//   async (categoryId, thunkAPI) => {
-//     try {
-//       const response = await categoryApi.getCategoryById(categoryId);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue("שליפת הקטגוריה נכשלה");
-//     }
-//   }
-// );
+// אין כאן getCategoryById בכוונה - הקומפוננטות מסננות מתוך הרשימה שבסטייט ולא מביאות כל פריט בנפרד מהשרת
 
 export const addCategory = createAsyncThunk(
   "categories/addCategory",
@@ -89,18 +79,6 @@ export const categoriesSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-//לא בשמוש כי מסננים בקומפוננטה עצמה מתוך הרשימה שבסטייט ולא מביאים כל פריט בנפרד מהשרת 
-      // .addCase(getCategoryById.pending, (state) => {
-      //   state.isLoading = true;
-      //   state.error = null;
-      // })
-      // .addCase(getCategoryById.fulfilled, (state) => {
-      //   state.isLoading = false;
-      // })
-      // .addCase(getCategoryById.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = action.payload;
-      // })
 
       .addCase(addCategory.pending, (state) => {
         state.isLoading = true;

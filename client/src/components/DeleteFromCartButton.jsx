@@ -20,8 +20,6 @@ export default function DeleteFromCartButton(props) {
   };
   return (
     <>
-      {/* אני רוצה ציור פח */}
-      {/* כפתור מחיקה */}
       <button className={styles.button} onClick={handleRemoveFromCart} disabled={isDeleting}>
         {" "}
         מחיקה

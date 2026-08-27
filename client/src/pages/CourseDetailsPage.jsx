@@ -16,7 +16,7 @@ export default function CourseDetailsPage() {
   const course=coursesList.find((c)=>c._id===courseId);
 
   useEffect(() => {
-    // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+    // שגיאה ממוטציה שנכשלה נשארת בסטור הגלובלי ולא מתנקה לבד
     dispatch(clearCoursesError());
     if (coursesList.length === 0) {
       dispatch(getCourses());
@@ -40,9 +40,7 @@ export default function CourseDetailsPage() {
           {course.courseDescription}
         </div>
         <div className={styles.contentSection}>
-          {/* כותרת תוכן הקורס */}
           <h3 className={styles.contentTitle}>תוכן הקורס:</h3>
-          {/* מציג את תוכן הקורס כרשימה */}
           <ul className={styles.contentList}>
             {Array.isArray(course.courseContent) ? (
               course.courseContent.map((item, index) => (

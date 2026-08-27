@@ -1,5 +1,3 @@
-//   אם זה עובד-לבדוקקקקק!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//import axios from "axios";
 import api from "./axiosConfig";
 
 export const loginUser = async (credentials) => {

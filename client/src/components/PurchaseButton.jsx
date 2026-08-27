@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styles from "../CSS/components/PurchaseButton.module.css";
 export default function PurchaseButton() {
   const navigate = useNavigate();
- //אמור להיות כאן מעבר לעמוד של קליטת פרטי הזמנה
+  //TODO
+//לעבור לעמוד קליטת פרטי הזמנה ליצירת הזמנה אמיתית
+
   return (
     <>
       <button className={styles.button} onClick={() => navigate("/createOrder")}>בצע רכישה</button>

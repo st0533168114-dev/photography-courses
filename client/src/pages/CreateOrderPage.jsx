@@ -10,9 +10,8 @@ import Footer from "../layout/Footer";
 export default function CreateOrderPage () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-   //כרגע פרטי הלקוח לא נלקחים מכאן אלא מהפרטי משתמש השמורים
-   //הייתי רוצה שיוכל כאן לערוך את הפרטים אבל זה דורש שינוי במסד-אולי בהמשך
- 
+   // TODO: כרגע פרטי המזמין נלקחים מפרטי המשתמש השמורים. יש לקלוט אותם כאן בטופס, כולל פרטי אשראי 
+
  const user=useSelector((state)=>state.auth.user);
  const cart=useSelector((state)=>state.shoppingCart.cart);
  const isCartLoading =useSelector((state)=>state.shoppingCart.isLoading);
@@ -20,7 +19,6 @@ export default function CreateOrderPage () {
  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-//קלוד אומר לשלוף בריענון את הסל מהמסד עם דיספאצ-כי זה עמוד הזמנה.זה נכון?
 
 useEffect(()=>{
     dispatch(getCart());
@@ -30,17 +28,15 @@ const courseList = cart?.courseList||[];
 const subtotal=cart?.subtotal||0;
 
 const handleCreateOrder = async (e) => {
-    e.preventDefault(); // מניעת רענון הדף
+    e.preventDefault(); 
     setError(null);
     setIsSubmitting(true);
 
     try {
-        const response = await addOrder({}); 
-        
-        
-        // כרגע אין פרטים לשלוח מעבר לאלו שבסל
+        // השרת בונה את ההזמנה מעגלת הקניות של המשתמש, ולכן גוף הבקשה ריק בכוונה
+        const response = await addOrder({});
 
-        // עדכון הקורסים של המשתמש ב-Redux רק אם השרת החזיר משתמש מעודכן
+        // עדכון הקורסים בסטייט הוא מה שפותח גישה מיידית ל"הקורסים שלי" בלי בקשה נוספת לשרת
         if (response?.user?.courseIds) {
             dispatch(updateUserCourses(response.user.courseIds));
         }

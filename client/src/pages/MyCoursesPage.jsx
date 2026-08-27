@@ -14,16 +14,15 @@ export default function MyCoursesPage() {
   const error = useSelector((state) => state.courses.error);
 
   useEffect(() => {
-    // ניקוי שגיאה שנשארה בסטור ממוטציה שנכשלה, כדי שהעמוד יתחיל נקי
+    // שגיאה ממוטציה שנכשלה נשארת בסטור הגלובלי ולא מתנקה לבד
     dispatch(clearCoursesError());
     if (coursesList.length === 0) {
       dispatch(getCourses());
     }
   }, [dispatch]);
 
-  //שליפת מערך מזהי הקורסים והמרתו למחרוזת-לבטיחות
+  // המרה למחרוזת בשני הצדדים כי מזהי Mongo מגיעים לעיתים כאובייקט ולעיתים כמחרוזת
   const purchasedCourseIds = (user?.courseIds || []).map((id) => String(id));
-//סינון הקורסים שהמשתמש רכש-לפי הקודים
   const userCourses = coursesList.filter((course) => purchasedCourseIds.includes(String(course._id)));
 
   return (

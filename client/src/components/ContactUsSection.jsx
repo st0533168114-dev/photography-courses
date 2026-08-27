@@ -1,13 +1,14 @@
 import { useState } from "react";
 import styles from "../CSS/components/ContactUsSection.module.css";
 export default function ContactUsSection() {
-      //כרגע לא קורה כלום בשליחת הודעה רק השדות נמחקים
+
+//TODO
+//לטפל בשליחת הודעה לשרת,כרגע זה רק הצגה של הודעה שההודעה נשלחה בהצלחה
   const [showModal, setShowModal]=useState(false);
   function handleSubmit(e){
-    e.preventDefault();//מניעת רענון הדף
-    e.target.reset();// מאפס את השדות
+    e.preventDefault();
+    e.target.reset();
     setShowModal(true);
-    //הצגה ל3 שניות בלבד
     setTimeout(()=>{
       setShowModal(false);
     },3000);

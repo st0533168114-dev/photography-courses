@@ -7,28 +7,26 @@ export default function AddToCartButton(props) {
   const { courseId } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isAdding, setIsAdding] = useState(false); //כדי למנוע לחיצה כפולה וגם כדי להשבית רק את הכפתור הזה ולא את כל כפתורי ההוספה באותו דף
+  // סטייט מקומי ולא מהסטור, כדי שרק הכפתור שנלחץ יושבת ולא כל כפתורי ההוספה בדף
+  const [isAdding, setIsAdding] = useState(false);
 
   const handleAddToCart = async (e) => {
-    e.stopPropagation(); //  מגביל את הלחיצה להוספה בסל בלבד
+    e.stopPropagation(); // הכפתור יושב בתוך כרטיס קורס שלחיצה עליו מנווטת - מונע ניווט לא רצוי
     if (!courseId) return;
 
     try {
       setIsAdding(true);
-      await dispatch(addToCart(courseId)).unwrap(); //כדי שנקבל מהרידקס שגיאה אם היתה כזו
+      await dispatch(addToCart(courseId)).unwrap(); // unwrap כדי שכישלון של ה-thunk יגיע ל-catch
     } catch (err) {
       console.error("ההוספה נכשלה:", err);
 
-      // בדיקה האם השגיאה היא 401 (Unauthorized - לא מחובר)
       if (err && err.status === 401) {
         alert("כדי להוסיף קורס לסל עליך להתחבר לחשבונך");
-        navigate("/login"); // העברה לעמוד התחברות
+        navigate("/login");
       }
-      // בדיקה אופציונלית למקרה שהקורס כבר קיים בסל (שגיאה 400)
       else if (err && err.status === 400) {
         alert("קורס זה כבר קיים בסל הקניות שלך");
       }
-      // לכל שאר השגיאות הכלליות (כמו שרת כבוי או בעיית רשת)
       else {
         alert("אופס, תקלה זמנית בהוספת הקורס לסל. נסה שנית מאוחר יותר.");
       }
@@ -41,7 +39,7 @@ export default function AddToCartButton(props) {
     <button
       className={styles.button}
       onClick={handleAddToCart}
-      disabled={isAdding} //אם הוא באמצע להוסיף הכפתור מושבת
+      disabled={isAdding}
     >
       {isAdding ? "מבצע הוספה..." : "הוסף לסל"}
     </button>

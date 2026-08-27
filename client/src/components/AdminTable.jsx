@@ -1,11 +1,10 @@
 import { EditIcon, DeleteIcon } from "./admin/AdminIcons";
 import styles from "../CSS/components/AdminTable.module.css";
 
-// קומפוננטה גנרית לתצוגת טבלת נתונים עם עמודות דינמיות ופעולות עריכה/מחיקה
 export default function AdminTable(props) {
   const { columns, rows, loading, error, emptyMessage, onEdit, onDelete } = props;
 
-  // עמודת הפעולות מופיעה רק אם העמוד ביקש לפחות אחת מהן
+  // עמודת הפעולות נבנית לפי מה שהעמוד סיפק, כדי שטבלה לקריאה בלבד לא תציג עמודה ריקה
   const hasActions = Boolean(onEdit || onDelete);
 
   if (loading) {
@@ -37,7 +36,7 @@ export default function AdminTable(props) {
           {rows.map((row) => (
             <tr key={row._id}>
               {columns.map((col) => (
-                // render מאפשר לעמודה לעצב את הערך (למשל המרת מזהה לשם קטגוריה)
+                // render אופציונלי כדי שהעמוד יוכל להמיר ערך גולמי לתצוגה, למשל מזהה קטגוריה לשמה
                 <td key={col.key} className={col.align === "center" ? styles.centered : ""}>
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
                 </td>

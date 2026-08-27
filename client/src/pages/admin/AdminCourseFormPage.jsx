@@ -30,21 +30,21 @@ const isEditMode = courseId !== undefined && courseId !== "";
   const [error, setError] = useState(null);
   const [contentInput, setContentInput] = useState("");
 
-  // טעינת קטגוריות
+  // הקטגוריות נדרשות לרשימת הבחירה בטופס
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(getCategories());
     }
   }, [dispatch]);
 
-  // בעריכה - מביאים את כל הקורסים פעם אחת אם הרשימה ריקה
+  // נדרש לכניסה ישירה לכתובת העריכה, שבה הסטור עדיין ריק
   useEffect(() => {
     if (isEditMode && coursesList.length === 0) {
       dispatch(getCourses());
     }
   }, [dispatch, isEditMode]);
 
-  // מילוי הטופס בעריכה - שליפה ידנית מתוך מערך הקורסים שב-state, בלי פנייה נוספת לשרת
+  // מילוי הטופס נעשה מתוך הרשימה שבסטור ולא בפנייה נפרדת לשרת עבור קורס בודד
   useEffect(() => {
     if (!isEditMode || coursesList.length === 0) return;
 
@@ -66,16 +66,14 @@ const isEditMode = courseId !== undefined && courseId !== "";
     });
   }, [courseId, coursesList, isEditMode]);
 
-  // מעדכן את ערכי שדות הקלט הכלליים ב-State של הטופס
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
-      ...prev,//פורס את הערכים הקודמים של הטופס ורק משנה את השדה שהשתנה
+      ...prev,
       [name]: value,
     }));
   };
 
-  // מוסיף שיעור/נושא חדש לרשימת התוכן של הקורס
   const handleAddContent = () => {
     if (contentInput.trim()) {
       setFormData((prev) => ({
@@ -86,7 +84,6 @@ const isEditMode = courseId !== undefined && courseId !== "";
     }
   };
 
-  // מוחק שיעור/נושא מרשימת התוכן לפי האינדקס שלו
   const handleRemoveContent = (index) => {
     setFormData((prev) => ({
       ...prev,
@@ -94,7 +91,7 @@ const isEditMode = courseId !== undefined && courseId !== "";
     }));
   };
 
-  // מטפל בשליחת הטופס, עדכון/הוספת קורס בשרת וניווט חזרה
+  // השדות הלא רלוונטיים לסוג הקורס נשלחים ריקים, כדי שמעבר מקורס בתשלום לחינמי ינקה אותם במסד
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -126,7 +123,7 @@ const isEditMode = courseId !== undefined && courseId !== "";
     }
   };
 
-  // בעריכה מחכים שרשימת הקורסים תגיע לפני הצגת הטופס
+  // הצגת הטופס לפני שהרשימה הגיעה הייתה מרנדרת שדות ריקים ואז קופצת לערכים
   if (isEditMode && coursesList.length === 0) {
     return <div className={styles.container}>טוען נתונים...</div>;
   }
@@ -226,20 +223,17 @@ const isEditMode = courseId !== undefined && courseId !== "";
                     value={contentInput}
                     onChange={(e) => setContentInput(e.target.value)}
                     placeholder="הוסף שיעור/נושא"
-                    // מאפשר הוספה בלחיצה על Enter
+                    // preventDefault נדרש כי Enter בתוך טופס היה שולח את הטופס במקום להוסיף פריט
                     onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAddContent())}                  />
                   <button type="button" onClick={handleAddContent} className={styles.addContentBtn}>
                     הוסף
                   </button>
                 </div>
-                {/* בדיקה: הרשימה תרונדר רק אם יש לפחות איבר אחד במערך */}
                 {formData.courseContent.length > 0 && (
                   <ul className={styles.contentList}>
-                 {/* מעבר בלולאה על כל פריט במערך התכנים */}
                     {formData.courseContent.map((item, index) => (
                       <li key={index} className={styles.contentItem}>
                         {item}
-                        {/* כפתור למחיקת הפריט הספציפי מהרשימה לפי האינדקס שלו */}
                         <button
                           type="button"
                           onClick={() => handleRemoveContent(index)}

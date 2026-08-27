@@ -8,7 +8,6 @@ import {
 } from "../../redux/slices/categoriesSlice";
 import styles from "../../CSS/pages/admin/AdminCategoryFormPage.module.css";
 
-// טופס יצירה/עריכה קטגוריה עם שדה בודד: categoryName
 export default function AdminCategoryFormPage() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ export default function AdminCategoryFormPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // בעריכה - מביאים את כל הקטגוריות פעם אחת אם הרשימה ריקה
+  // נדרש לכניסה ישירה לכתובת העריכה, שבה הסטור עדיין ריק
   useEffect(() => {
     if (isEditMode && categoriesList.length === 0) {
       dispatch(getCategories());

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-//הגנה על נתיבי הניהול
+// הגנה בצד הלקוח בלבד - היא מסתירה את הממשק, והאכיפה האמיתית נעשית ב-isAdminMiddleware בשרת
 export default function AdminRoute(props) {
   const { children } = props; 
   const { isLoading, isLoggedIn, user } = useSelector((state) => state.auth);
