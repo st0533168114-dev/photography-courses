@@ -16,6 +16,7 @@ import AdminCourseFormPage from "./pages/admin/AdminCourseFormPage";
 import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
 import AdminCategoryFormPage from "./pages/admin/AdminCategoryFormPage";
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import AdminUserDetailsPage from "./pages/admin/AdminUserDetailsPage";
 import AdminUserFormPage from "./pages/admin/AdminUserFormPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import AdminOrderFormPage from "./pages/admin/AdminOrderFormPage";
@@ -91,6 +92,7 @@ function App() {
                 <Route path='categories/:categoryId/edit' element={<AdminCategoryFormPage />}></Route>
 
                 <Route path='users/list' element={<AdminUsersPage />}></Route>
+                <Route path='users/:userId' element={<AdminUserDetailsPage />}></Route>
                 <Route path='users/:userId/edit' element={<AdminUserFormPage />}></Route>
 
                 <Route path='orders/list' element={<AdminOrdersPage />}></Route>

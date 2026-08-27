@@ -1,8 +1,12 @@
+import { EditIcon, DeleteIcon } from "./admin/AdminIcons";
 import styles from "../CSS/components/AdminTable.module.css";
 
-// קומפוננטה גנרית לתצוגת טבלת נתונים עם עמודות דינמיות, פעולות עריכה/מחיקה וכפתור הוסף
+// קומפוננטה גנרית לתצוגת טבלת נתונים עם עמודות דינמיות ופעולות עריכה/מחיקה
 export default function AdminTable(props) {
-  const { columns, rows, loading, error, emptyMessage, onEdit, onDelete, onAdd, addButtonText } = props;
+  const { columns, rows, loading, error, emptyMessage, onEdit, onDelete } = props;
+
+  // עמודת הפעולות מופיעה רק אם העמוד ביקש לפחות אחת מהן
+  const hasActions = Boolean(onEdit || onDelete);
 
   if (loading) {
     return <div className={styles.loading}>טוען נתונים...</div>;
@@ -18,19 +22,15 @@ export default function AdminTable(props) {
 
   return (
     <div className={styles.tableContainer}>
-      {onAdd && (
-        <button className={styles.addButton} onClick={() => onAdd()}>
-          {addButtonText || "הוסף חדש"}
-        </button>
-      )}
-
       <table className={styles.table}>
         <thead>
           <tr>
             {columns.map((col) => (
-              <th key={col.key}>{col.label}</th>
+              <th key={col.key} className={col.align === "center" ? styles.centered : ""}>
+                {col.label}
+              </th>
             ))}
-            <th>פעולות</th>
+            {hasActions && <th className={styles.actionsHeader}>פעולות</th>}
           </tr>
         </thead>
         <tbody>
@@ -38,16 +38,36 @@ export default function AdminTable(props) {
             <tr key={row._id}>
               {columns.map((col) => (
                 // render מאפשר לעמודה לעצב את הערך (למשל המרת מזהה לשם קטגוריה)
-                <td key={col.key}>{col.render ? col.render(row[col.key], row) : row[col.key]}</td>
+                <td key={col.key} className={col.align === "center" ? styles.centered : ""}>
+                  {col.render ? col.render(row[col.key], row) : row[col.key]}
+                </td>
               ))}
-              <td className={styles.actions}>
-                <button className={styles.editBtn} onClick={() => onEdit?.(row._id)}>
-                  עריכה
-                </button>
-                <button className={styles.deleteBtn} onClick={() => onDelete?.(row._id)}>
-                  מחיקה
-                </button>
-              </td>
+              {hasActions && (
+                <td className={styles.actions}>
+                  {onEdit && (
+                    <button
+                      type="button"
+                      className={styles.editBtn}
+                      onClick={() => onEdit(row._id)}
+                      title="עריכה"
+                      aria-label="עריכה"
+                    >
+                      <EditIcon />
+                    </button>
+                  )}
+                  {onDelete && (
+                    <button
+                      type="button"
+                      className={styles.deleteBtn}
+                      onClick={() => onDelete(row._id)}
+                      title="מחיקה"
+                      aria-label="מחיקה"
+                    >
+                      <DeleteIcon />
+                    </button>
+                  )}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

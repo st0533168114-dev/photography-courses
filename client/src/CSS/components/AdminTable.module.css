@@ -2,22 +2,6 @@
   padding: var(--space-4);
 }
 
-.addButton {
-  padding: var(--space-2) var(--space-3);
-  margin-bottom: var(--space-4);
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  font-size: var(--font-size-base);
-  transition: background-color var(--transition-base);
-}
-
-.addButton:hover {
-  background-color: var(--color-primary-hover);
-}
-
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -49,39 +33,60 @@
   background-color: var(--color-primary-light);
 }
 
+.table th.centered,
+.table td.centered {
+  text-align: center;
+}
+
+.actionsHeader {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.table td.actions {
+  width: 1%;
+  white-space: nowrap;
+}
+
 .actions {
   display: flex;
+  justify-content: center;
   gap: var(--space-2);
-  direction: ltr;
 }
 
 .editBtn,
 .deleteBtn {
-  padding: var(--space-1) var(--space-2);
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  border: var(--border-width) solid transparent;
   border-radius: var(--radius-sm);
+  background-color: transparent;
+  line-height: var(--line-height-tight);
   cursor: pointer;
-  font-size: var(--font-size-sm);
-  transition: background-color var(--transition-base);
-  font-weight: var(--font-weight-medium);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .editBtn {
-  background-color: var(--color-info);
-  color: var(--color-text-inverse);
+  color: var(--color-primary);
 }
 
 .editBtn:hover {
-  background-color: var(--color-primary-hover);
+  background-color: var(--color-surface);
+  border-color: var(--color-primary);
+  color: var(--color-primary-hover);
 }
 
 .deleteBtn {
-  background-color: var(--color-error);
-  color: var(--color-text-inverse);
+  color: var(--color-error);
 }
 
 .deleteBtn:hover {
-  background-color: var(--color-error-strong);
+  background-color: var(--color-surface);
+  border-color: var(--color-error);
+  color: var(--color-error-strong);
 }
 
 .loading,

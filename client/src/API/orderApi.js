@@ -1,7 +1,7 @@
 import api from "./axiosConfig";
 
-export const getOrders = async () => {
-  const response = await api.get(`/orders`);
+export const getOrders = async (userId) => {
+  const response = await api.get(`/orders`, { params: userId ? { userId } : {} });
   return response.data;
 };
 export const getOrderById = async (orderId) => {

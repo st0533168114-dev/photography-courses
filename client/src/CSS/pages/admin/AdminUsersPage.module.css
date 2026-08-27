@@ -1,0 +1,120 @@
+.container {
+  padding: var(--space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nameLink {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+}
+
+.nameLink:hover {
+  color: var(--color-primary-hover);
+}
+
+.statusCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.toggle {
+  position: relative;
+  width: 42px;
+  height: var(--space-6);
+  flex-shrink: 0;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bg-subtle);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.toggleOn {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.knob {
+  position: absolute;
+  top: var(--space-2px);
+  right: var(--space-2px);
+  width: var(--space-4);
+  height: var(--space-4);
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+}
+
+.toggleOn .knob {
+  transform: translateX(-18px);
+}
+
+.activeText {
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+}
+
+.inactiveText {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.actionsCell {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--color-primary);
+  line-height: var(--line-height-tight);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.iconBtn:hover:not(:disabled) {
+  background-color: var(--color-surface);
+  border-color: var(--color-primary);
+  color: var(--color-primary-hover);
+}
+
+.iconBtn:disabled {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.deleteIconBtn {
+  color: var(--color-error);
+}
+
+.deleteIconBtn:hover:not(:disabled) {
+  background-color: var(--color-surface);
+  border-color: var(--color-error);
+  color: var(--color-error-strong);
+}
+
+.error {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+}
