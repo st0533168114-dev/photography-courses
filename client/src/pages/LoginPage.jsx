@@ -9,13 +9,13 @@ import styles from "../CSS/pages/LoginPage.module.css";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [formError, setFormError] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { isLoading, isLoggedIn } = useSelector((state) => state.auth);
 
-  // הניווט תלוי ב-isLoggedIn ולא בתוצאת ההתחברות, כדי שגם משתמש שכבר מחובר לא יישאר בעמוד
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/");
@@ -26,15 +26,15 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!username || !password) {
-      alert("נא למלא את כל השדות");
+      setFormError("נא למלא את כל השדות");
       return;
     }
 
+    setFormError(null);
     const resultAction = await dispatch(loginUser({ userName: username, password: password }));
 
-    // ה-thunk לא זורק שגיאה, ולכן בודקים את סוג ה-action שהוחזר
     if (loginUser.rejected.match(resultAction)) {
-      alert("פרטי התחברות שגויים או שאינך רשום במערכת");
+      setFormError(resultAction.payload?.message || "פרטי התחברות שגויים או שאינך רשום במערכת");
     }
   };
 
@@ -44,6 +44,9 @@ export default function LoginPage() {
       <div className={styles.page}>
         <div className={styles.card}>
           <h1 className={styles.title}>התחברות</h1>
+
+          {formError && <div className={styles.error}>{formError}</div>}
+
           <form className={styles.form} onSubmit={handleLogin}>
             <div className={styles.field}>
               <input

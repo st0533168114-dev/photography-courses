@@ -1,0 +1,41 @@
+.container {
+  padding: var(--space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.orderLink,
+.userLink {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+}
+
+.orderLink:hover,
+.userLink:hover {
+  color: var(--color-primary-hover);
+}
+
+.missingUser {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.completedBadge,
+.incompleteBadge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.completedBadge {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.incompleteBadge {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}

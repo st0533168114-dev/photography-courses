@@ -14,6 +14,7 @@ export default function AdminPage() {
         <NavLink to="/admin/categories/list">ניהול קטגוריות</NavLink>
         <NavLink to="/admin/courses/list">ניהול קורסים</NavLink>
         <NavLink to="/admin/users/list">ניהול משתמשים</NavLink>
+        <NavLink to="/admin/orders/list">ניהול הזמנות</NavLink>
       </nav>
       <div>
         <Outlet />
