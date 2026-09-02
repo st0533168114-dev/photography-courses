@@ -1,0 +1,46 @@
+.container {
+  padding: var(--space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.note {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+}
+
+.orderLink {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+}
+
+.orderLink:hover {
+  color: var(--color-primary-hover);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.successBadge,
+.failedBadge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.successBadge {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.failedBadge {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+}

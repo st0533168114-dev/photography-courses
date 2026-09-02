@@ -22,7 +22,6 @@ import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import AdminOrderDetailsPage from "./pages/admin/AdminOrderDetailsPage";
 import AdminOrderFormPage from "./pages/admin/AdminOrderFormPage";
 import AdminPaymentsPage from "./pages/admin/AdminPaymentsPage";
-import AdminPaymentFormPage from "./pages/admin/AdminPaymentFormPage";
 import AdminFaqPage from "./pages/admin/AdminFaqPage";
 import AdminFaqFormPage from "./pages/admin/AdminFaqFormPage";
 import AdminRoute from "./components/AdminRoute";
@@ -99,8 +98,6 @@ function App() {
                 <Route path='orders/:orderId/edit' element={<AdminOrderFormPage />}></Route>
 
                 <Route path='payments/list' element={<AdminPaymentsPage />}></Route>
-                <Route path='payments/new' element={<AdminPaymentFormPage />}></Route>
-                <Route path='payments/:paymentId/edit' element={<AdminPaymentFormPage />}></Route>
 
                 <Route path='faq/list' element={<AdminFaqPage />}></Route>
                 <Route path='faq/new' element={<AdminFaqFormPage />}></Route>
