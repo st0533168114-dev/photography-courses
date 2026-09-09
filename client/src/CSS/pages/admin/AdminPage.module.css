@@ -1,0 +1,76 @@
+.main {
+  padding: 0;
+}
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* גובה חלון מלא פחות ההדר, כדי שהסרגל יגיע לתחתית המסך בלי לדחוף את הפוטר */
+.sidebar {
+  flex: 0 0 260px;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - var(--space-9));
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-3);
+  background-color: var(--color-bg-subtle);
+  border-left: var(--border-width) solid var(--color-border);
+}
+
+.navLink {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.navLink:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-hover);
+}
+
+.navLinkActive {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.navLinkActive:hover {
+  background-color: var(--color-primary-hover);
+  color: var(--color-text-inverse);
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-6) var(--space-5) var(--space-8);
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: static;
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-left: none;
+    border-bottom: var(--border-width) solid var(--color-border);
+  }
+
+  .content {
+    width: 100%;
+  }
+}

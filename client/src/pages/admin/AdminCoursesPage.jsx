@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import AdminTable from "../../components/AdminTable";
+import DataTable from "../../components/DataTable";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getCourses, deleteCourse, clearCoursesError } from "../../redux/slices/coursesSlice";
@@ -100,7 +100,7 @@ export default function AdminCoursesPage() {
       </div>
 
       {/* loading מוגבל לטעינה ראשונית - אחרת כל מחיקה מעלימה את הטבלה */}
-      <AdminTable
+      <DataTable
         columns={columns}
         rows={courses}
         loading={loading && courses.length === 0}

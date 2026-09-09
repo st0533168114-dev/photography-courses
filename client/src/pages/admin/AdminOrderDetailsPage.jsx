@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import AdminTable from "../../components/AdminTable";
+import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getOrderById } from "../../API/orderApi";
 import { getCourses } from "../../redux/slices/coursesSlice";
@@ -148,7 +148,7 @@ export default function AdminOrderDetailsPage() {
       <div className={styles.card}>
         <h3 className={styles.sectionTitle}>הקורסים בהזמנה</h3>
         <p className={styles.note}>המחיר המוצג הוא המחיר ששולם בעת הרכישה, ולא בהכרח המחיר הנוכחי בקטלוג.</p>
-        <AdminTable
+        <DataTable
           columns={courseColumns}
           rows={orderCourses}
           loading={coursesLoading}
@@ -159,7 +159,7 @@ export default function AdminOrderDetailsPage() {
 
       <div className={styles.card}>
         <h3 className={styles.sectionTitle}>תשלומים</h3>
-        <AdminTable
+        <DataTable
           columns={paymentColumns}
           rows={order.paymentsList || []}
           loading={false}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AdminTable from "../../components/AdminTable";
+import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getOrders } from "../../API/orderApi";
 import styles from "../../CSS/pages/admin/AdminOrdersPage.module.css";
@@ -72,7 +72,7 @@ export default function AdminOrdersPage() {
     <div className={styles.container}>
       <AdminPageHeader title="ניהול הזמנות" />
 
-      <AdminTable
+      <DataTable
         columns={columns}
         rows={orders}
         loading={isLoading}

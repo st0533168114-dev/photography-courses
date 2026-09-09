@@ -8,7 +8,7 @@ export const checkAuth = createAsyncThunk("auth/checkAuth", async (_, thunkAPI) 
 
     const response = await userApi.getProfile();
     return response;
-  } catch (error) {
+  } catch {
     // טוקן שנדחה על ידי השרת נמחק מיד, כדי שלא יישלח שוב בכל בקשה
     localStorage.removeItem("token");
     return thunkAPI.rejectWithValue("פג תוקף החיבור");
@@ -55,6 +55,11 @@ const authSlice = createSlice({
         state.user.courseIds = action.payload;
       }
     },
+    updateUserDetails(state, action) {
+      if (state.user) {
+        state.user = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -68,7 +73,7 @@ const authSlice = createSlice({
         state.user = action.payload;
       })
       // error לא מתעדכן כאן: אורח שאינו מחובר אינו מקרה שגיאה שצריך להציג במסך
-      .addCase(checkAuth.rejected, (state, action) => {
+      .addCase(checkAuth.rejected, (state) => {
         state.isLoading = false;
         state.isLoggedIn = false;
         state.user = null;
@@ -102,5 +107,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logoutUser, updateUserCourses } = authSlice.actions;
+export const { logoutUser, updateUserCourses, updateUserDetails } = authSlice.actions;
 export default authSlice.reducer;

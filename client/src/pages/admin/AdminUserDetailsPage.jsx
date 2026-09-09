@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import AdminTable from "../../components/AdminTable";
+import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import { DeleteIcon } from "../../components/admin/AdminIcons";
@@ -269,7 +269,7 @@ export default function AdminUserDetailsPage() {
 
         <div className={styles.tabPanel}>
           {activeTab === "orders" && (
-            <AdminTable
+            <DataTable
               columns={orderColumns}
               rows={userOrders}
               loading={ordersLoading}
@@ -308,7 +308,7 @@ export default function AdminUserDetailsPage() {
                 הענקת קורס נותנת גישה לצפייה בלבד — לא נוצרת הזמנה ולא תשלום, והקורס לא ייספר במכירות.
               </p>
 
-              <AdminTable
+              <DataTable
                 columns={courseColumns}
                 rows={userCourses}
                 loading={coursesLoading}

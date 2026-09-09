@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import AdminTable from "../../components/AdminTable";
+import DataTable from "../../components/DataTable";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getCategories, deleteCategory, clearCategoriesError } from "../../redux/slices/categoriesSlice";
@@ -81,7 +81,7 @@ export default function AdminCategoriesPage() {
       />
 
       {/* loading מוגבל לטעינה ראשונית - אחרת כל מחיקה מעלימה את הטבלה */}
-      <AdminTable
+      <DataTable
         columns={columns}
         rows={categories}
         rowKey="_id"

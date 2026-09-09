@@ -1,7 +1,7 @@
 import { EditIcon, DeleteIcon } from "./admin/AdminIcons";
-import styles from "../CSS/components/AdminTable.module.css";
+import styles from "../CSS/components/DataTable.module.css";
 
-export default function AdminTable(props) {
+export default function DataTable(props) {
   const { columns, rows, loading, error, emptyMessage, onEdit, onDelete } = props;
 
   // עמודת הפעולות נבנית לפי מה שהעמוד סיפק, כדי שטבלה לקריאה בלבד לא תציג עמודה ריקה

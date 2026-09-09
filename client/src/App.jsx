@@ -1,6 +1,5 @@
 
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import CategoriesPage from "./pages/CategoriesPage";
 import AboutPage from "./pages/AboutPage";
 import ContactUsPage from "./pages/ContactUsPage";
@@ -8,9 +7,11 @@ import SignUpPage from "./pages/SignUpPage";
 import ShoppingCartPage from "./pages/ShoppingCartPage";
 import LoginPage from "./pages/LoginPage";
 import MyCoursesPage from "./pages/MyCoursesPage";
+import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 import CoursesPage from "./pages/CoursesPage";
 import AdminPage from "./pages/admin/AdminPage";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import AdminCoursesPage from "./pages/admin/AdminCoursesPage";
 import AdminCourseFormPage from "./pages/admin/AdminCourseFormPage";
 import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
@@ -38,7 +39,7 @@ import CourseDetailsPage from "./pages/CourseDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoading, isLoggedIn, user } = useSelector((state) => state.auth);
+  const isLoading = useSelector((state) => state.auth.isLoading);
 
   // הטוקן נבדק מול השרת בכל טעינה, כדי שהמשתמש יישאר מחובר גם אחרי ריענון
   useEffect(() => {
@@ -78,8 +79,13 @@ function App() {
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/signUp" element={<SignUpPage />}></Route>
           <Route path="/myCourses" element={<MyCoursesPage />}></Route>
+          <Route path="/profile" element={<ProfilePage />}></Route>
 
           <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>}>
+                {/* בלי ניתוב ברירת מחדל הכניסה ל-/admin מציגה סרגל צד בלי תוכן */}
+                <Route index element={<Navigate to='dashboard' replace />}></Route>
+                <Route path='dashboard' element={<AdminDashboardPage />}></Route>
+
                 <Route path='courses/list' element={<AdminCoursesPage />}></Route>
                 {/* courseType נשמר בנתיב ולא ב-state, כדי שהטופס יידע אם הקורס בתשלום או חינמי גם בכניסה ישירה לכתובת */}
                 <Route path='courses/new/:courseType' element={<AdminCourseFormPage />}></Route>

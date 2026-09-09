@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AdminTable from "../../components/AdminTable";
+import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getPayments } from "../../API/paymentApi";
 import styles from "../../CSS/pages/admin/AdminPaymentsPage.module.css";
@@ -64,8 +64,8 @@ export default function AdminPaymentsPage() {
         התשלומים נוצרים אוטומטית בעת ביצוע הזמנה — הרשימה היא לצפייה בלבד.
       </p>
 
-      {/* טבלה לקריאה בלבד - בלי onEdit/onDelete, ולכן AdminTable לא יציג עמודת פעולות */}
-      <AdminTable
+      {/* טבלה לקריאה בלבד - בלי onEdit/onDelete, ולכן DataTable לא יציג עמודת פעולות */}
+      <DataTable
         columns={columns}
         rows={payments}
         loading={isLoading}

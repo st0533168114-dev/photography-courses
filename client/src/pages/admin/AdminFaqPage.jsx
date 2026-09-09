@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminTable from "../../components/AdminTable";
+import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import { getFaqs, deleteFaq } from "../../API/faqApi";
@@ -55,7 +55,7 @@ export default function AdminFaqPage() {
 
       {actionError && <div className={styles.error}>{actionError}</div>}
 
-      <AdminTable
+      <DataTable
         columns={columns}
         rows={faqs}
         loading={isLoading}

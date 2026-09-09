@@ -4,6 +4,10 @@ export const getOrders = async (userId) => {
   const response = await api.get(`/orders`, { params: userId ? { userId } : {} });
   return response.data;
 };
+export const getUserOrders = async () => {
+  const response = await api.get(`/orders/user-orders`);
+  return response.data;
+};
 export const getOrderById = async (orderId) => {
   const response = await api.get(`/orders/${orderId}`);
   return response.data;

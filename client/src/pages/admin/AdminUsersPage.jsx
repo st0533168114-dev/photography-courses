@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import AdminTable from "../../components/AdminTable";
+import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import { ViewIcon, EditIcon, DeleteIcon } from "../../components/admin/AdminIcons";
@@ -143,7 +143,7 @@ export default function AdminUsersPage() {
 
       {actionError && <div className={styles.error}>{actionError}</div>}
 
-      <AdminTable
+      <DataTable
         columns={columns}
         rows={users}
         loading={isLoading}

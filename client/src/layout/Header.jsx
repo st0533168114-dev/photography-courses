@@ -35,6 +35,7 @@ export default function Header() {
               <>
                 <NavLink to="/ShoppingCartPage" className={navLinkClassName}>סל קניות</NavLink>
                 <NavLink to="/myCourses" className={navLinkClassName}>הקורסים שלי</NavLink>
+                <NavLink to="/profile" className={navLinkClassName}>האזור האישי</NavLink>
               </>
             )}
 
