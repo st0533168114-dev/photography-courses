@@ -3,9 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
-import ConfirmDialog from "../../components/admin/ConfirmDialog";
-import { ViewIcon, EditIcon, DeleteIcon } from "../../components/admin/AdminIcons";
-import { getUsers, updateUser, deleteUser } from "../../API/userApi";
+import { ViewIcon, EditIcon } from "../../components/admin/AdminIcons";
+import { getUsers, updateUser } from "../../API/userApi";
 import styles from "../../CSS/pages/admin/AdminUsersPage.module.css";
 
 export default function AdminUsersPage() {
@@ -15,7 +14,6 @@ export default function AdminUsersPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
   const [actionError, setActionError] = useState(null);
-  const [userToDelete, setUserToDelete] = useState(null);
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -42,18 +40,6 @@ export default function AdminUsersPage() {
     } catch (err) {
       setUsers((prevUsers) => prevUsers.map((u) => (u._id === user._id ? { ...u, status: previousStatus } : u)));
       setActionError(err.response?.data?.message || "שגיאה בעדכון הסטטוס");
-    }
-  };
-
-  const handleConfirmDelete = async () => {
-    const deletedId = userToDelete._id;
-    setUserToDelete(null);
-    try {
-      await deleteUser(deletedId);
-      setUsers((prevUsers) => prevUsers.filter((u) => u._id !== deletedId));
-      setActionError(null);
-    } catch (err) {
-      setActionError(err.response?.data?.message || "שגיאה במחיקת המשתמש");
     }
   };
 
@@ -99,41 +85,28 @@ export default function AdminUsersPage() {
       key: "actions",
       label: "פעולות",
       align: "center",
-      render: (value, row) => {
-        const isSelf = authUser?._id === row._id;
-        return (
-          <div className={styles.actionsCell}>
-            <button
-              type="button"
-              className={styles.iconBtn}
-              onClick={() => navigate(`/admin/users/${row._id}`)}
-              title="מעבר לעמוד ניהול המשתמש"
-              aria-label="מעבר לעמוד ניהול המשתמש"
-            >
-              <ViewIcon />
-            </button>
-            <button
-              type="button"
-              className={styles.iconBtn}
-              onClick={() => navigate(`/admin/users/${row._id}/edit`)}
-              title="עריכת פרטים"
-              aria-label="עריכת פרטים"
-            >
-              <EditIcon />
-            </button>
-            <button
-              type="button"
-              className={`${styles.iconBtn} ${styles.deleteIconBtn}`}
-              onClick={() => setUserToDelete(row)}
-              disabled={isSelf}
-              title={isSelf ? "לא ניתן למחוק את החשבון שלך" : "מחיקה לצמיתות"}
-              aria-label="מחיקה לצמיתות"
-            >
-              <DeleteIcon />
-            </button>
-          </div>
-        );
-      },
+      render: (value, row) => (
+        <div className={styles.actionsCell}>
+          <button
+            type="button"
+            className={styles.iconBtn}
+            onClick={() => navigate(`/admin/users/${row._id}`)}
+            title="מעבר לעמוד ניהול המשתמש"
+            aria-label="מעבר לעמוד ניהול המשתמש"
+          >
+            <ViewIcon />
+          </button>
+          <button
+            type="button"
+            className={styles.iconBtn}
+            onClick={() => navigate(`/admin/users/${row._id}/edit`)}
+            title="עריכת פרטים"
+            aria-label="עריכת פרטים"
+          >
+            <EditIcon />
+          </button>
+        </div>
+      ),
     },
   ];
 
@@ -149,21 +122,6 @@ export default function AdminUsersPage() {
         loading={isLoading}
         error={loadError}
         emptyMessage="אין משתמשים"
-      />
-
-      <ConfirmDialog
-        open={Boolean(userToDelete)}
-        title="מחיקת משתמש לצמיתות"
-        message={
-          userToDelete
-            ? `מחיקת ${userToDelete.firstName} ${userToDelete.lastName} אינה מוחקת את ההזמנות והתשלומים שלו — הם יישארו במסד ללא משתמש משויך. אם המטרה היא רק לחסום גישה, עדיף להפוך את המשתמש ללא פעיל. למחוק בכל זאת?`
-            : ""
-        }
-        confirmLabel="מחק לצמיתות"
-        cancelLabel="ביטול"
-        onConfirm={handleConfirmDelete}
-        onCancel={() => setUserToDelete(null)}
-        isDangerous={true}
       />
     </div>
   );

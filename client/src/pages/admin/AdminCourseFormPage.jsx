@@ -19,7 +19,6 @@ const isEditMode = courseId !== undefined && courseId !== "";
     courseName: "",
     categoryId: "",
     price: "",
-    status: "available",
     courseImage: "",
     courseDescription: "",
     courseContent: [],
@@ -58,7 +57,6 @@ const isEditMode = courseId !== undefined && courseId !== "";
       courseName: course.courseName || "",
       categoryId: course.categoryId || "",
       price: course.price || 0,
-      status: course.status || "available",
       courseImage: course.courseImage || "",
       courseDescription: course.courseDescription || "",
       courseContent: course.courseContent || [],
@@ -102,7 +100,6 @@ const isEditMode = courseId !== undefined && courseId !== "";
         courseName: formData.courseName,
         categoryId: formData.categoryId,
         price: isPaid ? Number(formData.price) : 0,
-        status: formData.status,
         courseImage: formData.courseImage || "ImagesOutImages0738_-canon_600.jpeg",
         courseDescription: isPaid ? formData.courseDescription : "",
         courseContent: isPaid ? formData.courseContent : [],
@@ -182,14 +179,6 @@ const isEditMode = courseId !== undefined && courseId !== "";
               />
             </div>
           )}
-
-          <div className={styles.field}>
-            <label>סטטוס *</label>
-            <select name="status" value={formData.status} onChange={handleInputChange}>
-              <option value="available">זמין</option>
-              <option value="notAvailable">לא זמין</option>
-            </select>
-          </div>
 
           <div className={styles.field}>
             <label>תמונה (שם הקובץ)</label>

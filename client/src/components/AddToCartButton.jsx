@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { addToCart } from "../redux/slices/shoppingCartSlice";
 import styles from "../CSS/components/AddToCartButton.module.css";
 export default function AddToCartButton(props) {
-  const { courseId } = props;
+  const { courseId, isAvailable } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // סטייט מקומי ולא מהסטור, כדי שרק הכפתור שנלחץ יושבת ולא כל כפתורי ההוספה בדף
@@ -39,9 +39,9 @@ export default function AddToCartButton(props) {
     <button
       className={styles.button}
       onClick={handleAddToCart}
-      disabled={isAdding}
+      disabled={isAdding || !isAvailable}
     >
-      {isAdding ? "מבצע הוספה..." : "הוסף לסל"}
+      {!isAvailable ? "לא זמין" : isAdding ? "מבצע הוספה..." : "הוסף לסל"}
     </button>
   );
 }

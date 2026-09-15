@@ -5,7 +5,7 @@ import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import { DeleteIcon } from "../../components/admin/AdminIcons";
-import { getUserById, updateUser, deleteUser } from "../../API/userApi";
+import { getUserById, updateUser } from "../../API/userApi";
 import { getOrders } from "../../API/orderApi";
 import { getCourses } from "../../redux/slices/coursesSlice";
 import styles from "../../CSS/pages/admin/AdminUserDetailsPage.module.css";
@@ -21,7 +21,6 @@ export default function AdminUserDetailsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
   const [actionError, setActionError] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("orders");
   const [userOrders, setUserOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(true);
@@ -113,17 +112,6 @@ export default function AdminUserDetailsPage() {
     } catch (err) {
       setCourseToRemove(null);
       setActionError(err.response?.data?.message || "שגיאה בהסרת הקורס");
-    }
-  };
-
-  const handleConfirmDelete = async () => {
-    try {
-      await deleteUser(userId);
-      setDialogOpen(false);
-      navigate("/admin/users/list");
-    } catch (err) {
-      setDialogOpen(false);
-      setActionError(err.response?.data?.message || "שגיאה במחיקת המשתמש");
     }
   };
 
@@ -231,18 +219,13 @@ export default function AdminUserDetailsPage() {
           </button>
 
           {!isSelf && (
-            <>
-              <button className={styles.statusBtn} onClick={handleToggleStatus}>
-                {isActive ? "הפוך ללא פעיל" : "הפוך לפעיל"}
-              </button>
-              <button className={styles.deleteBtn} onClick={() => setDialogOpen(true)}>
-                מחיקה לצמיתות
-              </button>
-            </>
+            <button className={styles.statusBtn} onClick={handleToggleStatus}>
+              {isActive ? "הפוך ללא פעיל" : "הפוך לפעיל"}
+            </button>
           )}
         </div>
 
-        {isSelf && <p className={styles.selfNote}>זהו החשבון שלך — שינוי סטטוס ומחיקה אינם זמינים.</p>}
+        {isSelf && <p className={styles.selfNote}>זהו החשבון שלך — שינוי סטטוס אינו זמין.</p>}
       </div>
 
       <div className={styles.tabsCard}>
@@ -319,17 +302,6 @@ export default function AdminUserDetailsPage() {
           )}
         </div>
       </div>
-
-      <ConfirmDialog
-        open={dialogOpen}
-        title="מחיקת משתמש לצמיתות"
-        message="מחיקת המשתמש אינה מוחקת את ההזמנות והתשלומים שלו — הם יישארו במסד ללא משתמש משויך. אם המטרה היא רק לחסום גישה, עדיף להפוך את המשתמש ללא פעיל. למחוק בכל זאת?"
-        confirmLabel="מחק לצמיתות"
-        cancelLabel="ביטול"
-        onConfirm={handleConfirmDelete}
-        onCancel={() => setDialogOpen(false)}
-        isDangerous={true}
-      />
 
       <ConfirmDialog
         open={Boolean(courseToRemove)}

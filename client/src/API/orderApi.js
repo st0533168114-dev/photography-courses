@@ -20,7 +20,3 @@ export const updateOrder = async (orderId, orderToUpdate) => {
   const response = await api.put(`/orders/${orderId}`, orderToUpdate);
   return response.data;
 };
-export const deleteOrder = async (orderId) => {
-  const response = await api.delete(`/orders/${orderId}`);
-  return response.data;
-};

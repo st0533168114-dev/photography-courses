@@ -6,6 +6,7 @@ export default function CourseCard(props) {
   const { course } = props;
   const navigate=useNavigate();
   if (!course) return <p className={styles.loading}>טוען נתונים...</p>;
+  const isAvailable = course.status === "available";
   // קורס חינמי אינו נמכר ולכן אין לו עמוד פרטים - הלחיצה פותחת ישירות את הסרטון ביוטיוב
   return (
 
@@ -14,16 +15,17 @@ export default function CourseCard(props) {
     <div className={styles.card} onClick={()=>{
     if(course.price>0){
          navigate(`/course/${course._id}`)
-    }else{
+    }else if(isAvailable){
       window.open(course.youtubeLink, "_blank")
     }
    }}>
       <img className={styles.image} src={course.courseImage} alt={course.courseName} />
       <div className={styles.body}>
         <h2 className={styles.title}>{course.courseName}</h2>
+        {!isAvailable && <span className={styles.unavailableBadge}>לא זמין</span>}
         <div className={styles.priceRow}>
           <p className={styles.price}>מחיר: {course.price}</p>
-          { course.price>0 &&(<AddToCartButton courseId={course._id} />)}
+          { course.price>0 &&(<AddToCartButton courseId={course._id} isAvailable={isAvailable} />)}
         </div>
       </div>
     </div>

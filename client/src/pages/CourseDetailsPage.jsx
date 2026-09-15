@@ -53,7 +53,7 @@ export default function CourseDetailsPage() {
             )}
           </ul>
         </div>
-        <AddToCartButton courseId={course._id} />
+        <AddToCartButton courseId={course._id} isAvailable={course.status === "available"} />
       </main>
       <Footer></Footer>
     </>

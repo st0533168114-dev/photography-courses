@@ -16,16 +16,18 @@ export default function CoursesPage() {
   const error = useSelector((state) => state.courses.error);
 
   useEffect(() => {
-    // שגיאה ממוטציה שנכשלה נשארת בסטור הגלובלי ולא מתנקה לבד
     dispatch(clearCoursesError());
     if (coursesList.length === 0) {
       dispatch(getCourses());
     }
   }, [dispatch]);
 
+  const publicCourses = coursesList.filter(
+    (course) => course.status === "available" || course.status === "notAvailable"
+  );
   const displayedCourses = categoryId
-    ? coursesList.filter((course) => course.categoryId === categoryId)
-    : coursesList;
+    ? publicCourses.filter((course) => course.categoryId === categoryId)
+    : publicCourses;
   return (
     <>
       <Header></Header>

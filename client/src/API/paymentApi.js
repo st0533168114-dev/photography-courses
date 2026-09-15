@@ -16,7 +16,3 @@ export const updatePayment = async (paymentId, paymentToUpdate) => {
   const response = await api.put(`/payments/${paymentId}`, paymentToUpdate);
   return response.data;
 };
-export const deletePayment = async (paymentId) => {
-  const response = await api.delete(`/payments/${paymentId}`);
-  return response.data;
-};

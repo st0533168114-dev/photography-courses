@@ -16,6 +16,10 @@ export const updateCourse = async (courseId, courseToUpdate) => {
   const response = await api.put(`/courses/${courseId}`, courseToUpdate);
   return response.data;
 };
+export const changeCourseStatus = async (courseId, action) => {
+  const response = await api.put(`/courses/${courseId}/status`, { action });
+  return response.data;
+};
 export const deleteCourse = async (courseId) => {
   const response = await api.delete(`/courses/${courseId}`);
   return response.data;

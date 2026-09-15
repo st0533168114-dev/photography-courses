@@ -39,7 +39,19 @@ export const updateCourse = createAsyncThunk(
       const response = await coursesApi.updateCourse(courseId, course);
       return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue("עדכון הקורס נכשל");
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "עדכון הקורס נכשל");
+    }
+  }
+);
+
+export const changeCourseStatus = createAsyncThunk(
+  "courses/changeCourseStatus",
+  async ({ courseId, action }, thunkAPI) => {
+    try {
+      const response = await coursesApi.changeCourseStatus(courseId, action);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "שינוי סטטוס הקורס נכשל");
     }
   }
 );
@@ -49,7 +61,7 @@ export const deleteCourse = createAsyncThunk("courses/deleteCourse", async (cour
     await coursesApi.deleteCourse(courseId);
     return courseId;
   } catch (error) {
-    return thunkAPI.rejectWithValue("מחיקת הקורס נכשלה");
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "מחיקת הקורס נכשלה");
   }
 });
 
@@ -119,6 +131,22 @@ export const coursesSlice = createSlice({
         }
       })
       .addCase(updateCourse.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(changeCourseStatus.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(changeCourseStatus.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const index = state.coursesList.findIndex((c) => c._id === action.payload._id);
+        if (index !== -1) {
+          state.coursesList[index] = action.payload;
+        }
+      })
+      .addCase(changeCourseStatus.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
