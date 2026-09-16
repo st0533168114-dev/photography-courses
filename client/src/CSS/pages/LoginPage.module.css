@@ -25,6 +25,25 @@
 }
 
 
+.info {
+  margin: 0 0 var(--space-6);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.info::after {
+  content: "";
+  display: block;
+  width: var(--space-8);
+  height: var(--space-1);
+  margin: var(--space-3) auto 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+}
+
 .error {
   padding: var(--space-3) var(--space-4);
   margin-bottom: var(--space-4);

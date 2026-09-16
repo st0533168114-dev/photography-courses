@@ -1,5 +1,43 @@
 /* Styles for AddToCartButton */
 
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.bubble {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: max-content;
+  max-width: 240px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: var(--border-width) solid var(--color-warning);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  pointer-events: none;
+  animation: bubbleIn var(--transition-base);
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, var(--space-1));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 .button {
   background-color: var(--color-primary);
   color: var(--color-text-inverse);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import styles from "../CSS/pages/LoginPage.module.css";
@@ -13,14 +13,17 @@ export default function LoginPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo = location.state?.from || "/";
+  const loginMessage = location.state?.message;
 
   const { isLoading, isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/");
+      navigate(redirectTo, { replace: true });
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, redirectTo]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -45,6 +48,7 @@ export default function LoginPage() {
         <div className={styles.card}>
           <h1 className={styles.title}>התחברות</h1>
 
+          {loginMessage && !formError && <p className={styles.info}>{loginMessage}</p>}
           {formError && <div className={styles.error}>{formError}</div>}
 
           <form className={styles.form} onSubmit={handleLogin}>
