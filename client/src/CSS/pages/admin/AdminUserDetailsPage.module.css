@@ -58,8 +58,7 @@
 }
 
 .editBtn,
-.statusBtn,
-.deleteBtn {
+.statusBtn {
   padding: var(--space-2) var(--space-5);
   border-radius: var(--radius-md);
   border: var(--border-width) solid transparent;
@@ -87,16 +86,6 @@
 
 .statusBtn:hover {
   background-color: var(--color-bg-subtle);
-}
-
-.deleteBtn {
-  background-color: var(--color-error-bg);
-  color: var(--color-error);
-}
-
-.deleteBtn:hover {
-  background-color: var(--color-error);
-  color: var(--color-text-inverse);
 }
 
 .selfNote {

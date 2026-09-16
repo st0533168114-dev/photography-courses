@@ -19,6 +19,7 @@ export default function AdminCategoriesPage() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   // שגיאת שליפה מקומית ולא מהסטור - רק כישלון בטעינה מצדיק להחליף את הטבלה בהודעת שגיאה
   const [loadError, setLoadError] = useState(null);
+  const [actionError, setActionError] = useState(null);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -50,10 +51,11 @@ export default function AdminCategoriesPage() {
     // חסימה מוקדמת בלקוח כדי לחסוך פנייה שהשרת ידחה בכל מקרה
     const linkedCourses = courses.filter((course) => course.categoryId === categoryId);
     if (linkedCourses.length > 0) {
-      alert(`לא ניתן למחוק קטגוריה זו כי משויכים אליה ${linkedCourses.length} קורסים`);
+      setActionError(`לא ניתן למחוק קטגוריה זו כי משויכים אליה ${linkedCourses.length} קורסים`);
       return;
     }
 
+    setActionError(null);
     setSelectedCategoryId(categoryId);
     setDialogOpen(true);
   };
@@ -63,10 +65,11 @@ export default function AdminCategoriesPage() {
     try {
       // unwrap כדי שכישלון של ה-thunk יגיע ל-catch
       await dispatch(deleteCategory(selectedCategoryId)).unwrap();
+    } catch (err) {
+      setActionError(err || "שגיאה במחיקת הקטגוריה");
+    } finally {
       setDialogOpen(false);
       setSelectedCategoryId(null);
-    } catch (err) {
-      alert("שגיאה במחיקה: " + (err || "נסה שוב"));
     }
   };
 
@@ -79,6 +82,8 @@ export default function AdminCategoriesPage() {
         addLabel="הוסף קטגוריה"
         onAdd={() => navigate("/admin/categories/new")}
       />
+
+      {actionError && <div className={styles.error}>{actionError}</div>}
 
       {/* loading מוגבל לטעינה ראשונית - אחרת כל מחיקה מעלימה את הטבלה */}
       <DataTable
@@ -96,7 +101,7 @@ export default function AdminCategoriesPage() {
         open={dialogOpen}
         title="מחיקת קטגוריה"
         message="האם בטוח שברצונך למחוק את הקטגוריה?"
-        confirmLabel="מחוק"
+        confirmLabel="מחק"
         cancelLabel="ביטול"
         onConfirm={handleConfirmDelete}
         onCancel={() => setDialogOpen(false)}

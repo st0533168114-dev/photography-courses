@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getOrderById } from "../../API/orderApi";
-import { getCourses } from "../../redux/slices/coursesSlice";
 import styles from "../../CSS/pages/admin/AdminOrderDetailsPage.module.css";
 
 export default function AdminOrderDetailsPage() {
   const { orderId } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const coursesList = useSelector((state) => state.courses.coursesList || []);
-  const coursesLoading = useSelector((state) => state.courses.isLoading);
   const [order, setOrder] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
-  const [coursesLoadError, setCoursesLoadError] = useState(null);
 
   useEffect(() => {
     const loadOrder = async () => {
@@ -33,19 +27,6 @@ export default function AdminOrderDetailsPage() {
     };
     loadOrder();
   }, [orderId]);
-
-  useEffect(() => {
-    const loadCourses = async () => {
-      try {
-        if (coursesList.length === 0) {
-          await dispatch(getCourses()).unwrap();
-        }
-      } catch (err) {
-        setCoursesLoadError(err || "שגיאה בטעינת הקורסים");
-      }
-    };
-    loadCourses();
-  }, [dispatch]);
 
   if (isLoading) {
     return <div className={styles.loading}>טוען נתונים...</div>;
@@ -64,7 +45,7 @@ export default function AdminOrderDetailsPage() {
 
   const orderCourses = (order.coursesList || []).map((item) => ({
     _id: item._id,
-    courseName: coursesList.find((course) => course._id === item.courseId)?.courseName ?? "קורס שנמחק",
+    courseName: item.courseName,
     price: item.price,
   }));
 
@@ -151,8 +132,8 @@ export default function AdminOrderDetailsPage() {
         <DataTable
           columns={courseColumns}
           rows={orderCourses}
-          loading={coursesLoading}
-          error={coursesLoadError}
+          loading={false}
+          error={null}
           emptyMessage="אין קורסים בהזמנה"
         />
       </div>

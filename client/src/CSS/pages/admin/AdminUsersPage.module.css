@@ -99,16 +99,6 @@
   cursor: not-allowed;
 }
 
-.deleteIconBtn {
-  color: var(--color-error);
-}
-
-.deleteIconBtn:hover:not(:disabled) {
-  background-color: var(--color-surface);
-  border-color: var(--color-error);
-  color: var(--color-error-strong);
-}
-
 .error {
   padding: var(--space-3) var(--space-4);
   margin-bottom: var(--space-4);
