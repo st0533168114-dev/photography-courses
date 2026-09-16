@@ -17,6 +17,7 @@ export default function ShoppingCartPage() {
 
   const courseList = cart?.courseList || [];
   const subtotal = cart?.subtotal || 0;
+  const hasUnavailable = courseList.some((course) => course.isAvailable === false);
 
   // מסך הטעינה מוגבל לטעינה ראשונית - אחרת כל הוספה או מחיקה הייתה מעלימה את העגלה
   if (isLoading && courseList.length === 0) {
@@ -54,7 +55,12 @@ export default function ShoppingCartPage() {
 
               <aside className={styles.summary}>
                 <h3 className={styles.total}>לתשלום: {subtotal} ₪</h3>
-                <PurchaseButton />
+                <PurchaseButton disabled={hasUnavailable} />
+                {hasUnavailable && (
+                  <p className={styles.blockedNote}>
+                    יש בעגלה קורסים שאינם זמינים לרכישה. יש להסיר אותם כדי להמשיך.
+                  </p>
+                )}
               </aside>
             </div>
           )}

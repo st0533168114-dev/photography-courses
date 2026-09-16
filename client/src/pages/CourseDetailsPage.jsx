@@ -53,6 +53,9 @@ export default function CourseDetailsPage() {
             )}
           </ul>
         </div>
+        {course.status !== "available" && (
+          <p className={styles.unavailableNote}>הקורס אינו זמין לרכישה כעת</p>
+        )}
         <AddToCartButton courseId={course._id} isAvailable={course.status === "available"} />
       </main>
       <Footer></Footer>

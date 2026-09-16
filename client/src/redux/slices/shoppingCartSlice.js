@@ -18,7 +18,7 @@ export const addToCart = createAsyncThunk("shoppingCart/addToCart", async (cours
     const statusCode = error.response?.status || 500;
     return thunkAPI.rejectWithValue({
       status: statusCode,
-      message: "Add to cart failed",
+      message: error.response?.data?.message || "ההוספה נכשלה",
     });
   }
 });

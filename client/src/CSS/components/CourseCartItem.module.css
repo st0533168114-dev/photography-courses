@@ -17,17 +17,47 @@
   padding: var(--space-1);
 }
 
-.name {
+.details {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: start;
+}
+
+.name {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
   margin: 0;
-  text-align: start;
 }
 
 .price {
   font-weight: var(--font-weight-bold);
   color: var(--color-accent);
   margin: 0;
+}
+
+.unavailable {
+  border-color: var(--color-warning);
+  background: var(--color-warning-bg);
+}
+
+.unavailable .image,
+.unavailable .name,
+.unavailable .price {
+  opacity: 0.55;
+}
+
+.unavailableNote {
+  margin: 0;
+  color: var(--color-warning);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.priceChanged {
+  margin: 0;
+  color: var(--color-info);
+  font-size: var(--font-size-sm);
 }

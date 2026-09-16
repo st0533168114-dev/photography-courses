@@ -26,6 +26,7 @@ useEffect(()=>{
 
 const courseList = cart?.courseList||[];
 const subtotal=cart?.subtotal||0;
+const hasUnavailable = courseList.some((course) => course.isAvailable === false);
 
 const handleCreateOrder = async (e) => {
     e.preventDefault(); 
@@ -46,7 +47,7 @@ const handleCreateOrder = async (e) => {
         navigate("/paymentConfirmation");
 
     } catch (err) {
-        setError(err.message || "יצירת ההזמנה נכשלה נסה שוב");
+        setError(err.response?.data?.message || "יצירת ההזמנה נכשלה נסה שוב");
     } finally {
         setIsSubmitting(false);
     }
@@ -85,7 +86,7 @@ if (isSubmitting) {
     ))}
    <h3>סה"כ לתשלום: {subtotal} ₪</h3>
 {error&&<p>{error}</p>}
-         <button type="submit" disabled={isSubmitting}> יצירת הזמנה</button>
+         <button type="submit" disabled={isSubmitting || hasUnavailable}> יצירת הזמנה</button>
         </form>
       )}
 

@@ -16,3 +16,8 @@
 .button:active {
   background: var(--color-primary-active);
 }
+
+.button:disabled {
+  background: var(--color-text-disabled);
+  cursor: not-allowed;
+}

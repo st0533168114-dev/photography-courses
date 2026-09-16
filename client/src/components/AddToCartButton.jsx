@@ -25,7 +25,7 @@ export default function AddToCartButton(props) {
         navigate("/login");
       }
       else if (err && err.status === 400) {
-        alert("קורס זה כבר קיים בסל הקניות שלך");
+        alert(err.message);
       }
       else {
         alert("אופס, תקלה זמנית בהוספת הקורס לסל. נסה שנית מאוחר יותר.");
@@ -41,7 +41,7 @@ export default function AddToCartButton(props) {
       onClick={handleAddToCart}
       disabled={isAdding || !isAvailable}
     >
-      {!isAvailable ? "לא זמין" : isAdding ? "מבצע הוספה..." : "הוסף לסל"}
+      {isAdding ? "מבצע הוספה..." : "הוסף לסל"}
     </button>
   );
 }

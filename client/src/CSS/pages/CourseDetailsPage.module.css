@@ -72,6 +72,13 @@
   border-bottom: none;
 }
 
+.unavailableNote {
+  margin: 0 0 var(--space-3);
+  color: var(--color-warning);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
 .status {
   color: var(--color-text-muted);
   padding: var(--space-6);
