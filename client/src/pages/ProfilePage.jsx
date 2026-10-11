@@ -8,6 +8,7 @@ import { updateUser } from "../API/userApi";
 import { getUserOrders } from "../API/orderApi";
 import { getCourses } from "../redux/slices/coursesSlice";
 import { updateUserDetails } from "../redux/slices/authSlice";
+import { getOrderStatusLabel } from "../constants/orderStatus";
 import styles from "../CSS/pages/ProfilePage.module.css";
 
 const EMPTY_FORM = {
@@ -119,7 +120,7 @@ export default function ProfilePage() {
         const isCompleted = value === "completed";
         return (
           <span className={isCompleted ? styles.successBadge : styles.failedBadge}>
-            {isCompleted ? "הושלמה" : "לא הושלמה"}
+            {getOrderStatusLabel(value)}
           </span>
         );
       },

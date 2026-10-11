@@ -8,6 +8,7 @@ import { DeleteIcon } from "../../components/admin/AdminIcons";
 import { getUserById, updateUser } from "../../API/userApi";
 import { getOrders } from "../../API/orderApi";
 import { getCourses } from "../../redux/slices/coursesSlice";
+import { getOrderStatusLabel } from "../../constants/orderStatus";
 import styles from "../../CSS/pages/admin/AdminUserDetailsPage.module.css";
 
 export default function AdminUserDetailsPage() {
@@ -167,7 +168,7 @@ export default function AdminUserDetailsPage() {
     { key: "orderDate", label: "תאריך", render: (value) => new Date(value).toLocaleDateString("he-IL") },
     { key: "coursesList", label: "מס' קורסים", align: "center", render: (value) => value?.length || 0 },
     { key: "totalAmount", label: "סכום כולל", render: (value) => `₪${value}` },
-    { key: "status", label: "סטטוס", render: (value) => (value === "completed" ? "הושלמה" : "לא הושלמה") },
+    { key: "status", label: "סטטוס", render: (value) => getOrderStatusLabel(value) },
     {
       key: "paymentsList",
       label: "שולם",

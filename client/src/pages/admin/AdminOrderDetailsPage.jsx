@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getOrderById } from "../../API/orderApi";
+import { getOrderStatusLabel } from "../../constants/orderStatus";
 import styles from "../../CSS/pages/admin/AdminOrderDetailsPage.module.css";
 
 export default function AdminOrderDetailsPage() {
@@ -95,7 +96,7 @@ export default function AdminOrderDetailsPage() {
           <span className={styles.label}>סטטוס</span>
           <span className={styles.value}>
             <span className={isCompleted ? styles.completedBadge : styles.incompleteBadge}>
-              {isCompleted ? "הושלמה" : "לא הושלמה"}
+              {getOrderStatusLabel(order.status)}
             </span>
           </span>
         </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getOrderById, updateOrder } from "../../API/orderApi";
+import { getOrderStatusLabel, MANUAL_ORDER_STATUSES } from "../../constants/orderStatus";
 import styles from "../../CSS/pages/admin/AdminOrderFormPage.module.css";
 
 export default function AdminOrderFormPage() {
@@ -79,8 +80,11 @@ export default function AdminOrderFormPage() {
           <div className={styles.field}>
             <label htmlFor="status">סטטוס הזמנה *</label>
             <select id="status" name="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option value="incomplete">לא הושלמה</option>
-              <option value="completed">הושלמה</option>
+              {MANUAL_ORDER_STATUSES.map((statusOption) => (
+                <option key={statusOption} value={statusOption}>
+                  {getOrderStatusLabel(statusOption)}
+                </option>
+              ))}
             </select>
           </div>
 
