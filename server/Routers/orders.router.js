@@ -5,8 +5,8 @@ import isAdminMiddleware from "../Middlewares/isAdmin.middleware.js";
 
 const OrdersRouter = express.Router();
 OrdersRouter.get("/", jwtMiddleware, isAdminMiddleware, OrdersController.get);
-// חייב להירשם לפני /:id, אחרת "user-orders" ייקלט כמזהה הזמנה
 OrdersRouter.get("/user-orders", jwtMiddleware, OrdersController.getUserOrders);
+OrdersRouter.get("/count", jwtMiddleware, isAdminMiddleware, OrdersController.getCount);
 OrdersRouter.get("/:id", jwtMiddleware, OrdersController.getById);
 OrdersRouter.post("/", jwtMiddleware, OrdersController.post);
 OrdersRouter.put("/:id", jwtMiddleware, isAdminMiddleware, OrdersController.put);

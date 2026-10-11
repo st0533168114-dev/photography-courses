@@ -21,6 +21,14 @@ const OrdersController = {
       res.status(500).json({ error: error.message });
     }
   },
+  getCount: async (req, res) => {
+    try {
+      const count = await orders.countDocuments({});
+      res.status(200).json({ count });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
   getUserOrders: async (req, res) => {
     try {
       const userId = req.user.userId; // מגיע מהטוקן המפוענח ב-jwtMiddleware ולא מהלקוח
