@@ -19,6 +19,10 @@ export const getUsers = async () => {
   const response = await api.get(`/users`);
   return response.data;
 };
+export const getUsersCount = async () => {
+  const response = await api.get(`/users/count`);
+  return response.data.count;
+};
 export const getUserById = async (userId) => {
   const response = await api.get(`/users/${userId}`);
   return response.data;

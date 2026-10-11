@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
-import { getUsers } from "../../API/userApi";
-import { getOrders } from "../../API/orderApi";
+import { getUsersCount } from "../../API/userApi";
+import { getOrdersCount } from "../../API/orderApi";
 import { getCourses } from "../../redux/slices/coursesSlice";
 import styles from "../../CSS/pages/admin/AdminDashboardPage.module.css";
 
@@ -18,17 +18,17 @@ export default function AdminDashboardPage() {
   const coursesList = useSelector((state) => state.courses.coursesList || []);
   const coursesLoading = useSelector((state) => state.courses.isLoading);
 
-  const [users, setUsers] = useState([]);
-  const [orders, setOrders] = useState([]);
+  const [usersCount, setUsersCount] = useState(0);
+  const [ordersCount, setOrdersCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
 
   useEffect(() => {
     const loadDashboard = async () => {
       try {
-        const [usersList, ordersList] = await Promise.all([getUsers(), getOrders()]);
-        setUsers(usersList);
-        setOrders(ordersList);
+        const [users, orders] = await Promise.all([getUsersCount(), getOrdersCount()]);
+        setUsersCount(users);
+        setOrdersCount(orders);
       } catch (err) {
         setLoadError(err.response?.data?.message || "שגיאה בטעינת נתוני לוח הבקרה");
       } finally {
@@ -47,8 +47,8 @@ export default function AdminDashboardPage() {
   const activeCoursesCount = coursesList.filter((course) => course.status === "available").length;
 
   const stats = [
-    { key: "users", label: "מספר משתמשים", value: users.length, loading: isLoading },
-    { key: "orders", label: "סך הזמנות", value: orders.length, loading: isLoading },
+    { key: "users", label: "מספר משתמשים", value: usersCount, loading: isLoading },
+    { key: "orders", label: "סך הזמנות", value: ordersCount, loading: isLoading },
     { key: "courses", label: "קורסים פעילים", value: activeCoursesCount, loading: coursesLoading },
     { key: "inquiries", label: "פניות חדשות", value: "—", hint: "יתווסף בהמשך" },
   ];
