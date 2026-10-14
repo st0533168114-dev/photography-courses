@@ -9,8 +9,8 @@ React 19 · Vite · Redux Toolkit · React Router v7 · Axios · CSS Modules · 
 ## Installation & Running
 
 ```bash
-git clone https://github.com/st0533168114-dev/photography-courses-client.git
-cd photography-courses-client
+git clone https://github.com/st0533168114-dev/photography-courses.git
+cd photography-courses/client
 npm install
 npm run dev
 ```
@@ -43,5 +43,5 @@ src/
 npm run build
 ```
 
-## Related Repository
-- [Photography Courses Server (Node/Express)](https://github.com/st0533168114-dev/photography-courses-server)
+## Full Project
+See the [root README](../README.md) for the full project, including the server.

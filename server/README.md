@@ -9,8 +9,8 @@ Node.js · Express 5 · MongoDB (Mongoose) · JWT · bcrypt · cors · dotenv
 ## Installation & Running
 
 ```bash
-git clone https://github.com/st0533168114-dev/photography-courses-server.git
-cd photography-courses-server
+git clone https://github.com/st0533168114-dev/photography-courses.git
+cd photography-courses/server
 npm install
 npm start
 ```
@@ -33,13 +33,12 @@ JWT_SECRET=<secret for signing tokens>
 ├── Routers/        # API route definitions
 ├── Controllers/     # Business logic
 ├── Models/          # Mongoose schemas
-├── Middlewares/      # JWT authentication and admin authorization
-└── Images/           # Course images
+└── Middlewares/      # JWT authentication and admin authorization
 ```
 
 ## Main API Routes
 
 `/users` · `/courses` · `/categories` · `/shoppingCarts` · `/orders` · `/payments` · `/faq`
 
-## Related Repository
-- [Photography Courses Client (React)](https://github.com/st0533168114-dev/photography-courses-client)
+## Full Project
+See the [root README](../README.md) for the full project, including the client.
