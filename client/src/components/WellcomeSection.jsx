@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import styles from "../CSS/components/WellcomeSection.module.css";
 
-// import.meta.glob מייבא את כל התמונות מהתיקייה, כך שהוספת תמונה לגלריה לא דורשת שינוי בקוד
-const images = Object.values(
-  import.meta.glob("../assets/*.{jpg,jpeg,png,webp}", {
-    eager: true,
-    import: "default",
-  })
-);
+// התמונות מאוחסנות ב-Cloudinary ולא בריפו. הכתובת מבקשת גרסה מוקטנת בפורמט שמתאים לדפדפן
+const CLOUDINARY_BASE = "https://res.cloudinary.com/tcs2p8ac/image/upload/w_1920,c_limit,q_auto,f_auto";
+
+const images = [
+  `${CLOUDINARY_BASE}/v1792076553/1Q3A9517_-_%D7%A2%D7%95%D7%AA%D7%A7-Y2flmcgv.jpg`,
+  `${CLOUDINARY_BASE}/v1792076551/1Q3A8836-DgVUDjjl.jpg`,
+  `${CLOUDINARY_BASE}/v1792076551/1Q3A9257_copy-Cwll_37m.jpg`,
+  `${CLOUDINARY_BASE}/v1792076550/1Q3A0424_copy-D5qj4py7.jpg`,
+  `${CLOUDINARY_BASE}/v1792076549/1Q3A0466_-_%D7%A2%D7%95%D7%AA%D7%A7-D_4uYDxJ.jpg`,
+  `${CLOUDINARY_BASE}/v1792076549/1Q3A2771_copy-B2GuQsis.jpg`,
+  `${CLOUDINARY_BASE}/v1792076549/469A3703-CSYFhqnp.jpg`,
+  `${CLOUDINARY_BASE}/v1792076549/1Q3A1715-BO7esbxm.jpg`,
+];
 
 export default function WellcomeSection() {
   const [currentImage, setCurrentImage] = useState(0);
