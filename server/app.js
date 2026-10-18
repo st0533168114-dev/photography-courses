@@ -13,6 +13,7 @@ import shoppingCartsRouter from "./Routers/shoppingCart.router.js";
 import paymentsRouter from "./Routers/payments.router.js";
 import categoriesRouter from "./Routers/categories.router.js";
 import faqRouter from "./Routers/faq.router.js";
+import mediaRouter from "./Routers/media.router.js";
 
 // ב-ES Modules אין __dirname מובנה, ולכן הוא נגזר מכתובת הקובץ
 const __filename = fileURLToPath(import.meta.url);
@@ -46,6 +47,7 @@ app.use("/shoppingCarts", shoppingCartsRouter);
 app.use("/payments", paymentsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/faq", faqRouter);
+app.use("/media", mediaRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);

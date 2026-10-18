@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import ImageUploadButton from "../../components/ImageUploadButton";
 import { getCourses, addCourse, updateCourse } from "../../redux/slices/coursesSlice";
 import { getCategories } from "../../redux/slices/categoriesSlice";
 import styles from "../../CSS/pages/admin/AdminCourseFormPage.module.css";
@@ -72,6 +73,13 @@ const isEditMode = courseId !== undefined && courseId !== "";
     }));
   };
 
+  const handleImageUpload = (url) => {
+    setFormData((prev) => ({
+      ...prev,
+      courseImage: url,
+    }));
+  };
+
   const handleAddContent = () => {
     if (contentInput.trim()) {
       setFormData((prev) => ({
@@ -100,7 +108,7 @@ const isEditMode = courseId !== undefined && courseId !== "";
         courseName: formData.courseName,
         categoryId: formData.categoryId,
         price: isPaid ? Number(formData.price) : 0,
-        courseImage: formData.courseImage || "ImagesOutImages0738_-canon_600.jpeg",
+        courseImage: formData.courseImage || undefined,
         courseDescription: isPaid ? formData.courseDescription : "",
         courseContent: isPaid ? formData.courseContent : [],
         youtubeLink: !isPaid ? formData.youtubeLink : "",
@@ -181,13 +189,15 @@ const isEditMode = courseId !== undefined && courseId !== "";
           )}
 
           <div className={styles.field}>
-            <label>תמונה (שם הקובץ)</label>
-            <input
-              type="text"
-              name="courseImage"
-              value={formData.courseImage}
-              onChange={handleInputChange}
-              placeholder="שם התמונה (דיפולט: ImagesOutImages0738_-canon_600.jpeg)"
+            <label>תמונת הקורס</label>
+            {formData.courseImage && (
+              <img src={formData.courseImage} alt="תמונת הקורס" className={styles.imagePreview} />
+            )}
+            <ImageUploadButton
+              folder="photography-courses/courses"
+              label={formData.courseImage ? "החלפת תמונה" : "העלאת תמונה"}
+              onUpload={handleImageUpload}
+              onError={setError}
             />
           </div>
 

@@ -1,0 +1,15 @@
+.button {
+  align-self: flex-start;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  transition: background-color var(--transition-fast);
+}
+
+.button:hover {
+  background-color: var(--color-primary-hover);
+}
