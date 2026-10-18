@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "../CSS/components/WellcomeSection.module.css";
 
-// התמונות מאוחסנות ב-Cloudinary ולא בריפו. הכתובת מבקשת גרסה מוקטנת בפורמט שמתאים לדפדפן
-const CLOUDINARY_BASE = "https://res.cloudinary.com/tcs2p8ac/image/upload/w_1920,c_limit,q_auto,f_auto";
+// התמונות מאוחסנות ב-Cloudinary ולא בריפו. f_webp ולא f_auto, כי עם f_auto התמונות לא נטענו ב-Chrome
+const CLOUDINARY_BASE = "https://res.cloudinary.com/tcs2p8ac/image/upload/w_1920,c_limit,q_auto,f_webp";
 
 const images = [
   `${CLOUDINARY_BASE}/v1792076553/1Q3A9517_-_%D7%A2%D7%95%D7%AA%D7%A7-Y2flmcgv.jpg`,
