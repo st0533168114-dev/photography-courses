@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
 import courses from "../Models/course.js";
+import { isCloudinaryUrl } from "../Services/media.service.js";
 
 const allowedTransitions = {
   publish: { from: ["draft", "notAvailable", "archived"], to: "available" },
   markUnavailable: { from: ["available"], to: "notAvailable" },
   archive: { from: ["available", "notAvailable"], to: "archived" },
 };
+
+const hasNonCloudinaryImage = ({ courseImage, images }) =>
+  (courseImage !== undefined && !isCloudinaryUrl(courseImage)) ||
+  (images !== undefined && (!Array.isArray(images) || !images.every(isCloudinaryUrl)));
 
 const CoursesController = {
   get: async (req, res) => {
@@ -40,6 +45,9 @@ const CoursesController = {
       courseContent,
       images,
     } = req.body;
+    if (hasNonCloudinaryImage(req.body)) {
+      return res.status(400).json({ message: "יש להעלות את תמונת הקורס דרך הטופס" });
+    }
     try {
       const newCourse = new courses({
         courseName,
@@ -64,10 +72,13 @@ const CoursesController = {
     if (course.status !== undefined) {
       return res.status(400).json({ message: "שינוי סטטוס נעשה בנתיב PUT /courses/:id/status" });
     }
+    if (hasNonCloudinaryImage(course)) {
+      return res.status(400).json({ message: "יש להעלות את תמונת הקורס דרך הטופס" });
+    }
     try {
       const updatedCourse = await courses.findByIdAndUpdate(id, course, {
         new: true,
-        runValidators: true, // Mongoose לא מריץ ולידציה בעדכון אלא אם מבקשים במפורש
+        runValidators: true,
       });
 
       if (!updatedCourse) {
