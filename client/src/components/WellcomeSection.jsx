@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../CSS/components/WellcomeSection.module.css";
 
-// התמונות מאוחסנות ב-Cloudinary ולא בריפו. f_webp ולא f_auto, כי עם f_auto התמונות לא נטענו ב-Chrome
 const CLOUDINARY_BASE = "https://res.cloudinary.com/tcs2p8ac/image/upload/w_1920,c_limit,q_auto,f_webp";
 
 const images = [
