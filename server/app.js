@@ -1,7 +1,5 @@
 
 import "dotenv/config";
-import path from "path";
-import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -13,10 +11,7 @@ import shoppingCartsRouter from "./Routers/shoppingCart.router.js";
 import paymentsRouter from "./Routers/payments.router.js";
 import categoriesRouter from "./Routers/categories.router.js";
 import faqRouter from "./Routers/faq.router.js";
-
-// ב-ES Modules אין __dirname מובנה, ולכן הוא נגזר מכתובת הקובץ
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import mediaRouter from "./Routers/media.router.js";
 
 const app = express();
 const PORT = process.env.PORT || 1234;
@@ -24,9 +19,6 @@ const MONGO_URI = process.env.MONGO_URI;
 
 app.use(cors());
 app.use(express.json());
-
-// תמונות הקורסים נשמרות בדיסק המקומי ולא במסד, ולכן מוגשות כקבצים סטטיים
-app.use("/images", express.static(path.join(__dirname, "Images/OutImages")));
 
 // כישלון בחיבור לא מפיל את השרת - הבקשות ייכשלו בנפרד עם 500
 const connectDB = async () => {
@@ -46,6 +38,7 @@ app.use("/shoppingCarts", shoppingCartsRouter);
 app.use("/payments", paymentsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/faq", faqRouter);
+app.use("/media", mediaRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);

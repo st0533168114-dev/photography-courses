@@ -13,12 +13,10 @@ const CourseSchema = mongoose.Schema({
     min: 0,
   },
   youtubeLink: String,
-  // תמונת ברירת מחדל כדי שקורס בלי תמונה לא ישבור את התצוגה בלקוח
   courseImage: {
     type: String,
-    required: true,
     trim: true,
-    default: "ImagesOutImages0738_-canon_600.jpeg",
+    default: "https://res.cloudinary.com/tcs2p8ac/image/upload/v1792075678/0000738_-canon_600.jpg",
   },
   categoryId: {
     type: ObjectId,
