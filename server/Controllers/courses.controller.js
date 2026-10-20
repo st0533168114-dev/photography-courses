@@ -18,7 +18,7 @@ const CoursesController = {
       const coursesList = await courses.find({});
       res.status(200).json(coursesList);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
   getById: async (req, res) => {
@@ -26,11 +26,11 @@ const CoursesController = {
     try {
       const course = await courses.findById(id);
       if (!course) {
-        return res.status(404).json({ message: "Course not found" });
+        return res.status(404).json({ message: "הקורס לא נמצא" });
       }
       res.status(200).json(course);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -62,7 +62,7 @@ const CoursesController = {
       await newCourse.save();
       res.status(201).json(newCourse);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -82,12 +82,12 @@ const CoursesController = {
       });
 
       if (!updatedCourse) {
-        return res.status(404).json({ message: "Course not found" });
+        return res.status(404).json({ message: "הקורס לא נמצא" });
       }
 
       res.status(200).json(updatedCourse);
     } catch (error) {
-      res.status(500).json({ error: "Course update failed" + error });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -103,7 +103,7 @@ const CoursesController = {
     try {
       const course = await courses.findById(id);
       if (!course) {
-        return res.status(404).json({ message: "Course not found" });
+        return res.status(404).json({ message: "הקורס לא נמצא" });
       }
       if (!transition.from.includes(course.status)) {
         return res.status(409).json({ message: "הפעולה אינה חוקית מהסטטוס הנוכחי של הקורס" });
@@ -121,7 +121,7 @@ const CoursesController = {
     try {
       const course = await courses.findById(id);
       if (!course) {
-        return res.status(404).json({ message: "Course not found" });
+        return res.status(404).json({ message: "הקורס לא נמצא" });
       }
       if (course.status !== "draft") {
         return res
@@ -141,7 +141,7 @@ const CoursesController = {
       const coursesList = await courses.find({ categoryId: id });
       res.status(200).json(coursesList);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
 };
