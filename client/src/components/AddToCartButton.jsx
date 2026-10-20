@@ -35,7 +35,7 @@ export default function AddToCartButton(props) {
           state: { from: location.pathname, message: "כדי להוסיף קורס לסל עליך להתחבר לחשבונך" },
         });
       }
-      else if (err && err.status === 400) {
+      else if (err && (err.status === 400 || err.status === 409)) {
         setNote(err.message);
       }
       else {

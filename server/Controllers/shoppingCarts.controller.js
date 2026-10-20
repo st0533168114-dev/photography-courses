@@ -75,7 +75,7 @@ const ShoppingCartsController = {
       const buyer = await users.findById(userId).select("courseIds");
       const isOwned = (buyer?.courseIds || []).some((id) => id.toString() === courseId);
       if (isOwned) {
-        return res.status(400).json({ message: "הקורס כבר נרכש" });
+        return res.status(409).json({ message: "הקורס כבר נרכש" });
       }
 
       // יצירת העגלה מופרדת מההוספה: upsert יחד עם תנאי ה-$ne שלמטה היה יוצר עגלה נוספת
@@ -104,7 +104,7 @@ const ShoppingCartsController = {
 
       // תוצאה ריקה כאן משמעותה שהתנאי לא התקיים, כלומר הקורס כבר בעגלה
       if (!updatedCart) {
-        return res.status(400).json({ message: "הקורס כבר נמצא בסל" });
+        return res.status(409).json({ message: "הקורס כבר נמצא בסל" });
       }
 
       return res.status(200).json(await resolveCart(updatedCart));

@@ -80,7 +80,7 @@ const PaymentsController = {
 
       res.status(200).json(updatedPayment);
     } catch (error) {
-      res.status(400).json({ message: "נתוני התשלום אינם תקינים" });
+      res.status(500).json({ error: error.message });
     }
   },
 };
