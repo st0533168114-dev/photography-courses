@@ -17,5 +17,12 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      "no-alert": "error",
+      "no-restricted-syntax": ["error", {
+        selector: "CallExpression[optional=true]",
+        message: "בלי קריאה אופציונלית fn?.()",
+      }],
+    },
   },
 ]);
