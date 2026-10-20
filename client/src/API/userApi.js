@@ -8,7 +8,7 @@ export const loginUser = async (credentials) => {
   return response.data;
 };
 export const addUser = async (user) => {
-  const response = await api.post(`/users`, user);
+  const response = await api.post(`/users/register`, user);
   if (response.data && response.data.token) {
     localStorage.setItem("token", response.data.token);
   }
