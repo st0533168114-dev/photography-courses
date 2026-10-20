@@ -15,7 +15,7 @@ const FaqController = {
     try {
       const faq = await faqs.findById(id);
       if (!faq) {
-        return res.status(404).json({ message: "Faq not found" });
+        return res.status(404).json({ message: "השאלה לא נמצאה" });
       }
       res.status(200).json(faq);
     } catch (error) {
@@ -52,7 +52,7 @@ const FaqController = {
     );
 
     if (!updatedFaq) {
-      return res.status(404).json({ message: "Faq not found" });
+      return res.status(404).json({ message: "השאלה לא נמצאה" });
     }
 
     res.status(200).json(updatedFaq);
@@ -65,7 +65,7 @@ const FaqController = {
     try {
       const deletedFaq = await faqs.findByIdAndDelete(id);
       if (!deletedFaq) {
-        return res.status(404).json({ message: "Faq not found" });
+        return res.status(404).json({ message: "השאלה לא נמצאה" });
       }
       res.status(200).json(deletedFaq);
     } catch (error) {

@@ -12,7 +12,7 @@ const ShoppingCartsController = {
       res.status(200).json(shoppingCartsList);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Failed to fetch shopping carts" });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -27,7 +27,7 @@ const ShoppingCartsController = {
       res.status(200).json(await resolveCart(shoppingCart));
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Failed to fetch shopping cart" });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -45,12 +45,12 @@ const ShoppingCartsController = {
         }
       );
       if (!updateShoppingCart) {
-        return res.status(404).json({ message: "Shopping cart not found" });
+        return res.status(404).json({ message: "סל הקניות לא נמצא" });
       }
       res.status(200).json(updateShoppingCart);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Clear cart failed" });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -59,13 +59,13 @@ const ShoppingCartsController = {
     const { courseId } = req.body;
 
     if (!courseId || !mongoose.Types.ObjectId.isValid(courseId)) {
-      return res.status(400).json({ message: "Invalid or missing course id" });
+      return res.status(400).json({ message: "מזהה קורס חסר או לא תקין" });
     }
 
     try {
       const courseDetails = await course.findById(courseId);
       if (!courseDetails) {
-        return res.status(404).json({ message: "Course not found" });
+        return res.status(404).json({ message: "הקורס לא נמצא" });
       }
 
       if (courseDetails.status !== "available") {
@@ -110,24 +110,24 @@ const ShoppingCartsController = {
       return res.status(200).json(await resolveCart(updatedCart));
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Add to cart failed" });
+      res.status(500).json({ error: error.message });
     }
   },
   removeFromCart: async (req, res) => {
     const userId = req.user.userId;
     const { courseId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(courseId)) {
-      return res.status(400).json({ message: "Invalid course id" });
+      return res.status(400).json({ message: "מזהה קורס לא תקין" });
     }
     try {
       const currentShoppingCart = await shoppingCarts.findOne({ userId: userId });
-      if (!currentShoppingCart) return res.status(404).json({ message: "Shopping cart not found" });
+      if (!currentShoppingCart) return res.status(404).json({ message: "סל הקניות לא נמצא" });
       const isInCart = currentShoppingCart.courseList.some(
         (course) => course.courseId.toString() === courseId
       );
 
       if (!isInCart) {
-        return res.status(404).json({ message: "Course not found in cart" });
+        return res.status(404).json({ message: "הקורס לא נמצא בסל" });
       }
       const updateShoppingCart = await shoppingCarts.findOneAndUpdate(
         { userId: userId },
@@ -146,7 +146,7 @@ const ShoppingCartsController = {
 
       res.status(200).json(await resolveCart(updateShoppingCart));
     } catch (error) {
-      res.status(500).json({ error: "remove from cart failed" + error });
+      res.status(500).json({ error: error.message });
     }
   },
 

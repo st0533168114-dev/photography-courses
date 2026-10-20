@@ -17,7 +17,7 @@ const UsersController = {
       const usersList = await users.find({}).select("-password");
       res.status(200).json(usersList);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
   getCount: async (req, res) => {
@@ -33,11 +33,11 @@ const UsersController = {
     try {
       const user = await users.findById(id).select("-password");
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: "המשתמש לא נמצא" });
       }
       res.status(200).json(user);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
   getProfile: async (req, res) => {
@@ -45,7 +45,7 @@ const UsersController = {
       const user = await users.findById(req.user.userId).select("-password");
 
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: "המשתמש לא נמצא" });
       }
 
       res.status(200).json(user);
@@ -58,13 +58,13 @@ const UsersController = {
     const { firstName, lastName, email, userName, password, phoneNumber, courseIds } = req.body;
 
     if (!firstName || !lastName || !email || !userName || !password || !phoneNumber) {
-      return res.status(400).json({ message: "All required fields must be provided" });
+      return res.status(400).json({ message: "יש למלא את כל שדות החובה" });
     }
 
     try {
       const existingUser = await users.findOne({ $or: [{ email }, { userName }] });
       if (existingUser) {
-        return res.status(400).json({ message: "Email or username already exists" });
+        return res.status(400).json({ message: "האימייל או שם המשתמש כבר קיימים במערכת" });
       }
 
       const newUser = new users({
@@ -113,7 +113,7 @@ const UsersController = {
         : Object.fromEntries(Object.entries(req.body).filter(([key]) => SELF_EDITABLE.includes(key)));
     try {
       if (req.user.userId !== id && req.user.role !== "admin") {
-        return res.status(403).json({ message: "Forbidden" });
+        return res.status(403).json({ message: "אין הרשאה לבצע פעולה זו" });
       }
       if (user.password) {
         user.password = await hashPassword(user.password);
@@ -126,7 +126,7 @@ const UsersController = {
         .select("-password");
 
       if (!updatedUser) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: "המשתמש לא נמצא" });
       }
 
       res.status(200).json(updatedUser);
@@ -137,7 +137,7 @@ const UsersController = {
           : "שם המשתמש כבר קיים במערכת";
         return res.status(400).json({ message });
       }
-      res.status(500).json({ error: "User update failed" + error.message });
+      res.status(500).json({ error: error.message });
     }
   },
   login: async (req, res) => {

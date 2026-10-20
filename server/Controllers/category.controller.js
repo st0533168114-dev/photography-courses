@@ -8,7 +8,7 @@ const CategoriesController = {
       const categoriesList = await categories.find({});
       res.status(200).json(categoriesList);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
   getById: async (req, res) => {
@@ -16,11 +16,11 @@ const CategoriesController = {
     try {
       const category = await categories.findById(id);
       if (!category) {
-        return res.status(404).json({ message: "Category not found" });
+        return res.status(404).json({ message: "הקטגוריה לא נמצאה" });
       }
       res.status(200).json(category);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -33,7 +33,7 @@ const CategoriesController = {
       await newCategory.save();
       res.status(201).json(newCategory);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -47,12 +47,12 @@ const CategoriesController = {
       });
 
       if (!updatedCategory) {
-        return res.status(404).json({ message: "Category not found" });
+        return res.status(404).json({ message: "הקטגוריה לא נמצאה" });
       }
 
       res.status(200).json(updatedCategory);
     } catch (error) {
-      res.status(404).json({ error: "Category update failed" + error });
+      res.status(500).json({ error: error.message });
     }
   },
   delete: async (req, res) => {
@@ -68,11 +68,11 @@ const CategoriesController = {
 
       const deletedCategory = await categories.findByIdAndDelete(id);
       if (!deletedCategory) {
-        return res.status(404).json({ message: "Category not found" });
+        return res.status(404).json({ message: "הקטגוריה לא נמצאה" });
       }
       res.status(200).json(deletedCategory);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     }
   },
 };

@@ -52,10 +52,10 @@ const OrdersController = {
         .populate("userId", "firstName lastName email")
         .populate("paymentsList");
       if (!order) {
-        return res.status(404).json({ message: "Order not found" });
+        return res.status(404).json({ message: "ההזמנה לא נמצאה" });
       }
       if (order.userId?._id.toString() !== userId && userRole !== "admin") {
-        return res.status(403).json({ message: "Unauthorized to view this order" });
+        return res.status(403).json({ message: "אין הרשאה לצפות בהזמנה זו" });
       }
       res.status(200).json(order);
     } catch (error) {
@@ -69,7 +69,7 @@ const OrdersController = {
       const userId = req.user.userId;
       const userCart = await shoppingCarts.findOne({ userId: userId });
       if (!userCart || userCart.courseList.length === 0) {
-        return res.status(400).json({ message: "Cannot place an order with an empty cart" });
+        return res.status(400).json({ message: "לא ניתן לבצע הזמנה עם סל ריק" });
       }
 
       const resolvedCart = await resolveCart(userCart);
@@ -82,7 +82,7 @@ const OrdersController = {
       }
 
       if (resolvedCart.courseList.length === 0) {
-        return res.status(400).json({ message: "Cannot place an order with an empty cart" });
+        return res.status(400).json({ message: "לא ניתן לבצע הזמנה עם סל ריק" });
       }
 
       const buyer = await users.findById(userId).select("courseIds");
@@ -167,7 +167,7 @@ const OrdersController = {
       });
 
       if (!updatedOrder) {
-        return res.status(404).json({ message: "Order not found" });
+        return res.status(404).json({ message: "ההזמנה לא נמצאה" });
       }
 
       res.status(200).json(updatedOrder);

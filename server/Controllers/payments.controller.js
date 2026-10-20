@@ -32,12 +32,12 @@ const PaymentsController = {
       const payment = await payments.findById(id).populate("orderId");
 
       if (!payment) {
-        return res.status(404).json({ message: "Payment not found" });
+        return res.status(404).json({ message: "התשלום לא נמצא" });
       }
 
       const isOrderOwner = payment.orderId && payment.orderId.userId.toString() === req.user.userId;
       if (!isOrderOwner && req.user.role !== "admin") {
-        return res.status(403).json({ message: "Access denied. Unauthorized." });
+        return res.status(403).json({ message: "אין הרשאה לצפות בתשלום זה" });
       }
       res.status(200).json(payment);
     } catch (error) {
@@ -75,12 +75,12 @@ const PaymentsController = {
       });
 
       if (!updatedPayment) {
-        return res.status(404).json({ message: "Payment not found" });
+        return res.status(404).json({ message: "התשלום לא נמצא" });
       }
 
       res.status(200).json(updatedPayment);
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ message: "נתוני התשלום אינם תקינים" });
     }
   },
 };
