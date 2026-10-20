@@ -11,6 +11,5 @@ UsersRouter.get("/profile", jwtMiddleware, UsersController.getProfile);
 UsersRouter.get("/count", jwtMiddleware, isAdminMiddleware, UsersController.getCount);
 UsersRouter.get("/", jwtMiddleware, isAdminMiddleware, UsersController.get);
 UsersRouter.get("/:id", jwtMiddleware, isAdminMiddleware, UsersController.getById);
-UsersRouter.post("/", UsersController.post);
 UsersRouter.put("/:id", jwtMiddleware, UsersController.put);
 export default UsersRouter;

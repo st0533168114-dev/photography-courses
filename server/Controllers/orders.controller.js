@@ -92,7 +92,7 @@ const OrdersController = {
       );
       if (alreadyOwnedCourse) {
         return res
-          .status(400)
+          .status(409)
           .json({ message: `הקורס "${alreadyOwnedCourse.courseName}" כבר נרכש` });
       }
 
