@@ -6,7 +6,7 @@ export const getCategories = createAsyncThunk("categories/getCategories", async 
     const response = await categoryApi.getCategories();
     return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue("שליפת הקטגוריות נכשלה");
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "שליפת הקטגוריות נכשלה");
   }
 });
 
@@ -19,7 +19,7 @@ export const addCategory = createAsyncThunk(
       const response = await categoryApi.addCategory(category);
       return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue("הוספת הקטגוריה נכשלה");
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "הוספת הקטגוריה נכשלה");
     }
   }
 );
@@ -31,7 +31,7 @@ export const updateCategory = createAsyncThunk(
       const response = await categoryApi.updateCategory(categoryId, categoryToUpdate);
       return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue("עדכון הקטגוריה נכשל");
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "עדכון הקטגוריה נכשל");
     }
   }
 );

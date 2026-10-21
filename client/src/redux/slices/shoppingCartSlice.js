@@ -6,7 +6,7 @@ export const getCart = createAsyncThunk("shoppingCart/getCart", async (_, thunkA
     const response = await shoppingCartApi.getShoppingCart();
     return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue("Get cart failed");
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "טעינת הסל נכשלה");
   }
 });
 
@@ -30,7 +30,7 @@ export const removeFromCart = createAsyncThunk(
       const response = await shoppingCartApi.removeFromShoppingCart(courseId);
       return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue("Remove from cart failed");
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "המחיקה מהסל נכשלה");
     }
   }
 );
@@ -40,7 +40,7 @@ export const clearCart = createAsyncThunk("shoppingCart/clearCart",
     const response = await shoppingCartApi.clearShoppingCart();
     return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue("Clear cart failed");
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "ריקון הסל נכשל");
   }
 });
 
