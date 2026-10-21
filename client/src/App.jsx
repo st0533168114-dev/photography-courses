@@ -39,7 +39,7 @@ import CourseDetailsPage from "./pages/CourseDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  const isCheckingAuth = useSelector((state) => state.auth.isCheckingAuth);
 
   // הטוקן נבדק מול השרת בכל טעינה, כדי שהמשתמש יישאר מחובר גם אחרי ריענון
   useEffect(() => {
@@ -47,7 +47,7 @@ function App() {
   }, [dispatch]);
 
   // חוסם את רינדור הראוטים עד לסיום הבדיקה, אחרת משתמש מחובר היה נשלח רגע למסך התחברות
-  if (isLoading) {
+  if (isCheckingAuth) {
     return (
       <div
         className="loading-container"

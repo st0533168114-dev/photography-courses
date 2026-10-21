@@ -17,6 +17,7 @@ export default function SignUpPage() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [formError, setFormError] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,10 +39,11 @@ export default function SignUpPage() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setFormError(null);
     const resultAction = await dispatch(registerUser(formData));
 
     if (registerUser.rejected.match(resultAction)) {
-      alert("ההרשמה נכשלה. ייתכן ששם המשתמש או האימייל כבר קיימים במערכת");
+      setFormError(resultAction.payload || "ההרשמה נכשלה. ייתכן ששם המשתמש או האימייל כבר קיימים במערכת");
     }
   };
 
@@ -51,6 +53,7 @@ export default function SignUpPage() {
       <div className={styles.page}>
         <div className={styles.card}>
           <h1 className={styles.title}>הרשמה</h1>
+          {formError && <div className={styles.error}>{formError}</div>}
           <form className={styles.form} onSubmit={handleRegister}>
             <div className={styles.field}>
               <input

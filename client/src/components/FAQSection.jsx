@@ -16,7 +16,7 @@ export default function FAQSection() {
         // הגנה על תגובה לא צפויה מהשרת - map על ערך שאינו מערך היה מפיל את הקומפוננטה
         setFaqsList(Array.isArray(data) ? data : []);
       } catch (err) {
-        setError(err.message || "נכשלה טעינת השאלות והתשובות");
+        setError(err.response?.data?.message || "נכשלה טעינת השאלות והתשובות");
       } finally {
         setIsLoading(false);
       }

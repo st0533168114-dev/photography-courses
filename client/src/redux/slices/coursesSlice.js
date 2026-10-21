@@ -7,7 +7,7 @@ export const getCourses = createAsyncThunk("courses/getCourses", async (_, thunk
     const response = await coursesApi.getCourses();
     return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue("שליפת הקורסים נכשלה");
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "שליפת הקורסים נכשלה");
   }
 });
 // כמעט ולא בשימוש - הקומפוננטות מסננות קורס בודד מתוך הרשימה שבסטייט ולא מביאות אותו בנפרד מהשרת
@@ -18,7 +18,7 @@ export const getCourseById = createAsyncThunk(
       const response = await coursesApi.getCourseById(courseId);
       return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue("שליפת הקורס נכשלה");
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "שליפת הקורס נכשלה");
     }
   }
 );
@@ -28,7 +28,7 @@ export const addCourse = createAsyncThunk("courses/addCourse", async (course, th
     const response = await coursesApi.addCourse(course);
     return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue("הוספת הקורס נכשלה");
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "הוספת הקורס נכשלה");
   }
 });
 

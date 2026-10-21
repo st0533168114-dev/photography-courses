@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styles from "../CSS/components/FAQItem.module.css";
 
-export default function FAQItem({ faq }) {
+export default function FAQItem(props) {
+  const { faq } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   if (!faq) return null;

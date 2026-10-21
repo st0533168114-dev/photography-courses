@@ -18,7 +18,7 @@ export default function CategoryGrid(props) {
     if (categoriesList.length === 0) {
       dispatch(getCategories());
     }
-  }, [dispatch, categoriesList.length]);
+  }, [dispatch]);
 
   if (isLoading) {
     return <p className={styles.status}>טוען קטגוריות ממסד הנתונים...</p>;

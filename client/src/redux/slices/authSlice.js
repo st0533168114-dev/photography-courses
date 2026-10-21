@@ -39,7 +39,10 @@ const authSlice = createSlice({
   initialState: {
     user: null,
     isLoggedIn: false,
-    isLoading: true, // מתחיל ב-true כדי שמסך ההתחברות לא יוצג לרגע למשתמש שכבר מחובר
+    // מתחיל ב-true כדי שמסך ההתחברות לא יוצג לרגע למשתמש שכבר מחובר.
+    // נפרד מ-isLoading: אחרת הרשמה/התחברות מחליפות את כל האתר במסך טעינה והטופס נבנה מחדש ומתרוקן
+    isCheckingAuth: true,
+    isLoading: false,
     error: null,
   },
   reducers: {
@@ -64,17 +67,17 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(checkAuth.pending, (state) => {
-        state.isLoading = true;
+        state.isCheckingAuth = true;
         state.error = null;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isCheckingAuth = false;
         state.isLoggedIn = true;
         state.user = action.payload;
       })
       // error לא מתעדכן כאן: אורח שאינו מחובר אינו מקרה שגיאה שצריך להציג במסך
       .addCase(checkAuth.rejected, (state) => {
-        state.isLoading = false;
+        state.isCheckingAuth = false;
         state.isLoggedIn = false;
         state.user = null;
       })

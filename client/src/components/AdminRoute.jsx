@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 // הגנה בצד הלקוח בלבד - היא מסתירה את הממשק, והאכיפה האמיתית נעשית ב-isAdminMiddleware בשרת
 export default function AdminRoute(props) {
   const { children } = props; 
-  const { isLoading, isLoggedIn, user } = useSelector((state) => state.auth);
+  const { isCheckingAuth, isLoggedIn, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isCheckingAuth) return;
 
     if (!isLoggedIn) {
       navigate("/login");
@@ -19,9 +19,9 @@ export default function AdminRoute(props) {
       navigate("/");
       return;
     }
-  }, [isLoading, isLoggedIn, user, navigate]);
+  }, [isCheckingAuth, isLoggedIn, user, navigate]);
 
-  if (isLoading) {
+  if (isCheckingAuth) {
     return (
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
         <h3>טוען...</h3>
