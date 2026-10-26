@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
-import crypto from "crypto";
 import orders from "../Models/order.js";
+import payments from "../Models/payment.js";
 import shoppingCarts from "../Models/shoppingCart.js";
 import users from "../Models/user.js";
-import { createPayment } from "./payments.controller.js";
 import { resolveCart } from "../Services/shoppingCart.service.js";
+import { createPayment, completeOrder } from "../Services/payment.service.js";
+import { createProviderOrder, captureProviderOrder } from "../Services/paymentProvider.service.js";
 
 const OrdersController = {
   get: async (req, res) => {
@@ -102,55 +103,74 @@ const OrdersController = {
         price: item.price,
       }));
       const totalAmount = resolvedCart.subtotal;
+      if (totalAmount <= 0) {
+        return res.status(400).json({ message: "אין בהזמנה קורסים בתשלום" });
+      }
 
+      // נשמרת רק אחרי פתיחת העסקה, כדי שלא תישאר הזמנה בלי תשלום. ה-_id נוצר כבר ב-new
       const newOrder = new orders({
         userId: userId,
         coursesList,
         totalAmount,
       });
-
+      const { providerOrderId } = await createProviderOrder(totalAmount, newOrder._id.toString());
+      const newPayment = await createPayment({
+        orderId: newOrder._id,
+        paymentMethod: "PayPal",
+        providerOrderId,
+      });
+      newOrder.paymentsList.push(newPayment._id);
       await newOrder.save();
 
-      // אין עדיין אינטגרציה עם ספק סליקה אמיתי, לכן כל פרטי התשלום מומצאים אוטומטית בשרת
-      const paymentsResult = await createPayment({
-        orderId: newOrder._id,
-        status: "success",
-        paymentNumber: 1,
-        paymentMethod: "כרטיס אשראי",
-        transactionId: crypto.randomUUID(),
-      });
+      res.status(201).json({ order: newOrder, payments: newPayment });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: error.message });
+    }
+  },
 
-      newOrder.paymentsList = newOrder.paymentsList || [];
-      newOrder.paymentsList.push(paymentsResult._id);
-      let updatedUser = null;
-      if (paymentsResult.status === "success") {
-        newOrder.status = "completed";
-
-        // הוספת הקורסים למשתמש היא מה שפותח לו את הגישה לקורס, ולכן קורית רק אחרי תשלום מוצלח
-        const purchasedCourseIds = coursesList.map((course) => course.courseId);
-        updatedUser = await users.findByIdAndUpdate(
-          userId,
-          {
-            $addToSet: {
-              courseIds: {
-                $each: purchasedCourseIds,
-              },
-            },
-          },
-          { new: true }
-        ).select("-password");
-        if (!updatedUser) {
-          throw new Error("User not found");
-        }
+  // הגבייה מחוץ לטרנזקציה, כי טרנזקציה לא יכולה לבטל חיוב שכבר בוצע
+  capture: async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "מזהה הזמנה לא תקין" });
+    }
+    try {
+      const order = await orders.findById(id);
+      if (!order) {
+        return res.status(404).json({ message: "ההזמנה לא נמצאה" });
+      }
+      if (order.userId.toString() !== req.user.userId) {
+        return res.status(403).json({ message: "אין הרשאה לשלם על הזמנה זו" });
+      }
+      if (order.status !== "incomplete") {
+        return res.status(409).json({ message: "ההזמנה כבר שולמה או בוטלה" });
       }
 
-      await newOrder.save();
+      const payment = await payments.findOne({ orderId: order._id, status: "pending" });
+      if (!payment) {
+        return res.status(409).json({ message: "אין תשלום ממתין להזמנה זו" });
+      }
 
-      res.status(201).json({
-        order: newOrder,
-        payments: paymentsResult,
-        user: updatedUser,
-      });
+      const capture = await captureProviderOrder(payment.providerOrderId);
+      if (capture.status === "DECLINED") {
+        return res.status(400).json({ message: "התשלום נדחה, אפשר לנסות אמצעי תשלום אחר" });
+      }
+      const isPaid =
+        capture.status === "COMPLETED" &&
+        capture.amount === order.totalAmount.toFixed(2) &&
+        capture.currency === "ILS";
+      if (!isPaid) {
+        await payments.findByIdAndUpdate(payment._id, { status: "failed" }, { runValidators: true });
+        return res.status(400).json({ message: "התשלום לא אושר, והגישה לקורסים לא נפתחה" });
+      }
+
+      const result = await completeOrder(order._id, payment._id, capture.transactionId);
+      if (!result) {
+        return res.status(409).json({ message: "ההזמנה כבר שולמה או בוטלה" });
+      }
+
+      res.status(200).json({ order: result.order, payments: result.payment, user: result.user });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.message });

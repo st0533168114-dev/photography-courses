@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
-// תשלום המשויך להזמנה אחת ב-orders. נוצר אוטומטית ביצירת הזמנה, בלי ספק סליקה חיצוני
+// ניסיון תשלום אחד של הזמנה ב-orders. רק השרת יוצר ומעדכן אותו, לפי תשובת ספק הסליקה
 const PaymentSchema = new mongoose.Schema({
   orderId: {
     type: ObjectId,
@@ -14,8 +14,8 @@ const PaymentSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["success", "failed"],
-    default: "success",
+    enum: ["pending", "success", "failed"],
+    default: "pending",
   },
   // מספר התשלום בתוך ההזמנה - כרגע תמיד 1 כי אין תשלומים מרובים
   paymentNumber: {
@@ -27,11 +27,17 @@ const PaymentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // מזהה העסקה מול הסליקה - ייחודי כדי למנוע רישום כפול של אותו חיוב
-  transactionId: {
+  providerOrderId: {
     type: String,
     required: true,
     unique: true,
+  },
+  // נוצר רק אחרי גבייה, לכן הרבה רשומות בלי ערך.
+// sparse מאפשר זאת, ועדיין מונע כפילות בין מזהים קיימים.
+  transactionId: {
+    type: String,
+    unique: true,
+    sparse: true,
   },
 });
 
