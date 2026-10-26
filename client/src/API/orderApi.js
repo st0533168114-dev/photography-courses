@@ -20,7 +20,11 @@ export const addOrder = async (order) => {
   const response = await api.post(`/orders`, order);
   return response.data;
 };
-export const updateOrder = async (orderId, orderToUpdate) => {
+export const captureOrder = async (orderId) => {
+  const response = await api.post(`/orders/${orderId}/capture`);
+  return response.data;
+};
+export const updateOrder =async (orderId, orderToUpdate) => {
   const response = await api.put(`/orders/${orderId}`, orderToUpdate);
   return response.data;
 };

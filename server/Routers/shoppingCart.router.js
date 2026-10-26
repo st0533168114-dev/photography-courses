@@ -9,5 +9,4 @@ ShoppingCartsRouter.get("/admin/all",jwtMiddleware,isAdminMiddleware,ShoppingCar
 ShoppingCartsRouter.get("/", jwtMiddleware, ShoppingCartsController.getByUserId);
 ShoppingCartsRouter.post("/items", jwtMiddleware, ShoppingCartsController.addToCart);
 ShoppingCartsRouter.delete("/items/:courseId", jwtMiddleware, ShoppingCartsController.removeFromCart);
-ShoppingCartsRouter.delete("/items", jwtMiddleware, ShoppingCartsController.clearCart);
 export default ShoppingCartsRouter;

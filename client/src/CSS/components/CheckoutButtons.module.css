@@ -1,0 +1,7 @@
+/* Styles for CheckoutButtons */
+
+.wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin-top: var(--space-4);
+}

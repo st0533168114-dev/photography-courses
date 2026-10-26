@@ -31,29 +31,6 @@ const ShoppingCartsController = {
     }
   },
 
-
-  clearCart: async (req, res) => {
-    const userId = req.user.userId;
-    try {
-      const updateShoppingCart = await shoppingCarts.findOneAndUpdate(
-        { userId: userId },
-        // איפוס הרשימה במקום מחיקת המסמך, כדי שהמשתמש ימשיך להחזיק באותה עגלה
-        { $set: { courseList: [] } },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-      if (!updateShoppingCart) {
-        return res.status(404).json({ message: "סל הקניות לא נמצא" });
-      }
-      res.status(200).json(updateShoppingCart);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message });
-    }
-  },
-
   addToCart: async (req, res) => {
     const userId = req.user.userId;
     const { courseId } = req.body;
