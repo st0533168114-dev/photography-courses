@@ -34,16 +34,6 @@ export const removeFromCart = createAsyncThunk(
     }
   }
 );
-export const clearCart = createAsyncThunk("shoppingCart/clearCart",
-   async (_, thunkAPI) => {
-  try {
-    const response = await shoppingCartApi.clearShoppingCart();
-    return response;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || "ריקון הסל נכשל");
-  }
-});
-
 const shoppingCartSlice = createSlice({
   name: "shoppingCart",
   initialState: {
@@ -52,6 +42,9 @@ const shoppingCartSlice = createSlice({
     error: null,
   },
   reducers: {
+    resetCart(state) {
+      state.cart = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -90,20 +83,9 @@ const shoppingCartSlice = createSlice({
       .addCase(getCart.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
-      .addCase(clearCart.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(clearCart.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.cart = action.payload;
-      })
-      .addCase(clearCart.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
       });
 
   },
 });
+export const { resetCart } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;

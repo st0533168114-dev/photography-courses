@@ -55,7 +55,7 @@ const UsersController = {
   },
 
   post: async (req, res) => {
-    const { firstName, lastName, email, userName, password, phoneNumber, courseIds } = req.body;
+    const { firstName, lastName, email, userName, password, phoneNumber } = req.body;
 
     if (!firstName || !lastName || !email || !userName || !password || !phoneNumber) {
       return res.status(400).json({ message: "יש למלא את כל שדות החובה" });
@@ -74,7 +74,6 @@ const UsersController = {
         userName,
         password: await hashPassword(password),
         phoneNumber,
-        courseIds,
       });
       await newUser.save();
       const token = jwt.sign(

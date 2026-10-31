@@ -7,7 +7,4 @@ const PaymentsRouter = express.Router();
 
 PaymentsRouter.get("/", jwtMiddleware, isAdminMiddleware, PaymentsController.get);
 PaymentsRouter.get("/:id", jwtMiddleware, PaymentsController.getById);
-// יצירת תשלום ידנית מוגבלת למנהל - תשלום של משתמש נוצר רק כחלק מיצירת הזמנה
-PaymentsRouter.post("/", jwtMiddleware, isAdminMiddleware, PaymentsController.post);
-PaymentsRouter.put("/:id", jwtMiddleware, isAdminMiddleware, PaymentsController.put);
 export default PaymentsRouter;
