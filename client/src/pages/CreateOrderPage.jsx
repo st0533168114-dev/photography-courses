@@ -74,7 +74,8 @@ export default function CreateOrderPage() {
       dispatch(updateUserCourses(response.user.courseIds));
       dispatch(resetCart());
 
-      navigate("/paymentConfirmation");
+      // replace: "חזור" מעמוד האישור לא יחזיר לעמוד התשלום עם עגלה ריקה
+      navigate("/paymentConfirmation", { state: { order: response.order }, replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "התשלום נכשל, נסה שוב");
     } finally {
