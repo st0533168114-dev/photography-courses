@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import users from "../Models/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { syncPendingPayments } from "../Services/payment.service.js";
 const secretKey = process.env.JWT_SECRET;
 // כשהמשתמש לא קיים משווים מול hash מדומה, כדי שזמן התגובה יהיה זהה לזה של סיסמה שגויה
 // ותוקף לא יוכל להסיק מכך אילו שמות משתמש קיימים
@@ -42,6 +43,9 @@ const UsersController = {
   },
   getProfile: async (req, res) => {
     try {
+      // לפני שליפת המשתמש, כי השלמת הזמנה מוסיפה לו קורסים
+      await syncPendingPayments(req.user.userId);
+
       const user = await users.findById(req.user.userId).select("-password");
 
       if (!user) {

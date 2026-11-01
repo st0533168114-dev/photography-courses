@@ -4,7 +4,7 @@ import payments from "../Models/payment.js";
 import shoppingCarts from "../Models/shoppingCart.js";
 import users from "../Models/user.js";
 import { resolveCart } from "../Services/shoppingCart.service.js";
-import { createPayment, completeOrder } from "../Services/payment.service.js";
+import { createPayment, completeOrder, isCapturePaid } from "../Services/payment.service.js";
 import { createProviderOrder, captureProviderOrder } from "../Services/paymentProvider.service.js";
 
 const OrdersController = {
@@ -156,11 +156,7 @@ const OrdersController = {
       if (capture.status === "DECLINED") {
         return res.status(400).json({ message: "התשלום נדחה, אפשר לנסות אמצעי תשלום אחר" });
       }
-      const isPaid =
-        capture.status === "COMPLETED" &&
-        capture.amount === order.totalAmount.toFixed(2) &&
-        capture.currency === "ILS";
-      if (!isPaid) {
+      if (!isCapturePaid(capture, order.totalAmount)) {
         await payments.findByIdAndUpdate(payment._id, { status: "failed" }, { runValidators: true });
         return res.status(400).json({ message: "התשלום לא אושר, והגישה לקורסים לא נפתחה" });
       }

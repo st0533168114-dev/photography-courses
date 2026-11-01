@@ -25,6 +25,14 @@ const providerPost = async (path, body) => {
   return response.data;
 };
 
+const providerGet = async (path) => {
+  const accessToken = await getAccessToken();
+  const response = await axios.get(`${process.env.PAYPAL_API_BASE}${path}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return response.data;
+};
+
 export const createProviderOrder = async (amount, referenceId) => {
   const data = await providerPost("/v2/checkout/orders", {
     intent: "CAPTURE",
@@ -55,4 +63,19 @@ export const captureProviderOrder = async (providerOrderId) => {
     }
     throw error;
   }
+};
+
+// אותו מבנה כמו captureProviderOrder. בעסקה שלא נגבתה אין capture, ומוחזר סטטוס העסקה עצמה (CREATED, APPROVED וכו')
+export const getProviderOrderStatus = async (providerOrderId) => {
+  const data = await providerGet(`/v2/checkout/orders/${providerOrderId}`);
+  const capture = data.purchase_units[0].payments?.captures?.[0];
+  if (!capture) {
+    return { status: data.status };
+  }
+  return {
+    status: capture.status,
+    amount: capture.amount.value,
+    currency: capture.amount.currency_code,
+    transactionId: capture.id,
+  };
 };
