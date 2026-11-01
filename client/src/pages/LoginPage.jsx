@@ -37,7 +37,7 @@ export default function LoginPage() {
     const resultAction = await dispatch(loginUser({ userName: username, password: password }));
 
     if (loginUser.rejected.match(resultAction)) {
-      setFormError(resultAction.payload?.message || "פרטי התחברות שגויים או שאינך רשום במערכת");
+      setFormError(resultAction.payload || "פרטי התחברות שגויים או שאינך רשום במערכת");
     }
   };
 

@@ -15,7 +15,7 @@ export const checkAuth = createAsyncThunk("auth/checkAuth", async (_, thunkAPI) 
   }
 });
 
-export const registerUser = createAsyncThunk("users/registerUser", async (user, thunkAPI) => {
+export const registerUser = createAsyncThunk("auth/registerUser", async (user, thunkAPI) => {
   try {
     const response = await userApi.addUser(user);
     return response;
@@ -29,7 +29,7 @@ export const loginUser = createAsyncThunk("auth/loginUser", async (credentials, 
     const response = await userApi.loginUser(credentials);
     return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data || "ההתחברות נכשלה");
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "ההתחברות נכשלה");
   }
 });
 
