@@ -176,24 +176,5 @@ const OrdersController = {
       res.status(500).json({ error: error.message });
     }
   },
-
-  put: async (req, res) => {
-    const { id } = req.params;
-    const order = req.body;
-    try {
-      const updatedOrder = await orders.findByIdAndUpdate(id, order, {
-        new: true,
-        runValidators: true, // Mongoose לא מריץ ולידציה בעדכון אלא אם מבקשים במפורש
-      });
-
-      if (!updatedOrder) {
-        return res.status(404).json({ message: "ההזמנה לא נמצאה" });
-      }
-
-      res.status(200).json(updatedOrder);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
 };
 export default OrdersController;

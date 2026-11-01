@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getPayments } from "../../API/paymentApi";
+import { getPaymentStatusLabel } from "../../constants/paymentStatus";
 import styles from "../../CSS/pages/admin/AdminPaymentsPage.module.css";
 
 export default function AdminPaymentsPage() {
@@ -35,16 +36,9 @@ export default function AdminPaymentsPage() {
     {
       key: "status",
       label: "סטטוס",
-      render: (value) => {
-        const isSuccess = value === "success";
-        return (
-          <span className={isSuccess ? styles.successBadge : styles.failedBadge}>
-            {isSuccess ? "הצליח" : "נכשל"}
-          </span>
-        );
-      },
+      render: (value) => <span className={styles[`${value}Badge`]}>{getPaymentStatusLabel(value)}</span>,
     },
-    { key: "transactionId", label: "מזהה עסקה", render: (value) => <span className={styles.mono}>{value}</span> },
+    { key: "transactionId", label: "מזהה עסקה", render: (value) => <span className={styles.mono}>{value || "—"}</span> },
     {
       key: "orderId",
       label: "הזמנה",

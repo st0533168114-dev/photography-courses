@@ -21,7 +21,6 @@ import AdminUserDetailsPage from "./pages/admin/AdminUserDetailsPage";
 import AdminUserFormPage from "./pages/admin/AdminUserFormPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import AdminOrderDetailsPage from "./pages/admin/AdminOrderDetailsPage";
-import AdminOrderFormPage from "./pages/admin/AdminOrderFormPage";
 import AdminPaymentsPage from "./pages/admin/AdminPaymentsPage";
 import AdminFaqPage from "./pages/admin/AdminFaqPage";
 import AdminFaqFormPage from "./pages/admin/AdminFaqFormPage";
@@ -101,7 +100,6 @@ function App() {
 
                 <Route path='orders/list' element={<AdminOrdersPage />}></Route>
                 <Route path='orders/:orderId' element={<AdminOrderDetailsPage />}></Route>
-                <Route path='orders/:orderId/edit' element={<AdminOrderFormPage />}></Route>
 
                 <Route path='payments/list' element={<AdminPaymentsPage />}></Route>
 

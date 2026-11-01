@@ -9,6 +9,7 @@ import { getUserOrders } from "../API/orderApi";
 import { getCourses } from "../redux/slices/coursesSlice";
 import { updateUserDetails } from "../redux/slices/authSlice";
 import { getOrderStatusLabel } from "../constants/orderStatus";
+import { getPaymentStatusLabel } from "../constants/paymentStatus";
 import styles from "../CSS/pages/ProfilePage.module.css";
 
 const EMPTY_FORM = {
@@ -119,7 +120,7 @@ export default function ProfilePage() {
       render: (value) => {
         const isCompleted = value === "completed";
         return (
-          <span className={isCompleted ? styles.successBadge : styles.failedBadge}>
+          <span className={isCompleted ? styles.successBadge : styles.pendingBadge}>
             {getOrderStatusLabel(value)}
           </span>
         );
@@ -138,14 +139,7 @@ export default function ProfilePage() {
     {
       key: "status",
       label: "סטטוס",
-      render: (value) => {
-        const isSuccess = value === "success";
-        return (
-          <span className={isSuccess ? styles.successBadge : styles.failedBadge}>
-            {isSuccess ? "הצליח" : "נכשל"}
-          </span>
-        );
-      },
+      render: (value) => <span className={styles[`${value}Badge`]}>{getPaymentStatusLabel(value)}</span>,
     },
   ];
 
