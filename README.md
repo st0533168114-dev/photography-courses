@@ -6,17 +6,29 @@ Full-stack e-commerce platform for digital photography courses, built end-to-end
 ## ✨ Features
 - User registration, login & role-based access (JWT)
 - Course catalog, shopping cart & digital course purchases
+- Payments with PayPal: course access is granted only after a verified capture
+- Pending payments are verified with PayPal: paid orders are completed and abandoned ones are cancelled
 - Admin management interface
-- Course images uploaded to Cloudinary
+- Signed direct browser uploads to Cloudinary, with server-side URL validation
 - RESTful API with Express & Mongoose (MongoDB)
 - Responsive UI built with React, Redux & React Router
 
 ## 🌐 Live Demo
 [https://photography-courses-client.vercel.app/](https://photography-courses-client.vercel.app/)
 
+> The server is on Render's free tier and sleeps when idle, so the first load may take up to a minute.
+
+### 💳 Try a purchase
+Payments run on PayPal Sandbox, so no real money is charged.
+1. Sign up on the site and add a course to the cart
+2. At checkout, click the PayPal button and log in with this test buyer account:
+   - **Email:** `sb-8osj453550709@personal.example.com`
+   - **Password:** `4_'y9Y4)`
+3. Approve the payment. The course appears under "My Courses"
+
 ## 🛠️ Technologies
-- **Frontend:** React 19 · Vite · Redux Toolkit · React Router v7 · Axios · CSS Modules · Swiper
-- **Backend:** Node.js · Express 5 · Mongoose (MongoDB) · JWT · bcrypt · Cloudinary
+- **Frontend:** React 19 · Vite · Redux Toolkit · React Router v7 · Axios · CSS Modules · Swiper · PayPal JS SDK · Cloudinary
+- **Backend:** Node.js · Express 5 · Mongoose (MongoDB) · JWT · bcrypt · Cloudinary · PayPal REST API
 - **Deployment:** Vercel (client) · Render (server)
 
 ## 📁 Project Structure
@@ -60,7 +72,11 @@ npm start              # http://localhost:1234
 |---|---|
 | `MONGO_URI` | MongoDB connection string |
 | `JWT_SECRET` | Secret for signing tokens |
+| `PORT` | Server port (default `1234`) |
 | `CLOUDINARY_URL` | `cloudinary://<api_key>:<api_secret>@<cloud_name>` |
+| `PAYPAL_CLIENT_ID` | PayPal REST app client ID |
+| `PAYPAL_CLIENT_SECRET` | PayPal REST app secret |
+| `PAYPAL_API_BASE` | `https://api-m.sandbox.paypal.com` (sandbox) or `https://api-m.paypal.com` (live) |
 
 ### Client
 ```bash
@@ -75,3 +91,4 @@ npm run dev            # http://localhost:5173
 | `VITE_API_URL` | Server address, e.g. `http://localhost:1234` |
 | `VITE_CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
 | `VITE_CLOUDINARY_API_KEY` | Cloudinary API key (public) |
+| `VITE_PAYPAL_CLIENT_ID` | Same value as the server's `PAYPAL_CLIENT_ID` |
