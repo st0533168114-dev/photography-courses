@@ -1,7 +1,7 @@
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import CategoryGrid from "../components/CategoryGrid";
-import styles from "../CSS/pages/CategoriesPage.module.css";
+import styles from "../css/pages/CategoriesPage.module.css";
 
 export default function CategoriesPage() {
   return (

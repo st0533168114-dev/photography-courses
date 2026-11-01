@@ -5,7 +5,7 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import CourseCard from "../components/CourseCard";
 import { getCourses, clearCoursesError } from "../redux/slices/coursesSlice";
-import styles from "../CSS/pages/CoursesPage.module.css";
+import styles from "../css/pages/CoursesPage.module.css";
 
 export default function CoursesPage() {
   // categoryId קיים רק בנתיב /courses/:categoryId - בלעדיו מוצגים כל הקורסים

@@ -1,4 +1,4 @@
-import { signUpload } from "../Services/media.service.js";
+import { signUpload } from "../services/media.service.js";
 
 const MediaController = {
   sign: (req, res) => {

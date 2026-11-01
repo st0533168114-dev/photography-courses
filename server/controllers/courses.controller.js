@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import courses from "../Models/course.js";
-import { isCloudinaryUrl } from "../Services/media.service.js";
+import courses from "../models/course.js";
+import { isCloudinaryUrl } from "../services/media.service.js";
 
 const allowedTransitions = {
   publish: { from: ["draft", "notAvailable", "archived"], to: "available" },

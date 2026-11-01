@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FAQItem from "./FAQItem";
-import { getFaqs } from "../API/faqApi";
-import styles from "../CSS/components/FAQSection.module.css";
+import { getFaqs } from "../api/faqApi";
+import styles from "../css/components/FAQSection.module.css";
 
 export default function FAQSection() {
   const [faqsList, setFaqsList] = useState([]);

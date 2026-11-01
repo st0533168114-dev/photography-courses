@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
-import { getUserById, updateUser } from "../../API/userApi";
-import styles from "../../CSS/pages/admin/AdminUserFormPage.module.css";
+import { getUserById, updateUser } from "../../api/userApi";
+import styles from "../../css/pages/admin/AdminUserFormPage.module.css";
 
 export default function AdminUserFormPage() {
   const { userId } = useParams();

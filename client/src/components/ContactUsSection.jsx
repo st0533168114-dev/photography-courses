@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../CSS/components/ContactUsSection.module.css";
+import styles from "../css/components/ContactUsSection.module.css";
 export default function ContactUsSection() {
 
 //TODO

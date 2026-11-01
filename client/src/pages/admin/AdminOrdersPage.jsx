@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
-import { getOrders } from "../../API/orderApi";
+import { getOrders } from "../../api/orderApi";
 import { getOrderStatusLabel } from "../../constants/orderStatus";
-import styles from "../../CSS/pages/admin/AdminOrdersPage.module.css";
+import styles from "../../css/pages/admin/AdminOrdersPage.module.css";
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState([]);

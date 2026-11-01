@@ -1,6 +1,6 @@
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import styles from "../CSS/pages/AboutPage.module.css";
+import styles from "../css/pages/AboutPage.module.css";
 
 export default function AboutPage() {
   return (

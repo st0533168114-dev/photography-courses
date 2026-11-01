@@ -1,4 +1,4 @@
-import styles from "../CSS/components/MyCourseItem.module.css";
+import styles from "../css/components/MyCourseItem.module.css";
 
 export default function MyCourseItem(props) {
   const { course } = props;

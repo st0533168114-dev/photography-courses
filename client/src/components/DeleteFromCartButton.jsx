@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../redux/slices/shoppingCartSlice";
-import styles from "../CSS/components/DeleteFromCartButton.module.css";
+import styles from "../css/components/DeleteFromCartButton.module.css";
 
 export default function DeleteFromCartButton(props) {
   const { courseId } = props;

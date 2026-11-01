@@ -38,16 +38,16 @@ photography-courses/
 │   ├── pages/        # Site pages (admin/ for the management panel)
 │   ├── components/   # Reusable components
 │   ├── layout/       # Header and Footer
-│   ├── API/          # Axios calls to the server
+│   ├── api/          # Axios calls to the server
 │   ├── redux/        # Store and slices
-│   └── CSS/          # CSS Modules
+│   └── css/          # CSS Modules
 └── server/
     ├── app.js        # Entry point: express, DB, CORS, routers
-    ├── Routers/      # API route definitions
-    ├── Controllers/  # Request handling
-    ├── Services/     # Logic shared between controllers
-    ├── Models/       # Mongoose schemas
-    └── Middlewares/  # JWT authentication and admin authorization
+    ├── routers/      # API route definitions
+    ├── controllers/  # Request handling
+    ├── services/     # Logic shared between controllers
+    ├── models/       # Mongoose schemas
+    └── middlewares/  # JWT authentication and admin authorization
 ```
 
 ## 🔌 API Routes

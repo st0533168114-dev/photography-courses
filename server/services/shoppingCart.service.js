@@ -1,4 +1,4 @@
-import courses from "../Models/course.js";
+import courses from "../models/course.js";
 
 export const resolveCart = async (cart) => {
   const courseIds = cart.courseList.map((item) => item.courseId);

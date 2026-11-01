@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styles from "../CSS/components/PurchaseButton.module.css";
+import styles from "../css/components/PurchaseButton.module.css";
 
 export default function PurchaseButton(props) {
   const { disabled } = props;

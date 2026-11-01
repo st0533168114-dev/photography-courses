@@ -13,17 +13,17 @@ npm run lint      # ESLint
 
 ## Architecture
 
-SPA using `BrowserRouter` + routes defined in `src/App.jsx`, with `checkAuth` dispatched on load. Data flow: `API/*.js` (Axios) → `createAsyncThunk` in a Redux slice → components/pages via `useSelector`/`useDispatch`. Shared Axios instance in `src/API/axiosConfig.js` attaches the Bearer token from `localStorage` via an interceptor.
+SPA using `BrowserRouter` + routes defined in `src/App.jsx`, with `checkAuth` dispatched on load. Data flow: `api/*.js` (Axios) → `createAsyncThunk` in a Redux slice → components/pages via `useSelector`/`useDispatch`. Shared Axios instance in `src/api/axiosConfig.js` attaches the Bearer token from `localStorage` via an interceptor.
 
-- Pages: `src/pages/X.jsx` + `src/CSS/pages/X.module.css`, one route each in `App.jsx`
-- Components: `src/components/X.jsx` + `src/CSS/components/X.module.css`, reused inside pages
-- Admin pages for users, orders, payments and FAQ don't use Redux: they call `API/` directly with `useState`/`useEffect`
+- Pages: `src/pages/X.jsx` + `src/css/pages/X.module.css`, one route each in `App.jsx`
+- Components: `src/components/X.jsx` + `src/css/components/X.module.css`, reused inside pages
+- Admin pages for users, orders, payments and FAQ don't use Redux: they call `api/` directly with `useState`/`useEffect`
 - Admin tables use `DataTable` (`columns` with optional `render`, `rows`, `onEdit`, `onDelete`)
 
 ## General
 
 - JavaScript only (`.jsx`/`.js`), no TypeScript
-- Import order: React hooks → Router/Redux → local child components → API/slices → CSS Module import as `styles`. Import only what the file uses
+- Import order: React hooks → Router/Redux → local child components → api/slices → CSS Module import as `styles`. Import only what the file uses
 - Naming: PascalCase for components/pages, camelCase + `Api`/`Slice` suffix for logic files; thunk action names use `"domain/action"` strings
 - UI text is in Hebrew; users are called "משתמשים", never "לקוחות"
 
@@ -59,12 +59,12 @@ useEffect(() => {
 
 ## Async and errors
 
-- Make a handler `async` only if it awaits a thunk or an `API/` call. Navigation, toggles and props callbacks stay sync.
+- Make a handler `async` only if it awaits a thunk or an `api/` call. Navigation, toggles and props callbacks stay sync.
 - Every `await` is wrapped in `try/catch`. Add `finally` to reset a loading flag (`isAdding`).
 - Always `.unwrap()` thunks you await, or `catch` never fires.
 - Result affects only this file's UI (bubble, disabled button) → `async` + `try/catch`. Slice already exposes `isLoading`/`error` and a component shows them → plain `dispatch()` without `await` (see `CategoryGrid.jsx`).
 - In `useEffect`: always a block body; define an inner async function with `try/catch/finally` and call it; never make the effect itself `async` (see `FAQSection.jsx`).
-- Error message: `catch (err)` with `err || "..."` after an awaited thunk (slices reject with a string; `addToCart` rejects with `{ message, status }`), `err.response?.data?.message || "..."` after a direct `API/` call.
+- Error message: `catch (err)` with `err || "..."` after an awaited thunk (slices reject with a string; `addToCart` rejects with `{ message, status }`), `err.response?.data?.message || "..."` after a direct `api/` call.
 - Show the error to the user, don't only log it.
 - If a logged-out user can trigger the action, 401 → `navigate("/login", { state: { from, message } })` (see `AddToCartButton.jsx`).
 - User feedback is a small bubble next to the button that triggered it (see `AddToCartButton.jsx`), never `alert()` or a global toast.

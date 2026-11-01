@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import orders from "../Models/order.js";
-import payments from "../Models/payment.js";
-import users from "../Models/user.js";
-import shoppingCarts from "../Models/shoppingCart.js";
+import orders from "../models/order.js";
+import payments from "../models/payment.js";
+import users from "../models/user.js";
+import shoppingCarts from "../models/shoppingCart.js";
 import { getProviderOrderStatus } from "./paymentProvider.service.js";
 
 // עסקה ב-PayPal שלא נגבתה תוך שעה נחשבת נטושה. לפני כן ייתכן שהמשתמש עדיין באמצע התשלום

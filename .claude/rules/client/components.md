@@ -1,7 +1,7 @@
 ---
 paths:
   - "client/src/components/**"
-  - "client/src/CSS/components/**"
+  - "client/src/css/components/**"
 ---
 
 # Component rules
@@ -9,7 +9,7 @@ paths:
 Component-only additions to `client/CLAUDE.md`, which applies here too.
 
 ## Files
-- A component is always a pair: `components/X.jsx` + `CSS/components/X.module.css`.
+- A component is always a pair: `components/X.jsx` + `css/components/X.module.css`.
 - Admin-only components go under `admin/` in both folders.
 
 ## Props

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
-import { getOrderById } from "../../API/orderApi";
+import { getOrderById } from "../../api/orderApi";
 import { getOrderStatusLabel } from "../../constants/orderStatus";
 import { getPaymentStatusLabel } from "../../constants/paymentStatus";
-import styles from "../../CSS/pages/admin/AdminOrderDetailsPage.module.css";
+import styles from "../../css/pages/admin/AdminOrderDetailsPage.module.css";
 
 export default function AdminOrderDetailsPage() {
   const { orderId } = useParams();

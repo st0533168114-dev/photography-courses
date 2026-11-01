@@ -1,8 +1,8 @@
 import express from "express";
-import jwtMiddleware from "../Middlewares/jwt.middleware.js";
-import isAdminMiddleware from "../Middlewares/isAdmin.middleware.js";
+import jwtMiddleware from "../middlewares/jwt.middleware.js";
+import isAdminMiddleware from "../middlewares/isAdmin.middleware.js";
 
-import PaymentsController from "../Controllers/payments.controller.js";
+import PaymentsController from "../controllers/payments.controller.js";
 const PaymentsRouter = express.Router();
 
 PaymentsRouter.get("/", jwtMiddleware, isAdminMiddleware, PaymentsController.get);

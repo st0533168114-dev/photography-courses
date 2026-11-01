@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import users from "../Models/user.js";
+import users from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { syncPendingPayments } from "../Services/payment.service.js";
+import { syncPendingPayments } from "../services/payment.service.js";
 const secretKey = process.env.JWT_SECRET;
 // כשהמשתמש לא קיים משווים מול hash מדומה, כדי שזמן התגובה יהיה זהה לזה של סיסמה שגויה
 // ותוקף לא יוכל להסיק מכך אילו שמות משתמש קיימים

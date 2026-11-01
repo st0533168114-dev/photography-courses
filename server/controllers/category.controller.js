@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import categories from "../Models/category.js";
-import courses from "../Models/course.js";
+import categories from "../models/category.js";
+import courses from "../models/course.js";
 
 const CategoriesController = {
   get: async (req, res) => {

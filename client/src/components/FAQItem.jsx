@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../CSS/components/FAQItem.module.css";
+import styles from "../css/components/FAQItem.module.css";
 
 export default function FAQItem(props) {
   const { faq } = props;

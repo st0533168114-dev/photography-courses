@@ -9,7 +9,7 @@ Slice-writing rules. How pages and components read the store is in `client/CLAUD
 
 ## Files
 - One slice per domain: `src/redux/slices/<domain>Slice.js`, registered in `store.js` under the same `<domain>` key.
-- Import the API module as a namespace: `import * as coursesApi from "../../API/coursesApi";`.
+- Import the API module as a namespace: `import * as coursesApi from "../../api/coursesApi";`.
 
 ## Thunk
 
@@ -27,7 +27,7 @@ export const updateCourse = createAsyncThunk(
 );
 ```
 
-- Action name `"<sliceName>/<thunkName>"`, the thunk named like the `API/` function it calls.
+- Action name `"<sliceName>/<thunkName>"`, the thunk named like the `api/` function it calls.
 - One argument: a single value (`courseId`), or an object for several (`{ courseId, course }`); `_` when there is none.
 - Reject with a Hebrew string: the server's `message`, otherwise a fallback. The only exception is `addToCart`, which also needs `status` for the 401 redirect.
 - Delete returns the id it deleted, since the server response isn't needed to update the list.

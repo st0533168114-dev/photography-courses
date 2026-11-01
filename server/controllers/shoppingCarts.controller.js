@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import shoppingCarts from "../Models/shoppingCart.js";
-import course from "../Models/course.js";
-import users from "../Models/user.js";
-import { resolveCart } from "../Services/shoppingCart.service.js";
+import shoppingCarts from "../models/shoppingCart.js";
+import course from "../models/course.js";
+import users from "../models/user.js";
+import { resolveCart } from "../services/shoppingCart.service.js";
 
 const ShoppingCartsController = {
 

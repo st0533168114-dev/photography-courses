@@ -1,17 +1,17 @@
 ---
 paths:
-  - "server/Routers/**"
-  - "server/Controllers/**"
-  - "server/Services/**"
+  - "server/routers/**"
+  - "server/controllers/**"
+  - "server/services/**"
   - "server/app.js"
-  - "client/src/API/**"
+  - "client/src/api/**"
 ---
 
 # API rules
 
-An endpoint is one chain: `app.js` → `Routers/` → `Controllers/` (→ `Services/`) → Model, and on the client `src/API/<domain>Api.js`. Every client function maps to exactly one server route with the same method and path.
+An endpoint is one chain: `app.js` → `routers/` → `controllers/` (→ `services/`) → Model, and on the client `src/api/<domain>Api.js`. Every client function maps to exactly one server route with the same method and path.
 
-## Router — `server/Routers/<entity>.router.js`
+## Router — `server/routers/<entity>.router.js`
 - One line per route: `XRouter.<method>(path, ...middlewares, XController.<action>)`. No logic, no inline handlers.
 - Middleware order: `jwtMiddleware` then `isAdminMiddleware`.
 - Public catalog reads (`courses`, `categories`, `faq`): no middleware.
@@ -22,7 +22,7 @@ An endpoint is one chain: `app.js` → `Routers/` → `Controllers/` (→ `Servi
 - Path shape: plural resource, sub-actions as a noun segment (`/:id/status`, `/items`, `/signature`); admin-only variants of a user route under `/admin/...`.
 - New router → `app.use("/<pluralCamelCase>", xRouter)` in `app.js` next to the others.
 
-## Controller — `server/Controllers/<entity>.controller.js`
+## Controller — `server/controllers/<entity>.controller.js`
 
 Fixed skeleton:
 
@@ -81,13 +81,13 @@ put: async (req, res) => {
 - Updates use `{ new: true, runValidators: true }`.
 - Image URLs must pass `isCloudinaryUrl` (see `hasNonCloudinaryImage` in courses).
 
-## Service — `server/Services/<entity>.service.js`
+## Service — `server/services/<entity>.service.js`
 - Only for logic used by more than one controller.
 - Named exports, plain functions: take documents/values, return plain objects or `null`.
 - Never `req`/`res`, never status codes; the controller turns `null` into 400/404.
 - New shared helpers go here, not as an extra controller export.
 
-## Client — `client/src/API/<domain>Api.js`
+## Client — `client/src/api/<domain>Api.js`
 
 ```js
 import api from "./axiosConfig";

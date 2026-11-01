@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 
 import Header from "../../layout/Header";
 import Footer from "../../layout/Footer";
-import styles from "../../CSS/pages/admin/AdminPage.module.css";
+import styles from "../../css/pages/admin/AdminPage.module.css";
 
 const adminSections = [
   { to: "/admin/dashboard", prefix: "/admin/dashboard", label: "לוח בקרה" },

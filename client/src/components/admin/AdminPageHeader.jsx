@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styles from "../../CSS/components/admin/AdminPageHeader.module.css";
+import styles from "../../css/components/admin/AdminPageHeader.module.css";
 
 export default function AdminPageHeader(props) {
   const { title, onAdd, addPath, addLabel } = props;

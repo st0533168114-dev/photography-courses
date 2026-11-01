@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { getUploadSignature } from "../API/mediaApi";
-import styles from "../CSS/components/ImageUploadButton.module.css";
+import { getUploadSignature } from "../api/mediaApi";
+import styles from "../css/components/ImageUploadButton.module.css";
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const API_KEY = import.meta.env.VITE_CLOUDINARY_API_KEY;

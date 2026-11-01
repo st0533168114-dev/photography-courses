@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
-import { getPayments } from "../../API/paymentApi";
+import { getPayments } from "../../api/paymentApi";
 import { getPaymentStatusLabel } from "../../constants/paymentStatus";
-import styles from "../../CSS/pages/admin/AdminPaymentsPage.module.css";
+import styles from "../../css/pages/admin/AdminPaymentsPage.module.css";
 
 export default function AdminPaymentsPage() {
   const [payments, setPayments] = useState([]);

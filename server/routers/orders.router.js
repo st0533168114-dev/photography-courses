@@ -1,7 +1,7 @@
 import express from "express";
-import OrdersController from "../Controllers/orders.controller.js";
-import jwtMiddleware from "../Middlewares/jwt.middleware.js";
-import isAdminMiddleware from "../Middlewares/isAdmin.middleware.js";
+import OrdersController from "../controllers/orders.controller.js";
+import jwtMiddleware from "../middlewares/jwt.middleware.js";
+import isAdminMiddleware from "../middlewares/isAdmin.middleware.js";
 
 const OrdersRouter = express.Router();
 OrdersRouter.get("/", jwtMiddleware, isAdminMiddleware, OrdersController.get);
