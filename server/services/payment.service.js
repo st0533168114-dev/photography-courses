@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import orders from "../Models/order.js";
-import payments from "../Models/payment.js";
-import users from "../Models/user.js";
-import shoppingCarts from "../Models/shoppingCart.js";
+import orders from "../models/order.js";
+import payments from "../models/payment.js";
+import users from "../models/user.js";
+import shoppingCarts from "../models/shoppingCart.js";
 import { getProviderOrderStatus } from "./paymentProvider.service.js";
 
 // עסקה ב-PayPal שלא נגבתה תוך שעה נחשבת נטושה. לפני כן ייתכן שהמשתמש עדיין באמצע התשלום
@@ -23,7 +23,7 @@ export const completeOrder = async (orderId, paymentId, transactionId) =>
     const order = await orders.findOneAndUpdate(
       { _id: orderId, status: "incomplete" },
       { status: "completed" },
-      { new: true, runValidators: true, session }
+      { returnDocument: "after", runValidators: true, session }
     );
     if (!order) {
       return null;
@@ -32,7 +32,7 @@ export const completeOrder = async (orderId, paymentId, transactionId) =>
     const payment = await payments.findByIdAndUpdate(
       paymentId,
       { status: "success", transactionId },
-      { new: true, runValidators: true, session }
+      { returnDocument: "after", runValidators: true, session }
     );
 
     const purchasedCourseIds = order.coursesList.map((course) => course.courseId);
@@ -40,7 +40,7 @@ export const completeOrder = async (orderId, paymentId, transactionId) =>
       .findByIdAndUpdate(
         order.userId,
         { $addToSet: { courseIds: { $each: purchasedCourseIds } } },
-        { new: true, session }
+        { returnDocument: "after", session }
       )
       .select("-password");
     if (!user) {
@@ -64,7 +64,7 @@ const cancelOrder = async (orderId, paymentId) =>
     const order = await orders.findOneAndUpdate(
       { _id: orderId, status: "incomplete" },
       { status: "cancelled" },
-      { new: true, runValidators: true, session }
+      { returnDocument: "after", runValidators: true, session }
     );
     if (!order) {
       return;

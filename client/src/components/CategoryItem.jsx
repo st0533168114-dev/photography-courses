@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styles from "../CSS/components/CategoryItem.module.css";
+import styles from "../css/components/CategoryItem.module.css";
 
 export default function CategoryItem(props) {
   const { category } = props;

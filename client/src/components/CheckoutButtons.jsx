@@ -1,5 +1,5 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import styles from "../CSS/components/CheckoutButtons.module.css";
+import styles from "../css/components/CheckoutButtons.module.css";
 
 const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
 const PAYPAL_OPTIONS = {

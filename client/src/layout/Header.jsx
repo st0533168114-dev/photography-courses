@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/slices/authSlice";
-import styles from "../CSS/layout/Header.module.css";
+import styles from "../css/layout/Header.module.css";
 
 export default function Header() {
   const dispatch = useDispatch();

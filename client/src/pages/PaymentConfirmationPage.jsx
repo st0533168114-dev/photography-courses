@@ -1,7 +1,7 @@
 import { Link, Navigate, useLocation } from "react-router-dom";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import styles from "../CSS/pages/PaymentConfirmationPage.module.css";
+import styles from "../css/pages/PaymentConfirmationPage.module.css";
 
 export default function PaymentConfirmationPage() {
   const location = useLocation();

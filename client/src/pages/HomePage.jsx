@@ -4,7 +4,7 @@ import WellcomeSection from "../components/WellcomeSection";
 import CategoryGrid from "../components/CategoryGrid";
 import FAQSection from "../components/FAQSection";
 import ContactUsSection from "../components/ContactUsSection";
-import styles from "../CSS/pages/HomePage.module.css";
+import styles from "../css/pages/HomePage.module.css";
 
 export default function HomePage() {
   return (

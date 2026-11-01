@@ -4,7 +4,7 @@ import { registerUser } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import styles from "../CSS/pages/SignUpPage.module.css";
+import styles from "../css/pages/SignUpPage.module.css";
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({

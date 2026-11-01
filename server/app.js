@@ -4,14 +4,14 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import usersRouter from "./Routers/users.router.js";
-import ordersRouter from "./Routers/orders.router.js";
-import coursesRouter from "./Routers/courses.router.js";
-import shoppingCartsRouter from "./Routers/shoppingCart.router.js";
-import paymentsRouter from "./Routers/payments.router.js";
-import categoriesRouter from "./Routers/categories.router.js";
-import faqRouter from "./Routers/faq.router.js";
-import mediaRouter from "./Routers/media.router.js";
+import usersRouter from "./routers/users.router.js";
+import ordersRouter from "./routers/orders.router.js";
+import coursesRouter from "./routers/courses.router.js";
+import shoppingCartsRouter from "./routers/shoppingCart.router.js";
+import paymentsRouter from "./routers/payments.router.js";
+import categoriesRouter from "./routers/categories.router.js";
+import faqRouter from "./routers/faq.router.js";
+import mediaRouter from "./routers/media.router.js";
 
 const app = express();
 const PORT = process.env.PORT || 1234;

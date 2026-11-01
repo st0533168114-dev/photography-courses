@@ -6,8 +6,8 @@ import Footer from "../layout/Footer";
 import CheckoutButtons from "../components/CheckoutButtons";
 import { getCart, resetCart } from "../redux/slices/shoppingCartSlice";
 import { updateUserCourses } from "../redux/slices/authSlice";
-import { addOrder, captureOrder } from "../API/orderApi";
-import styles from "../CSS/pages/CreateOrderPage.module.css";
+import { addOrder, captureOrder } from "../api/orderApi";
+import styles from "../css/pages/CreateOrderPage.module.css";
 
 export default function CreateOrderPage() {
   const dispatch = useDispatch();

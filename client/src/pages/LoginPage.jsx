@@ -4,7 +4,7 @@ import { loginUser } from "../redux/slices/authSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import styles from "../CSS/pages/LoginPage.module.css";
+import styles from "../css/pages/LoginPage.module.css";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -37,7 +37,7 @@ export default function LoginPage() {
     const resultAction = await dispatch(loginUser({ userName: username, password: password }));
 
     if (loginUser.rejected.match(resultAction)) {
-      setFormError(resultAction.payload?.message || "פרטי התחברות שגויים או שאינך רשום במערכת");
+      setFormError(resultAction.payload || "פרטי התחברות שגויים או שאינך רשום במערכת");
     }
   };
 

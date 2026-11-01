@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ImageUploadButton from "../../components/ImageUploadButton";
 import { getCourses, addCourse, updateCourse } from "../../redux/slices/coursesSlice";
 import { getCategories } from "../../redux/slices/categoriesSlice";
-import styles from "../../CSS/pages/admin/AdminCourseFormPage.module.css";
+import styles from "../../css/pages/admin/AdminCourseFormPage.module.css";
 
 export default function AdminCourseFormPage() {
   const { courseId, courseType } = useParams();

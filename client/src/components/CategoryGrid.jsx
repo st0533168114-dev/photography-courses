@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CategoryItem from "./CategoryItem";
 import { getCategories, clearCategoriesError } from "../redux/slices/categoriesSlice";
-import styles from "../CSS/components/CategoryGrid.module.css";
+import styles from "../css/components/CategoryGrid.module.css";
 
 export default function CategoryGrid(props) {
   // ברירת המחדל true כי רוב העמודים מציגים את הכרטיס - דף הבית הוא היוצא מן הכלל

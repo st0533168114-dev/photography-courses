@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { ViewIcon, EditIcon } from "../../components/admin/AdminIcons";
-import { getUsers, updateUser } from "../../API/userApi";
-import styles from "../../CSS/pages/admin/AdminUsersPage.module.css";
+import { getUsers, updateUser } from "../../api/userApi";
+import styles from "../../css/pages/admin/AdminUsersPage.module.css";
 
 export default function AdminUsersPage() {
   const navigate = useNavigate();

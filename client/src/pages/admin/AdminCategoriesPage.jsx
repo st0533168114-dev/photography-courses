@@ -6,7 +6,7 @@ import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getCategories, deleteCategory, clearCategoriesError } from "../../redux/slices/categoriesSlice";
 import { getCourses } from "../../redux/slices/coursesSlice";
-import styles from "../../CSS/pages/admin/AdminCategoriesPage.module.css";
+import styles from "../../css/pages/admin/AdminCategoriesPage.module.css";
 
 export default function AdminCategoriesPage() {
   const navigate = useNavigate();

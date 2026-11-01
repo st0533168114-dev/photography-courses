@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
-import { getFaqs, deleteFaq } from "../../API/faqApi";
-import styles from "../../CSS/pages/admin/AdminFaqPage.module.css";
+import { getFaqs, deleteFaq } from "../../api/faqApi";
+import styles from "../../css/pages/admin/AdminFaqPage.module.css";
 
 export default function AdminFaqPage() {
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import AddToCartButton from "../components/AddToCartButton";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses, clearCoursesError } from "../redux/slices/coursesSlice";
-import styles from "../CSS/pages/CourseDetailsPage.module.css";
+import styles from "../css/pages/CourseDetailsPage.module.css";
 
 export default function CourseDetailsPage() {
   const {courseId}=useParams();

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "../CSS/components/WellcomeSection.module.css";
+import styles from "../css/components/WellcomeSection.module.css";
 
 const CLOUDINARY_BASE = "https://res.cloudinary.com/tcs2p8ac/image/upload/w_1920,c_limit,q_auto,f_webp";
 

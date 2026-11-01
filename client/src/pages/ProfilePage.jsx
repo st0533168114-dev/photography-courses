@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import DataTable from "../components/DataTable";
-import { updateUser } from "../API/userApi";
-import { getUserOrders } from "../API/orderApi";
+import { updateUser } from "../api/userApi";
+import { getUserOrders } from "../api/orderApi";
 import { getCourses } from "../redux/slices/coursesSlice";
 import { updateUserDetails } from "../redux/slices/authSlice";
 import { getOrderStatusLabel } from "../constants/orderStatus";
 import { getPaymentStatusLabel } from "../constants/paymentStatus";
-import styles from "../CSS/pages/ProfilePage.module.css";
+import styles from "../css/pages/ProfilePage.module.css";
 
 const EMPTY_FORM = {
   firstName: "",

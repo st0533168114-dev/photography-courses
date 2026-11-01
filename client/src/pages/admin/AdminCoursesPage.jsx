@@ -12,7 +12,7 @@ import {
   clearCoursesError,
 } from "../../redux/slices/coursesSlice";
 import { getCategories } from "../../redux/slices/categoriesSlice";
-import styles from "../../CSS/pages/admin/AdminCoursesPage.module.css";
+import styles from "../../css/pages/admin/AdminCoursesPage.module.css";
 
 const statusLabels = {
   draft: "טיוטה",

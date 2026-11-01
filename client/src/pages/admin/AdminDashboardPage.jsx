@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
-import { getUsersCount } from "../../API/userApi";
-import { getOrdersCount } from "../../API/orderApi";
+import { getUsersCount } from "../../api/userApi";
+import { getOrdersCount } from "../../api/orderApi";
 import { getCourses } from "../../redux/slices/coursesSlice";
-import styles from "../../CSS/pages/admin/AdminDashboardPage.module.css";
+import styles from "../../css/pages/admin/AdminDashboardPage.module.css";
 
 const quickActions = [
   { to: "/admin/courses/new/paid", label: "הוספת קורס בתשלום" },

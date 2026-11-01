@@ -1,7 +1,7 @@
 import express from "express";
-import UsersController from "../Controllers/users.controller.js";
-import jwtMiddleware from "../Middlewares/jwt.middleware.js";
-import isAdminMiddleware from "../Middlewares/isAdmin.middleware.js";
+import UsersController from "../controllers/users.controller.js";
+import jwtMiddleware from "../middlewares/jwt.middleware.js";
+import isAdminMiddleware from "../middlewares/isAdmin.middleware.js";
 const UsersRouter = express.Router();
 
 UsersRouter.post("/login", UsersController.login);

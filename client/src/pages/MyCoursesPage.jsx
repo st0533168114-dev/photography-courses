@@ -4,7 +4,7 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import MyCourseItem from "../components/MyCourseItem";
 import { getCourses, clearCoursesError } from "../redux/slices/coursesSlice";
-import styles from "../CSS/pages/CoursesPage.module.css";
+import styles from "../css/pages/CoursesPage.module.css";
 
 export default function MyCoursesPage() {
   const dispatch = useDispatch();

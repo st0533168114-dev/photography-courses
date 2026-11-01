@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getFaqById, addFaq, updateFaq } from "../../API/faqApi";
-import styles from "../../CSS/pages/admin/AdminFaqFormPage.module.css";
+import { getFaqById, addFaq, updateFaq } from "../../api/faqApi";
+import styles from "../../css/pages/admin/AdminFaqFormPage.module.css";
 
 export default function AdminFaqFormPage() {
   const { faqId } = useParams();

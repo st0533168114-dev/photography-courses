@@ -5,11 +5,11 @@ import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import ConfirmDialog from "../../components/admin/ConfirmDialog";
 import { DeleteIcon } from "../../components/admin/AdminIcons";
-import { getUserById, updateUser } from "../../API/userApi";
-import { getOrders } from "../../API/orderApi";
+import { getUserById, updateUser } from "../../api/userApi";
+import { getOrders } from "../../api/orderApi";
 import { getCourses } from "../../redux/slices/coursesSlice";
 import { getOrderStatusLabel } from "../../constants/orderStatus";
-import styles from "../../CSS/pages/admin/AdminUserDetailsPage.module.css";
+import styles from "../../css/pages/admin/AdminUserDetailsPage.module.css";
 
 export default function AdminUserDetailsPage() {
   const { userId } = useParams();

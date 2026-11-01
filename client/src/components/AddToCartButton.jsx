@@ -2,7 +2,7 @@ import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { addToCart } from "../redux/slices/shoppingCartSlice";
-import styles from "../CSS/components/AddToCartButton.module.css";
+import styles from "../css/components/AddToCartButton.module.css";
 export default function AddToCartButton(props) {
   const { courseId, isAvailable } = props;
   const dispatch = useDispatch();

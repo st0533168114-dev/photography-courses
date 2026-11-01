@@ -1,7 +1,7 @@
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import ContactUsSection from "../components/ContactUsSection";
-import styles from "../CSS/pages/ContactUsPage.module.css";
+import styles from "../css/pages/ContactUsPage.module.css";
 export default function ContactUsPage() {
   return (
     <>

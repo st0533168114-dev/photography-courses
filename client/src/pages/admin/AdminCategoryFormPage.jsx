@@ -6,7 +6,7 @@ import {
   addCategory,
   updateCategory,
 } from "../../redux/slices/categoriesSlice";
-import styles from "../../CSS/pages/admin/AdminCategoryFormPage.module.css";
+import styles from "../../css/pages/admin/AdminCategoryFormPage.module.css";
 
 export default function AdminCategoryFormPage() {
   const { categoryId } = useParams();

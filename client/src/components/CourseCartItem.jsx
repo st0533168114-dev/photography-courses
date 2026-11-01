@@ -1,5 +1,5 @@
 import DeleteFromCartButton from "./DeleteFromCartButton";
-import styles from "../CSS/components/CourseCartItem.module.css";
+import styles from "../css/components/CourseCartItem.module.css";
 export default function CourseCartItem(props) {
 
   const { course } = props;

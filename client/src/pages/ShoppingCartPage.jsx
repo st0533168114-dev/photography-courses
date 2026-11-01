@@ -5,7 +5,7 @@ import Footer from "../layout/Footer";
 import CourseCartItem from "../components/CourseCartItem";
 import PurchaseButton from "../components/PurchaseButton";
 import { getCart } from "../redux/slices/shoppingCartSlice";
-import styles from "../CSS/pages/ShoppingCartPage.module.css";
+import styles from "../css/pages/ShoppingCartPage.module.css";
 
 export default function ShoppingCartPage() {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import faqs from "../Models/faq.js"; 
+import faqs from "../models/faq.js"; 
 
 const FaqController = {
   get: async (req, res) => {
@@ -46,7 +46,7 @@ const FaqController = {
       id,
       { question, answer },
       {
-        new: true,
+        returnDocument: "after",
         runValidators: true, // Mongoose לא מריץ ולידציה בעדכון אלא אם מבקשים במפורש
       }
     );

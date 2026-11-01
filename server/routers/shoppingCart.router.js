@@ -1,7 +1,7 @@
 import express from "express";
-import ShoppingCartsController from "../Controllers/shoppingCarts.controller.js";
-import jwtMiddleware from "../Middlewares/jwt.middleware.js";
-import isAdminMiddleware from "../Middlewares/isAdmin.middleware.js";
+import ShoppingCartsController from "../controllers/shoppingCarts.controller.js";
+import jwtMiddleware from "../middlewares/jwt.middleware.js";
+import isAdminMiddleware from "../middlewares/isAdmin.middleware.js";
 const ShoppingCartsRouter = express.Router();
 
 

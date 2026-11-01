@@ -1,4 +1,4 @@
-import styles from "../../CSS/components/admin/ConfirmDialog.module.css";
+import styles from "../../css/components/admin/ConfirmDialog.module.css";
 
 export default function ConfirmDialog(props) {
   const { open, title, message, confirmLabel, cancelLabel, onConfirm, onCancel, isDangerous } = props;

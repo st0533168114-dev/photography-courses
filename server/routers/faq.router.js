@@ -1,7 +1,7 @@
 import express from "express";
-import jwtMiddleware from "../Middlewares/jwt.middleware.js";
-import isAdminMiddleware from "../Middlewares/isAdmin.middleware.js";
-import FaqController from "../Controllers/faq.controller.js";
+import jwtMiddleware from "../middlewares/jwt.middleware.js";
+import isAdminMiddleware from "../middlewares/isAdmin.middleware.js";
+import FaqController from "../controllers/faq.controller.js";
 
 const FaqRouter = express.Router();
 

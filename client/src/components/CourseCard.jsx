@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import AddToCartButton from "./AddToCartButton";
-import styles from "../CSS/components/CourseCard.module.css";
+import styles from "../css/components/CourseCard.module.css";
 
 export default function CourseCard(props) {
   const { course } = props;
