@@ -46,7 +46,7 @@ const FaqController = {
       id,
       { question, answer },
       {
-        new: true,
+        returnDocument: "after",
         runValidators: true, // Mongoose לא מריץ ולידציה בעדכון אלא אם מבקשים במפורש
       }
     );

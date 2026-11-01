@@ -77,7 +77,7 @@ const CoursesController = {
     }
     try {
       const updatedCourse = await courses.findByIdAndUpdate(id, course, {
-        new: true,
+        returnDocument: "after",
         runValidators: true,
       });
 

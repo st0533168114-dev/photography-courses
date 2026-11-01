@@ -37,7 +37,7 @@ put: async (req, res) => {
     const updatedFaq = await faqs.findByIdAndUpdate(  // 3. DB work
       id,
       { question, answer },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     );
     if (!updatedFaq) {                       // 4. not found → 404 with return
       return res.status(404).json({ message: "השאלה לא נמצאה" });
@@ -78,7 +78,7 @@ put: async (req, res) => {
 - Ids inside an update operator (`$ne`, `$pull`) → `mongoose.Types.ObjectId.isValid`, else 400.
 - Strings from an open route that go into a Mongo filter → `typeof === "string"`.
 - Users are always returned with `.select("-password")`.
-- Updates use `{ new: true, runValidators: true }`.
+- Updates use `{ returnDocument: "after", runValidators: true }`.
 - Image URLs must pass `isCloudinaryUrl` (see `hasNonCloudinaryImage` in courses).
 
 ## Service — `server/services/<entity>.service.js`

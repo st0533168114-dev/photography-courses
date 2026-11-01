@@ -42,7 +42,7 @@ const CategoriesController = {
     const category = req.body;
     try {
       const updatedCategory = await categories.findByIdAndUpdate(id, category, {
-        new: true,
+        returnDocument: "after",
         runValidators: true, // Mongoose לא מריץ ולידציה בעדכון אלא אם מבקשים במפורש
       });
 

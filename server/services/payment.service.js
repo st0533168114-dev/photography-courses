@@ -23,7 +23,7 @@ export const completeOrder = async (orderId, paymentId, transactionId) =>
     const order = await orders.findOneAndUpdate(
       { _id: orderId, status: "incomplete" },
       { status: "completed" },
-      { new: true, runValidators: true, session }
+      { returnDocument: "after", runValidators: true, session }
     );
     if (!order) {
       return null;
@@ -32,7 +32,7 @@ export const completeOrder = async (orderId, paymentId, transactionId) =>
     const payment = await payments.findByIdAndUpdate(
       paymentId,
       { status: "success", transactionId },
-      { new: true, runValidators: true, session }
+      { returnDocument: "after", runValidators: true, session }
     );
 
     const purchasedCourseIds = order.coursesList.map((course) => course.courseId);
@@ -40,7 +40,7 @@ export const completeOrder = async (orderId, paymentId, transactionId) =>
       .findByIdAndUpdate(
         order.userId,
         { $addToSet: { courseIds: { $each: purchasedCourseIds } } },
-        { new: true, session }
+        { returnDocument: "after", session }
       )
       .select("-password");
     if (!user) {
@@ -64,7 +64,7 @@ const cancelOrder = async (orderId, paymentId) =>
     const order = await orders.findOneAndUpdate(
       { _id: orderId, status: "incomplete" },
       { status: "cancelled" },
-      { new: true, runValidators: true, session }
+      { returnDocument: "after", runValidators: true, session }
     );
     if (!order) {
       return;

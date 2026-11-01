@@ -76,7 +76,7 @@ const ShoppingCartsController = {
             },
           },
         },
-        { new: true }
+        { returnDocument: "after" }
       );
 
       // תוצאה ריקה כאן משמעותה שהתנאי לא התקיים, כלומר הקורס כבר בעגלה
@@ -116,7 +116,7 @@ const ShoppingCartsController = {
           },
         },
         {
-          new: true,
+          returnDocument: "after",
           runValidators: true, // Mongoose לא מריץ ולידציה בעדכון אלא אם מבקשים במפורש
         }
       );

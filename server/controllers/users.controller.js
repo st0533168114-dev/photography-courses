@@ -123,7 +123,7 @@ const UsersController = {
       }
       const updatedUser = await users
         .findByIdAndUpdate(id, user, {
-          new: true,
+          returnDocument: "after",
           runValidators: true,
         })
         .select("-password");
