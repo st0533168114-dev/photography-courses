@@ -67,7 +67,16 @@ export const captureProviderOrder = async (providerOrderId) => {
 
 // אותו מבנה כמו captureProviderOrder. בעסקה שלא נגבתה אין capture, ומוחזר סטטוס העסקה עצמה (CREATED, APPROVED וכו')
 export const getProviderOrderStatus = async (providerOrderId) => {
-  const data = await providerGet(`/v2/checkout/orders/${providerOrderId}`);
+  let data;
+  try {
+    data = await providerGet(`/v2/checkout/orders/${providerOrderId}`);
+  } catch (error) {
+    // PayPal מוחק עסקאות שלא נגבו אחרי זמן מה, ועסקה שנגבתה נשמרת. 404 אומר שלא שולם
+    if (error.response?.status === 404) {
+      return { status: "NOT_FOUND" };
+    }
+    throw error;
+  }
   const capture = data.purchase_units[0].payments?.captures?.[0];
   if (!capture) {
     return { status: data.status };

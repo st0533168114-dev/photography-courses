@@ -99,7 +99,8 @@ export const syncPendingPayments = async (userId) => {
         await cancelOrder(order._id, payment._id);
       }
     } catch (error) {
-      console.error(error);
+      // רק תוכן התשובה: אובייקט השגיאה של axios כולל את ה-token של PayPal
+      console.error("syncPendingPayments:", error.response?.data || error.message);
     }
   }
 };

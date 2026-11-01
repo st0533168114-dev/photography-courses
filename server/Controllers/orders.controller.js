@@ -124,7 +124,8 @@ const OrdersController = {
 
       res.status(201).json({ order: newOrder, payments: newPayment });
     } catch (error) {
-      console.error(error);
+      // רק תוכן התשובה: אובייקט השגיאה של axios כולל את ה-token של PayPal
+      console.error("orders.post:", error.response?.data || error.message);
       res.status(500).json({ error: error.message });
     }
   },
@@ -168,7 +169,8 @@ const OrdersController = {
 
       res.status(200).json({ order: result.order, payments: result.payment, user: result.user });
     } catch (error) {
-      console.error(error);
+      // רק תוכן התשובה: אובייקט השגיאה של axios כולל את ה-token של PayPal
+      console.error("capture:", error.response?.data || error.message);
       res.status(500).json({ error: error.message });
     }
   },
