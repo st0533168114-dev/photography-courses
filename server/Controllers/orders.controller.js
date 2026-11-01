@@ -4,7 +4,7 @@ import payments from "../Models/payment.js";
 import shoppingCarts from "../Models/shoppingCart.js";
 import users from "../Models/user.js";
 import { resolveCart } from "../Services/shoppingCart.service.js";
-import { createPayment, completeOrder } from "../Services/payment.service.js";
+import { createPayment, completeOrder, isCapturePaid } from "../Services/payment.service.js";
 import { createProviderOrder, captureProviderOrder } from "../Services/paymentProvider.service.js";
 
 const OrdersController = {
@@ -124,7 +124,8 @@ const OrdersController = {
 
       res.status(201).json({ order: newOrder, payments: newPayment });
     } catch (error) {
-      console.error(error);
+      // רק תוכן התשובה: אובייקט השגיאה של axios כולל את ה-token של PayPal
+      console.error("orders.post:", error.response?.data || error.message);
       res.status(500).json({ error: error.message });
     }
   },
@@ -156,11 +157,7 @@ const OrdersController = {
       if (capture.status === "DECLINED") {
         return res.status(400).json({ message: "התשלום נדחה, אפשר לנסות אמצעי תשלום אחר" });
       }
-      const isPaid =
-        capture.status === "COMPLETED" &&
-        capture.amount === order.totalAmount.toFixed(2) &&
-        capture.currency === "ILS";
-      if (!isPaid) {
+      if (!isCapturePaid(capture, order.totalAmount)) {
         await payments.findByIdAndUpdate(payment._id, { status: "failed" }, { runValidators: true });
         return res.status(400).json({ message: "התשלום לא אושר, והגישה לקורסים לא נפתחה" });
       }
@@ -172,26 +169,8 @@ const OrdersController = {
 
       res.status(200).json({ order: result.order, payments: result.payment, user: result.user });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message });
-    }
-  },
-
-  put: async (req, res) => {
-    const { id } = req.params;
-    const order = req.body;
-    try {
-      const updatedOrder = await orders.findByIdAndUpdate(id, order, {
-        new: true,
-        runValidators: true, // Mongoose לא מריץ ולידציה בעדכון אלא אם מבקשים במפורש
-      });
-
-      if (!updatedOrder) {
-        return res.status(404).json({ message: "ההזמנה לא נמצאה" });
-      }
-
-      res.status(200).json(updatedOrder);
-    } catch (error) {
+      // רק תוכן התשובה: אובייקט השגיאה של axios כולל את ה-token של PayPal
+      console.error("capture:", error.response?.data || error.message);
       res.status(500).json({ error: error.message });
     }
   },

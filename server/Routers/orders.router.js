@@ -11,5 +11,4 @@ OrdersRouter.get("/:id", jwtMiddleware, OrdersController.getById);
 OrdersRouter.post("/", jwtMiddleware, OrdersController.post);
 // הבעלות על ההזמנה נבדקת בבקר
 OrdersRouter.post("/:id/capture", jwtMiddleware, OrdersController.capture);
-OrdersRouter.put("/:id", jwtMiddleware, isAdminMiddleware, OrdersController.put);
 export default OrdersRouter;

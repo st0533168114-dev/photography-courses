@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getOrders } from "../../API/orderApi";
@@ -7,7 +7,6 @@ import { getOrderStatusLabel } from "../../constants/orderStatus";
 import styles from "../../CSS/pages/admin/AdminOrdersPage.module.css";
 
 export default function AdminOrdersPage() {
-  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
@@ -79,7 +78,6 @@ export default function AdminOrdersPage() {
         loading={isLoading}
         error={loadError}
         emptyMessage="אין הזמנות"
-        onEdit={(orderId) => navigate(`/admin/orders/${orderId}/edit`)}
       />
     </div>
   );

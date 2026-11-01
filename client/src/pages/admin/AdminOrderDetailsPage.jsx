@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import DataTable from "../../components/DataTable";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getOrderById } from "../../API/orderApi";
 import { getOrderStatusLabel } from "../../constants/orderStatus";
+import { getPaymentStatusLabel } from "../../constants/paymentStatus";
 import styles from "../../CSS/pages/admin/AdminOrderDetailsPage.module.css";
 
 export default function AdminOrderDetailsPage() {
   const { orderId } = useParams();
-  const navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
@@ -66,16 +66,9 @@ export default function AdminOrderDetailsPage() {
     {
       key: "status",
       label: "סטטוס",
-      render: (value) => {
-        const isSuccess = value === "success";
-        return (
-          <span className={isSuccess ? styles.successBadge : styles.failedBadge}>
-            {isSuccess ? "הצליח" : "נכשל"}
-          </span>
-        );
-      },
+      render: (value) => <span className={styles[`${value}Badge`]}>{getPaymentStatusLabel(value)}</span>,
     },
-    { key: "transactionId", label: "מזהה עסקה", render: (value) => <span className={styles.mono}>{value}</span> },
+    { key: "transactionId", label: "מזהה עסקה", render: (value) => <span className={styles.mono}>{value || "—"}</span> },
   ];
 
   return (
@@ -99,12 +92,6 @@ export default function AdminOrderDetailsPage() {
               {getOrderStatusLabel(order.status)}
             </span>
           </span>
-        </div>
-
-        <div className={styles.actions}>
-          <button className={styles.editBtn} onClick={() => navigate(`/admin/orders/${orderId}/edit`)}>
-            עדכון סטטוס
-          </button>
         </div>
       </div>
 
