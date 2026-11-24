@@ -3,13 +3,9 @@ import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import DataTable from "../components/DataTable";
 import { updateUser } from "../api/userApi";
 import { getUserOrders } from "../api/orderApi";
-import { getCourses } from "../redux/slices/coursesSlice";
 import { updateUserDetails } from "../redux/slices/authSlice";
-import { getOrderStatusLabel } from "../constants/orderStatus";
-import { getPaymentStatusLabel } from "../constants/paymentStatus";
 import styles from "../css/pages/ProfilePage.module.css";
 
 const EMPTY_FORM = {
@@ -24,13 +20,9 @@ export default function ProfilePage() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.auth.user);
-  const coursesList = useSelector((state) => state.courses.coursesList || []);
-  const coursesLoading = useSelector((state) => state.courses.isLoading);
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [ordersError, setOrdersError] = useState(null);
-  const [coursesLoadError, setCoursesLoadError] = useState(null);
-  const [activeTab, setActiveTab] = useState("orders");
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [isSaving, setIsSaving] = useState(false);
@@ -47,26 +39,13 @@ export default function ProfilePage() {
         setOrders(ordersList);
         setOrdersError(null);
       } catch (err) {
-        setOrdersError(err.response?.data?.message || "שגיאה בטעינת ההזמנות שלך");
+        setOrdersError(err.response?.data?.message || "שגיאה בטעינת היסטוריית הרכישות");
       } finally {
         setOrdersLoading(false);
       }
     };
     loadOrders();
   }, [isLoggedIn]);
-
-  useEffect(() => {
-    const loadCourses = async () => {
-      try {
-        if (coursesList.length === 0) {
-          await dispatch(getCourses()).unwrap();
-        }
-      } catch (err) {
-        setCoursesLoadError(err || "שגיאה בטעינת הקורסים");
-      }
-    };
-    loadCourses();
-  }, [dispatch]);
 
   const handleStartEditing = () => {
     setFormData({
@@ -104,57 +83,42 @@ export default function ProfilePage() {
     return <Navigate to="/login" replace />;
   }
 
-  const purchasedCourseIds = (user.courseIds || []).map((id) => String(id));
-  const userCourses = coursesList.filter((course) => purchasedCourseIds.includes(String(course._id)));
-
-  const userPayments = orders.flatMap((order) => order.paymentsList || []);
-
-  const orderColumns = [
-    { key: "_id", label: "מס' הזמנה", render: (value) => `#${value.slice(-6)}` },
-    { key: "orderDate", label: "תאריך", render: (value) => new Date(value).toLocaleDateString("he-IL") },
-    { key: "coursesList", label: "מס' קורסים", align: "center", render: (value) => value?.length || 0 },
-    { key: "totalAmount", label: "סכום כולל", render: (value) => `₪${value}` },
-    {
-      key: "status",
-      label: "סטטוס",
-      render: (value) => {
-        const isCompleted = value === "completed";
-        return (
-          <span className={isCompleted ? styles.successBadge : styles.pendingBadge}>
-            {getOrderStatusLabel(value)}
-          </span>
-        );
-      },
-    },
-  ];
-
-  const paymentColumns = [
-    {
-      key: "paymentDate",
-      label: "תאריך",
-      render: (value) => (value ? new Date(value).toLocaleDateString("he-IL") : "—"),
-    },
-    { key: "paymentNumber", label: "מס' תשלום", align: "center" },
-    { key: "paymentMethod", label: "אמצעי תשלום" },
-    {
-      key: "status",
-      label: "סטטוס",
-      render: (value) => <span className={styles[`${value}Badge`]}>{getPaymentStatusLabel(value)}</span>,
-    },
-  ];
-
-  const courseColumns = [
-    {
-      key: "courseName",
-      label: "שם הקורס",
-      render: (value, row) => (
-        <Link className={styles.courseLink} to={`/course/${row._id}`} title="מעבר לעמוד הקורס">
-          {value}
-        </Link>
-      ),
-    },
-    { key: "courseDescription", label: "תיאור", render: (value) => value || "—" },
-  ];
+  const renderPurchaseHistory = () => {
+    if (ordersLoading) {
+      return <p className={styles.message}>טוען נתונים...</p>;
+    }
+    if (ordersError) {
+      return <p className={styles.error}>שגיאה: {ordersError}</p>;
+    }
+    if (orders.length === 0) {
+      return (
+        <p className={styles.message}>
+          עדיין לא ביצעת רכישות.{" "}
+          <Link className={styles.catalogLink} to="/courses">
+            לקטלוג הקורסים
+          </Link>
+        </p>
+      );
+    }
+    // שם הקורס מגיע מהעותק שנשמר בהזמנה, כך שמוצג השם שבו הקורס נקנה
+    return (
+      <ul className={styles.historyList}>
+        {orders.map((order) => (
+          <li key={order._id} className={styles.historyItem}>
+            <div className={styles.historyHeader}>
+              <span className={styles.historyDate}>{new Date(order.orderDate).toLocaleDateString("he-IL")}</span>
+              <span className={styles.historyTotal}>₪{order.totalAmount}</span>
+            </div>
+            <ul className={styles.historyCourses}>
+              {order.coursesList.map((course) => (
+                <li key={course.courseId}>{course.courseName}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <>
@@ -268,69 +232,10 @@ export default function ProfilePage() {
           )}
         </div>
 
-        <div className={styles.tabsCard}>
-          <div className={styles.tabs} role="tablist">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "orders"}
-              className={`${styles.tab} ${activeTab === "orders" ? styles.tabActive : ""}`}
-              onClick={() => setActiveTab("orders")}
-            >
-              ההזמנות שלי
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "payments"}
-              className={`${styles.tab} ${activeTab === "payments" ? styles.tabActive : ""}`}
-              onClick={() => setActiveTab("payments")}
-            >
-              התשלומים שלי
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "courses"}
-              className={`${styles.tab} ${activeTab === "courses" ? styles.tabActive : ""}`}
-              onClick={() => setActiveTab("courses")}
-            >
-              הקורסים שלי
-            </button>
-          </div>
-
-          <div className={styles.tabPanel}>
-            {activeTab === "orders" && (
-              <DataTable
-                columns={orderColumns}
-                rows={orders}
-                loading={ordersLoading}
-                error={ordersError}
-                emptyMessage="עדיין לא ביצעת הזמנות"
-              />
-            )}
-
-            {activeTab === "payments" && (
-              <DataTable
-                columns={paymentColumns}
-                rows={userPayments}
-                loading={ordersLoading}
-                error={ordersError}
-                emptyMessage="אין תשלומים להצגה"
-              />
-            )}
-
-            {activeTab === "courses" && (
-              <DataTable
-                columns={courseColumns}
-                rows={userCourses}
-                loading={coursesLoading}
-                error={coursesLoadError}
-                emptyMessage="עדיין אין לך קורסים"
-              />
-            )}
-          </div>
-        </div>
+        <section className={styles.historyCard}>
+          <h2 className={styles.sectionTitle}>היסטוריית רכישות</h2>
+          {renderPurchaseHistory()}
+        </section>
       </main>
       <Footer />
     </>

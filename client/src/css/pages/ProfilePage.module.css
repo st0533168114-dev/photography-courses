@@ -121,82 +121,74 @@
   background-color: var(--color-bg-subtle);
 }
 
-.tabsCard {
+.historyCard {
   margin-top: var(--space-6);
   background-color: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
+  padding: var(--space-6);
 }
 
-.tabs {
-  display: flex;
-  gap: var(--space-1);
-  border-bottom: var(--border-width) solid var(--color-border);
-  background-color: var(--color-bg-subtle);
-}
-
-.tab {
-  padding: var(--space-3) var(--space-6);
-  border: none;
-  border-bottom: 2px solid transparent;
-  background-color: transparent;
-  font-family: var(--font-sans);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
-  cursor: pointer;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
-}
-
-.tab:hover {
+.sectionTitle {
+  margin: 0 0 var(--space-4);
   color: var(--color-text);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
 }
 
-.tabActive {
-  color: var(--color-primary);
-  border-bottom-color: var(--color-primary);
-  background-color: var(--color-surface);
+.message {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
 }
 
-.tabPanel {
-  padding: var(--space-4);
-}
-
-.courseLink {
+.catalogLink {
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
   text-decoration: underline;
 }
 
-.courseLink:hover {
+.catalogLink:hover {
   color: var(--color-primary-hover);
 }
 
-.successBadge,
-.pendingBadge,
-.failedBadge {
-  display: inline-block;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+.historyList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.successBadge {
-  background-color: var(--color-success-bg);
-  color: var(--color-success);
+.historyItem {
+  padding: var(--space-4) 0;
+  border-bottom: var(--border-width) solid var(--color-border);
 }
 
-.pendingBadge {
-  background-color: var(--color-warning-bg);
-  color: var(--color-warning);
+.historyItem:last-child {
+  border-bottom: none;
 }
 
-.failedBadge {
-  background-color: var(--color-error-bg);
-  color: var(--color-error);
+.historyHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.historyDate {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.historyTotal {
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+}
+
+.historyCourses {
+  margin: 0;
+  padding-inline-start: var(--space-5);
+  color: var(--color-text);
 }
 
 .error {
@@ -211,9 +203,5 @@
   .detailsGrid {
     grid-template-columns: 1fr;
     gap: var(--space-1) 0;
-  }
-
-  .tabs {
-    flex-wrap: wrap;
   }
 }
