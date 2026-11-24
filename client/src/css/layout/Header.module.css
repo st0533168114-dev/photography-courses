@@ -10,9 +10,14 @@
 }
 
 .logo {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+}
+
+.logoImage {
+  display: block;
+  height: var(--space-8);
+  width: auto;
 }
 
 .nav {
@@ -22,6 +27,8 @@
 }
 
 .navLink {
+  display: inline-flex;
+  align-items: center;
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-muted);
@@ -44,24 +51,4 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
-}
-
-.greeting {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-}
-
-.logoutButton {
-  padding: var(--space-2) var(--space-4);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-weight: var(--font-weight-medium);
-  transition: background var(--transition-fast), border-color var(--transition-fast);
-}
-
-.logoutButton:hover {
-  background: var(--color-bg-subtle);
-  border-color: var(--color-border-strong);
 }
