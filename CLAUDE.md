@@ -35,4 +35,4 @@ Course images (`courseImage`, `images`) are stored only on Cloudinary. The admin
 
 ## Commits
 
-Commits, branches and PRs follow the `ship` skill (`.claude/skills/ship/SKILL.md`).
+Commits, branches and PRs follow the `ship-pr` skill (`.claude/skills/ship-pr/SKILL.md`).

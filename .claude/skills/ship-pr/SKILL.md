@@ -1,5 +1,5 @@
 ---
-name: ship
+name: ship-pr
 description: Commit, push and open a PR in this repo following the user's conventions. Use whenever the user asks to commit, push, open a PR, or "ship" a change, and after a PR is merged.
 ---
 
