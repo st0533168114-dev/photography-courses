@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getUsersCount } from "../../api/userApi";
 import { getOrdersCount } from "../../api/orderApi";
+import { getContactMessagesCount } from "../../api/contactMessageApi";
 import { getCourses } from "../../redux/slices/coursesSlice";
 import styles from "../../css/pages/admin/AdminDashboardPage.module.css";
 
@@ -20,15 +21,21 @@ export default function AdminDashboardPage() {
 
   const [usersCount, setUsersCount] = useState(0);
   const [ordersCount, setOrdersCount] = useState(0);
+  const [newContactMessagesCount, setNewContactMessagesCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
 
   useEffect(() => {
     const loadDashboard = async () => {
       try {
-        const [users, orders] = await Promise.all([getUsersCount(), getOrdersCount()]);
+        const [users, orders, newContactMessages] = await Promise.all([
+          getUsersCount(),
+          getOrdersCount(),
+          getContactMessagesCount(),
+        ]);
         setUsersCount(users);
         setOrdersCount(orders);
+        setNewContactMessagesCount(newContactMessages);
       } catch (err) {
         setLoadError(err.response?.data?.message || "שגיאה בטעינת נתוני לוח הבקרה");
       } finally {
@@ -50,7 +57,7 @@ export default function AdminDashboardPage() {
     { key: "users", label: "מספר משתמשים", value: usersCount, loading: isLoading },
     { key: "orders", label: "סך הזמנות", value: ordersCount, loading: isLoading },
     { key: "courses", label: "קורסים פעילים", value: activeCoursesCount, loading: coursesLoading },
-    { key: "inquiries", label: "פניות חדשות", value: "—", hint: "יתווסף בהמשך" },
+    { key: "inquiries", label: "פניות חדשות", value: newContactMessagesCount, loading: isLoading },
   ];
 
   return (

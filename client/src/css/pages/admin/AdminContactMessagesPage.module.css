@@ -1,0 +1,45 @@
+.container {
+  padding: var(--space-4);
+  width: 100%;
+}
+
+.error {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  border: var(--border-width) solid var(--color-error);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.message {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 360px;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-normal);
+}
+
+.statusButton {
+  padding: var(--space-1) var(--space-3);
+  border: var(--border-width) solid var(--color-warning);
+  border-radius: var(--radius-md);
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.statusButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.handled {
+  border-color: var(--color-success);
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}

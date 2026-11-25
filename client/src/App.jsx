@@ -24,6 +24,7 @@ import AdminOrderDetailsPage from "./pages/admin/AdminOrderDetailsPage";
 import AdminPaymentsPage from "./pages/admin/AdminPaymentsPage";
 import AdminFaqPage from "./pages/admin/AdminFaqPage";
 import AdminFaqFormPage from "./pages/admin/AdminFaqFormPage";
+import AdminContactMessagesPage from "./pages/admin/AdminContactMessagesPage";
 import AdminRoute from "./components/AdminRoute";
 import CreateOrderPage from "./pages/CreateOrderPage";
 import PaymentConfirmationPage from "./pages/PaymentConfirmationPage";
@@ -106,6 +107,8 @@ function App() {
                 <Route path='faq/list' element={<AdminFaqPage />}></Route>
                 <Route path='faq/new' element={<AdminFaqFormPage />}></Route>
                 <Route path='faq/:faqId/edit' element={<AdminFaqFormPage />}></Route>
+
+                <Route path='contactMessages/list' element={<AdminContactMessagesPage />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
