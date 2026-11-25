@@ -12,6 +12,7 @@ import paymentsRouter from "./routers/payments.router.js";
 import categoriesRouter from "./routers/categories.router.js";
 import faqRouter from "./routers/faq.router.js";
 import mediaRouter from "./routers/media.router.js";
+import contactMessagesRouter from "./routers/contactMessages.router.js";
 
 const app = express();
 const PORT = process.env.PORT || 1234;
@@ -39,6 +40,7 @@ app.use("/payments", paymentsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/faq", faqRouter);
 app.use("/media", mediaRouter);
+app.use("/contactMessages", contactMessagesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);

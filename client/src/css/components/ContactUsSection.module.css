@@ -43,34 +43,46 @@
   transition: background var(--transition-fast);
 }
 
-.submitButton:hover {
+.submitButton:hover:not(:disabled) {
   background: var(--color-primary-hover);
 }
 
-.modalOverlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-overlay-dark-40);
-  z-index: 10;
-}
-
-.modal {
-  background: var(--color-success-bg);
-  border: var(--border-width) solid var(--color-success);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6) var(--space-7);
-  text-align: center;
-}
-
-.modalTitle {
-  color: var(--color-success);
-  margin: 0 0 var(--space-2);
-}
-
-.modalText {
+.submitButton:disabled {
+  background: var(--color-border-strong);
   color: var(--color-text-muted);
-  margin: 0;
+  cursor: not-allowed;
+}
+
+.submitWrapper {
+  position: relative;
+}
+
+.submitWrapper .submitButton {
+  width: 100%;
+}
+
+.bubble {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: max-content;
+  max-width: 280px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: var(--border-width) solid var(--color-success);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  pointer-events: none;
+}
+
+.bubbleError {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }

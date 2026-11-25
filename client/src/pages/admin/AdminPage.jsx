@@ -12,6 +12,7 @@ const adminSections = [
   { to: "/admin/orders/list", prefix: "/admin/orders", label: "ניהול הזמנות" },
   { to: "/admin/payments/list", prefix: "/admin/payments", label: "ניהול תשלומים" },
   { to: "/admin/faq/list", prefix: "/admin/faq", label: "שאלות ותשובות" },
+  { to: "/admin/contactMessages/list", prefix: "/admin/contactMessages", label: "פניות" },
 ];
 
 export default function AdminPage() {

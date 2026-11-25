@@ -1,19 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { addContactMessage } from "../api/contactMessageApi";
 import styles from "../css/components/ContactUsSection.module.css";
+
+const EMPTY_FORM = { firstName: "", lastName: "", phone: "", email: "", message: "" };
+
 export default function ContactUsSection() {
+  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [isSending, setIsSending] = useState(false);
+  const [note, setNote] = useState(null);
 
-//TODO
-//לטפל בשליחת הודעה לשרת,כרגע זה רק הצגה של הודעה שההודעה נשלחה בהצלחה
-  const [showModal, setShowModal]=useState(false);
-  function handleSubmit(e){
+  useEffect(() => {
+    if (!note) return;
+    const timer = setTimeout(() => setNote(null), 3000);
+    return () => clearTimeout(timer);
+  }, [note]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    e.target.reset();
-    setShowModal(true);
-    setTimeout(()=>{
-      setShowModal(false);
-    },3000);
+    try {
+      setIsSending(true);
+      await addContactMessage(formData);
+      setFormData(EMPTY_FORM);
+      setNote({ text: "ההודעה נשלחה בהצלחה, נחזור אליך בהקדם", isError: false });
+    } catch (err) {
+      setNote({ text: err.response?.data?.message || "השליחה נכשלה, נסו שוב מאוחר יותר", isError: true });
+    } finally {
+      setIsSending(false);
+    }
+  };
 
-  }
   return (
     <div className={styles.section}>
       <h2 className={styles.heading}>צור קשר</h2>
@@ -21,24 +41,24 @@ export default function ContactUsSection() {
       <p className={styles.info}>מירלה כהן</p>
       <p className={styles.info}>052-763-1008</p>
       <p className={styles.info}>c0527631008@gmail.com</p>
-<form className={styles.form} onSubmit={handleSubmit}>
-      <input type="text" placeholder="שם פרטי" required />
-       <input type="text" placeholder="שם משפחה" required />
-      <input type="text" placeholder="טלפון" required/>
-      <input type="email" placeholder="אימייל" required/>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <input type="text" name="firstName" placeholder="שם פרטי" value={formData.firstName} onChange={handleChange} required />
+        <input type="text" name="lastName" placeholder="שם משפחה" value={formData.lastName} onChange={handleChange} required />
+        <input type="text" name="phone" placeholder="טלפון" value={formData.phone} onChange={handleChange} required />
+        <input type="email" name="email" placeholder="אימייל" value={formData.email} onChange={handleChange} required />
 
-      <textarea placeholder="הודעה"></textarea>
-      <button className={styles.submitButton} type="submit">שלח</button>
-</form>
-{showModal&&(
-  <div className={styles.modalOverlay}>
-<div className={styles.modal}>
-  <h3 className={styles.modalTitle}>ההודעה נשלחה בהצלחה</h3>
-  <p className={styles.modalText}>נחזור אליך בהקדם</p>
-</div>
-  </div>
-)}
-
+        <textarea name="message" placeholder="הודעה" value={formData.message} onChange={handleChange}></textarea>
+        <div className={styles.submitWrapper}>
+          {note && (
+            <span className={`${styles.bubble} ${note.isError ? styles.bubbleError : ""}`} role="status">
+              {note.text}
+            </span>
+          )}
+          <button className={styles.submitButton} type="submit" disabled={isSending}>
+            {isSending ? "שולח..." : "שלח"}
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
